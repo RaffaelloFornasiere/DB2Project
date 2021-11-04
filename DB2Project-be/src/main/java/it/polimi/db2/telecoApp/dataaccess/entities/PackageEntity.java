@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,4 +22,7 @@ import javax.persistence.Table;
 public class PackageEntity {
     @Id
     private Long id;
+
+    @Column
+    private String name;
 }

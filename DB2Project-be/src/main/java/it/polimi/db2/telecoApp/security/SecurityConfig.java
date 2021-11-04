@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends  WebSecurityConfigurerAdapter {
 
 
     @Autowired
@@ -24,21 +24,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder().encode("user1Pass"))
                 .authorities("ROLE_USER");
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
-        http.authorizeRequests()
-                .antMatchers("/securityNone").permitAll()
-                .anyRequest().authenticated()
-        ;
-//        .and()
-//                .httpBasic()
-//                .authenticationEntryPoint(entryPoint);
-
-//        http.addFilterAfter(new CustomFilter(),
-//                BasicAuthenticationFilter.class);
-    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+////        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
+////        http.authorizeRequests()
+////                .antMatchers("/api").authenticated();
+////        .and()
+////                .httpBasic()
+////                .authenticationEntryPoint(entryPoint);
+//
+////        http.addFilterAfter(new CustomFilter(),
+////                BasicAuthenticationFilter.class);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
