@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PackageComponent} from "../../components/package/package.component";
-import {Package} from "../../package";
+import {Package} from "../../interfaces/package";
 
 @Component({
   selector: 'app-packages',
