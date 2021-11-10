@@ -1,0 +1,11 @@
+<p>Available Packages</p>
+
+<div class="packages-menu">
+  <div *ngFor="let package of packages">
+    <a routerLink="/detail/{{package.id}}">
+      {{package.name}}
+    </a>
+    <br>
+  </div>
+
+</div>
