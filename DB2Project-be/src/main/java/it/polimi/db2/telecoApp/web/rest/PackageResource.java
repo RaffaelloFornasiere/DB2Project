@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -28,6 +29,10 @@ public class PackageResource {
         );
     }
 
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
+    }
 
 
 

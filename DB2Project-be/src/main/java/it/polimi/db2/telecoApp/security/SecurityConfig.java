@@ -28,15 +28,12 @@ public class SecurityConfig extends  WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
-//        http.authorizeRequests().anyRequest().permitAll();
-//                .antMatchers("/api").authenticated()
-//        .and()
-//                .httpBasic()
-//                .authenticationEntryPoint(entryPoint);
-
-//        http.addFilterAfter(new CustomFilter(),
-//                BasicAuthenticationFilter.class);
+        http
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/index.html", "/", "/home", "/login").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean

@@ -5,7 +5,8 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a  *ngFor="let page of pages" mat-list-item routerLink="{{page.link}}">
+      <a  *ngFor="let page of pages" mat-list-item routerLink="{{page.link}}"
+      (click)="setTitle(page.title)">
       {{page.title}}
       </a>
     </mat-nav-list>
@@ -20,7 +21,7 @@
         *ngIf="isHandset$ | async ">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>DB2Project-fe</span>
+      <span>{{title}}</span>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

@@ -6,4 +6,6 @@ export interface Admin {
   surname: string;
   location: string;
   associatedUsers: User[];
+
+
 }

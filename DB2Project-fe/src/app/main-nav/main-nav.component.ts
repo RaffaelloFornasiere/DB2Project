@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import {DashboardComponent} from "../pages/dashboard/dashboard.component";
+import {Component} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {NavigationExtras} from "@angular/router";
 
 @Component({
   selector: 'app-main-nav',
@@ -10,6 +10,7 @@ import {DashboardComponent} from "../pages/dashboard/dashboard.component";
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent {
+  title = "Dashboard";
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -20,8 +21,12 @@ export class MainNavComponent {
     {title: "Dashboard", link: "/dashboard"},
     {title: "Packages", link: "/packages"},
     {title: "Settings", link: "/settings"},
-];
-  constructor(private breakpointObserver: BreakpointObserver) {
-      }
+  ];
 
+  setTitle(title:string){
+    this.title = title;
+  }
+
+  constructor(private breakpointObserver: BreakpointObserver){
+  }
 }

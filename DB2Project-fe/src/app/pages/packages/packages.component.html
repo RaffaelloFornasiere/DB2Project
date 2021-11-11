@@ -1,11 +1,13 @@
-<p>Available Packages</p>
+<h1>Available Packages</h1>
 
 <div class="packages-menu">
   <div *ngFor="let package of packages">
-    <mat-card [style.width.rem]="width">
-      {{package.name}}
-      <br style="margin-bottom: 1%">
-      <button mat-button routerLink="/detail/{{package.id}}">Details</button>
+    <mat-card>
+      <mat-card-title>{{package.name}}</mat-card-title>
+      <mat-card-subtitle>Id: {{package.id}}</mat-card-subtitle>
+      <mat-card-actions>
+        <button routerLink="/detail/{{package.id}}" mat-button>Details</button>
+      </mat-card-actions>
     </mat-card>
     <br>
   </div>

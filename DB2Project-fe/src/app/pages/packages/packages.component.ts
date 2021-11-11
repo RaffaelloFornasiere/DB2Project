@@ -18,7 +18,8 @@ export class PackagesComponent implements OnInit {
      .subscribe(packages =>
      {
        this.packages = packages
-        this.width = packages.map(i => i.name.length).reduce((a,b) => a<b?a:b)*1.5;
+       //  this.width = Math.max(packages.map(i => i.name.length).reduce((a,b) => a>b?a:b)*4, 30);
+       // console.log(this.width)
      });
 
   }
