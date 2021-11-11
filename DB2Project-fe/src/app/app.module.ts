@@ -17,7 +17,8 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { PackageComponent } from './components/package/package.component';
 import { PackageDetailsComponent } from './pages/package-details/package-details.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -41,7 +42,9 @@ import { PackageDetailsComponent } from './pages/package-details/package-details
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

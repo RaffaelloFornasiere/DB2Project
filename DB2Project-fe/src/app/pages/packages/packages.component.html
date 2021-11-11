@@ -2,9 +2,11 @@
 
 <div class="packages-menu">
   <div *ngFor="let package of packages">
-    <a routerLink="/detail/{{package.id}}">
+    <mat-card [style.width.rem]="width">
       {{package.name}}
-    </a>
+      <br style="margin-bottom: 1%">
+      <button mat-button routerLink="/detail/{{package.id}}">Details</button>
+    </mat-card>
     <br>
   </div>
 

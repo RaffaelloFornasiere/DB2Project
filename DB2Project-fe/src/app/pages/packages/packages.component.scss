@@ -1,3 +1,6 @@
+
+
+
 .package-menu {
   padding: 0;
   margin: auto;
@@ -12,22 +15,23 @@
   align-items: flex-start;
 }
 
-a {
-  background-color: #3f525c;
-  border-radius: 2px;
-  padding: 1rem;
+mat-card {
+  padding: 0.2% 2%;
+
   font-size: 1.2rem;
-  text-decoration: none;
   display: inline-block;
-  color: #fff;
   text-align: center;
-  width: 30%;
+  width: fit-content;
   min-width: 70px;
   margin: .9%;
-  box-sizing: border-box;
+  //box-sizing: border-box;
 
-  /* flexbox */
-  order: 0;
-  flex: 0 1 auto;
-  align-self: auto;
+  ///* flexbox */
+  //order: 0;
+  //flex: 0 1 auto;
+  //align-self: auto;
 }
+mat-card:hover  {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
