@@ -17,39 +17,39 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends  WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
+//    private final UserDetailsService userDetailsService;
     //private final AuthEntryPointJwt
 
 
-
-
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-
-
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1")
-                .password(passwordEncoder().encode("user1Pass"))
-                .authorities("ROLE_USER");
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/index.html", "/", "/home", "/login").permitAll()
-                .anyRequest().authenticated();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//
+//
+//    public SecurityConfig(UserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
+//
+//
+//
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("user1")
+//                .password(passwordEncoder().encode("user1Pass"))
+//                .authorities("ROLE_USER");
+//    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .httpBasic()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/index.html", "/", "/home", "/login").permitAll()
+//                .anyRequest().authenticated();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
