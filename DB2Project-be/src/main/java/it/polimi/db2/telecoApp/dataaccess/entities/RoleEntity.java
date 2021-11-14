@@ -18,6 +18,8 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 public class RoleEntity {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

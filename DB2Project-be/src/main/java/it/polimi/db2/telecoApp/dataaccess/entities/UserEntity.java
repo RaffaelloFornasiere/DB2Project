@@ -3,9 +3,11 @@ package it.polimi.db2.telecoApp.dataaccess.entities;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import org.mapstruct.Mapping;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(name = "users_username_uindex", columnNames = {"username"})
@@ -21,10 +23,13 @@ import java.time.LocalDate;
 public class UserEntity {
     @Id
     @Column(name = "username", nullable = false)
-    private String id;
+    private String username;
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "surname")
     private String surname;
@@ -38,9 +43,10 @@ public class UserEntity {
     @Column(name = "billing_addr")
     private String billingAddr;
 
-    @Column(name = "join_date", nullable = false)
-    private LocalDate joinDate;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles;
 
-    @Column(name = "insolvent", nullable = false)
-    private Boolean insolvent = false;
 }

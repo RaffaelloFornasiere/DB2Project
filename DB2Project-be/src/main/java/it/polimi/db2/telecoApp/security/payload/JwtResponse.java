@@ -1,26 +1,25 @@
-package it.polimi.db2.telecoApp.services.models;
+package it.polimi.db2.telecoApp.security.payload;
 
-import it.polimi.db2.telecoApp.services.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import net.bytebuddy.agent.builder.AgentBuilder;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Accessors(chain = true)
-public class User {
+public class JwtResponse {
+    private String token;
+    @Builder.Default
+    private String type = "Bearer";
+    private Long id;
     private String username;
-    private String name;
-    private String surname;
-    private String password;
-
-    private Set<Role> roles = new HashSet<>();
+    private List<String> roles;
 }
