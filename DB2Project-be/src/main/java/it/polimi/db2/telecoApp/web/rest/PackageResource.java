@@ -25,14 +25,14 @@ public class PackageResource {
         this.packageService = packageService;
     }
 
-    @GetMapping("test/packages")
+    @GetMapping("/packages")
     ResponseEntity<List<Package>> findAll(){
         return ResponseEntity.ok().body(
                 packageService.findAll()
         );
     }
 
-    @RequestMapping("test/user")
+    @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;
     }
@@ -41,24 +41,25 @@ public class PackageResource {
 
 
 
-    @GetMapping("test/all")
+    @GetMapping("/all")
     public String allAccess() {
         return "Public Content.";
     }
 
-    @GetMapping("test/user")
+    @GetMapping("/user")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public String userAccess() {
         return "User Content.";
     }
 
-    @GetMapping("test/mod")
+
+    @GetMapping("/mod")
     @PreAuthorize("hasRole('MODERATOR')")
     public String moderatorAccess() {
         return "Moderator Board.";
     }
 
-    @GetMapping("test/admin")
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String adminAccess() {
         return "Admin Board.";

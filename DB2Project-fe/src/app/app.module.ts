@@ -19,6 +19,12 @@ import { PackageComponent } from './components/package/package.component';
 import { PackageDetailsComponent } from './pages/package-details/package-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import {MatCardModule} from "@angular/material/card";
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
+import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
+import {authInterceptorProviders} from "./helpers/auth.interceptor";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -31,22 +37,32 @@ import {MatCardModule} from "@angular/material/card";
     ChartComponent,
     PackageComponent,
     PackageDetailsComponent,
-    // MainNavComponent
+    LoginComponent,
+    RegisterComponent,
+    UserSettingsComponent,
+    AdminSettingsComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule,
     MatCardModule,
+
+    FormsModule,
+
+    HttpClientModule,
+
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
