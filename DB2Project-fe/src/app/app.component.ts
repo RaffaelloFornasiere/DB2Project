@@ -6,75 +6,45 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AppService} from "./services/app.service";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import Validation from "./helpers/validation";
+import {TokenStorageService} from "./services/token-storage.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  form: FormGroup;
-  submitted = false;
+export class AppComponent implements OnInit {
+  private roles: string[] = [];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showModeratorBoard = false;
+  username?: string;
 
   title = 'DB2Project-fe';
+
   constructor(private app: AppService,
               private http: HttpClient,
               private router: Router,
-
-              private formBuilder: FormBuilder) {
+              private tokenStorageService: TokenStorageService) {
     this.app.authenticate(undefined, undefined);
-  }
-  logout() {
-    this.http.post('logout', {})
-      .pipe(finalize(() => {
-      this.app.authenticated = false;
-      this.router.navigateByUrl('/login');
-    })).subscribe();
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        fullname: ['', Validators.required],
-        username: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(40)
-          ]
-        ],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-          ]
-        ],
-        confirmPassword: ['', Validators.required],
-        acceptTerms: [false, Validators.requiredTrue]
-      },
-      {
-        validators: [Validation.match('password', 'confirmPassword')]
-      }
-    )
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+
+      this.username = user.username;
+    }
   }
 
-  get f(): {[key: string]: AbstractControl}{
-    return this.form.controls;
+  logout(): void {
+    this.tokenStorageService.signOut();
+    window.location.reload();
   }
-
-  onSubmit(): void{
-    this.submitted = true;
-    if(this.form.invalid)
-      return;
-    console.log(JSON.stringify(this.form.value, null, 2))
-  }
-
-  onReset(): void{
-    this.submitted = false;
-    this.form.reset();
-  }
-
 }

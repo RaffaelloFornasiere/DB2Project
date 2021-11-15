@@ -25,6 +25,7 @@ import { UserSettingsComponent } from './pages/user-settings/user-settings.compo
 import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
 import {authInterceptorProviders} from "./helpers/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     RegisterComponent,
     UserSettingsComponent,
     AdminSettingsComponent,
+    ProfileComponent,
 
   ],
   imports: [
