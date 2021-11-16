@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Package} from "../../interfaces/package";
 import {PackageService} from "../../services/package.service";
+import {NavbarService} from "../../services/navbar.service";
 
 @Component({
   selector: 'app-packages',
@@ -10,7 +11,10 @@ import {PackageService} from "../../services/package.service";
 export class PackagesComponent implements OnInit {
   packages: Package[] = [];
   width= 1;
-  constructor(private packageService: PackageService) {
+  needsToBeLogged=false;
+  constructor(private packageService: PackageService,
+              private navbarService: NavbarService) {
+    navbarService.loggingVisibilityChange.subscribe(value => {this.needsToBeLogged = value})
   }
 
   ngOnInit(): void {
@@ -18,8 +22,6 @@ export class PackagesComponent implements OnInit {
      .subscribe(packages =>
      {
        this.packages = packages
-       //  this.width = Math.max(packages.map(i => i.name.length).reduce((a,b) => a>b?a:b)*4, 30);
-       // console.log(this.width)
      });
 
   }

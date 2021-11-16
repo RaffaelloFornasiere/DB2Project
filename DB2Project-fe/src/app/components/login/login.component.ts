@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {TokenStorageService} from "../../services/token-storage.service";
+import {NavbarService} from "../../services/navbar.service";
 
 @Component({
   selector: 'app-login',
@@ -14,40 +15,49 @@ export class LoginComponent implements OnInit {
   };
   isLogged = false;
   isLoginFailed = false;
-  errorMessage ='';
+  errorMessage = '';
   roles: string[] = [];
+  needsToBeLogged = false;
 
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
-              ) { }
+              private navbarService: NavbarService) {
+    this.navbarService.loggingVisibilityChange.subscribe(value => {
+      this.needsToBeLogged = value
+    })
+
+  }
 
   ngOnInit(): void {
-    if(this.tokenStorage.getToken()){
+    if (this.tokenStorage.getToken()) {
       this.isLogged = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
+    this.needsToBeLogged = this.navbarService.isLoggingInWarnVisible;
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     const {username, password} = this.form;
-    this.authService.login(username, password).subscribe(
-      data=>{
+    this.authService.login(username, password).subscribe({
+      next: data => {
         console.log(data);
-        this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
+        this.tokenStorage.saveToken(data.token);
+
 
         this.isLoginFailed = false;
         this.isLogged = true;
         this.roles = this.tokenStorage.getUser().roles;
       },
-      error => {
+      error: error => {
         this.errorMessage = error.message;
         this.isLoginFailed = true;
+        this.isLogged = false;
       }
-    )
+    })
   }
 
-  reloadPage(): void{
+  reloadPage(): void {
     window.location.reload();
   }
 
