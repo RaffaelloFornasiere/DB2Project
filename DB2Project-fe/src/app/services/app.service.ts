@@ -18,11 +18,17 @@ export class AppService {
       authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
 
-    this.http.get('user', {headers: headers}).subscribe(response => {
-      // @ts-ignore
-      this.authenticated = !!response['name'];
-      return callback && callback();
-    });
+    this.http.get('api/user', {headers: headers})
+      .subscribe(
+        response => {
+          // @ts-ignore
+          this.authenticated = !!response['name'];
+          return callback && callback();
+        },
+        error =>{
+          console.log(error)
+
+        });
 
   }
 }
