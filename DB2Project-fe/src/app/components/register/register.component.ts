@@ -26,17 +26,20 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     const {username, password} = this.form;
-    this.authService.register(username, password).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
-      error => {
-        this.errorMessage = error.error.message;
-        this.isSignUpFailed = true;
-      }
-    );
+    this.authService.register(username, password)
+      .subscribe({
+          next: data => {
+            console.log("data: ", data);
+            this.isSuccessful = true;
+            this.isSignUpFailed = false;
+          },
+          error: error => {
+            console.log("error: ", error);
+            this.errorMessage = error.error;
+            this.isSignUpFailed = true;
+          }
+        }
+      );
   }
 
 }

@@ -1,11 +1,12 @@
-<div class="col-md-12">
+<div class="col-md-6">
+  <h2>Sign Up</h2>
   <div class="card card-container">
     <img
       id="profile-img"
       src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
+      class="profile-img-card col-md-8"
     />
-    <form
+    <form class="m-3"
       *ngIf="!isSuccessful"
       name="form"
       (ngSubmit)="f.form.valid && onSubmit()"

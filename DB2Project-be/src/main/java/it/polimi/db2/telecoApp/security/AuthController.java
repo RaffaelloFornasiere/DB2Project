@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
@@ -75,7 +76,7 @@ public class AuthController {
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .build();
 
-        Set<String> strRoles = Objects.requireNonNullElse(signupRequest.getRole(), Set.of(""));
+        Set<String> strRoles = Objects.requireNonNullElse(signupRequest.getRole(), Set.of("user"));
         Set<Role> roles = new HashSet<>();
 
         for (String role : strRoles) {
@@ -89,6 +90,6 @@ public class AuthController {
 
         user.setRoles(roles);
         userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok("{ \"message\": \"User registered successful\" }");
     }
 }
