@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  title = 'DB2Project-fe';
+  title = 'DB2Project';
 
   constructor(private app: AppService,
               private http: HttpClient,

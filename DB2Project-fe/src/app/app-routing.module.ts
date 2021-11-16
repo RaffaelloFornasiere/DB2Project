@@ -14,10 +14,12 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'packages', component: PackagesComponent},
   { path: 'settings', component: SettingsComponent},
-  {path: 'user', component: UserSettingsComponent},
-  {path: 'admin', component: AdminSettingsComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  { path: "user", component: UserSettingsComponent},
+  { path: "admin", component: AdminSettingsComponent},
+
+  { path: "login", component: LoginComponent},
+  { path: "register", component: RegisterComponent},
+
 ]
 
 @NgModule({
