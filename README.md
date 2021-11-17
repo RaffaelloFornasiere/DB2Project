@@ -12,7 +12,7 @@ Inside the folder DB2Pject-be run the following commands:
 ```
 The server will be listening on default port 8080. In order to change it you can edit the application.properties file uncommenting and setting the following line
 
-```json 
+```bash
 # server.port=8081
 ```
 
@@ -29,7 +29,7 @@ ng serve —-proxy-config proxy.conf.json
 ```
 
 After this you should be able to access the application on 
-```json
+```bash
 localhost:4200
 ```
 
