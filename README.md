@@ -29,7 +29,7 @@ ng serve —-proxy-config proxy.conf.json
 ```
 
 After this you should be able to access the application on 
-```
+```json
 localhost:4200
 ```
 
