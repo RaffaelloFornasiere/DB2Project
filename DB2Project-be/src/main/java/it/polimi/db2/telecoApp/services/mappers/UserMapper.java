@@ -18,6 +18,9 @@ public interface UserMapper {
     @Mapping(source = "surname", target = "surname")
     @Mapping(source = "password", target = "password")
     @Mapping(source = "roles", target = "roles")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "birthdate", target = "birthdate")
+    @Mapping(source = "billingAddr", target = "billingAddress")
     User toTarget(UserEntity source);
 
     @Mapping(target = "username", source = "username")
@@ -25,13 +28,16 @@ public interface UserMapper {
     @Mapping(target = "surname", source = "surname")
     @Mapping(target = "password", source = "password")
     @Mapping(target = "roles", source = "roles")
+    @Mapping(target = "gender", source = "gender")
+    @Mapping(target = "birthdate", source = "birthdate")
+    @Mapping(target = "billingAddr", source = "billingAddress")
     UserEntity toSource(User source);
 
-    default Role map(RoleEntity entity){
+    default Role map(RoleEntity entity) {
         return entity.getRole();
     }
 
-    default RoleEntity map(Role role){
+    default RoleEntity map(Role role) {
         return new RoleEntity(role.getId().longValue(), role);
     }
 

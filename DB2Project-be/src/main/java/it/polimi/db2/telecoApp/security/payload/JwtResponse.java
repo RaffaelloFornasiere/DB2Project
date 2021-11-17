@@ -1,25 +1,24 @@
 package it.polimi.db2.telecoApp.security.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import it.polimi.db2.telecoApp.services.models.User;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.agent.builder.AgentBuilder;
 
-import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
+@SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class JwtResponse {
+public class JwtResponse extends User {
+    public JwtResponse(String jwt, User user)
+    {
+        super(user.toBuilder());
+        this.token = jwt;
+    }
     private String token;
     @Builder.Default
     private String type = "Bearer";
-    private Long id;
-    private String username;
-    private List<String> roles;
 }

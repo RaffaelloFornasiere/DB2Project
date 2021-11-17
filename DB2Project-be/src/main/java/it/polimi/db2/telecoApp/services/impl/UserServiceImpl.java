@@ -4,8 +4,10 @@ import it.polimi.db2.telecoApp.dataaccess.repositories.UserRepository;
 import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.mappers.UserMapper;
 import it.polimi.db2.telecoApp.services.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,5 +41,12 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         return UserMapper.MAPPER.toTarget(
                 userRepository.save(UserMapper.MAPPER.toSource(user)));
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return findByUsername(s)
+                .orElseThrow(() -> new UsernameNotFoundException("username " + s + " not found"));
     }
 }

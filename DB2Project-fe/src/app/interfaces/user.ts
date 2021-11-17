@@ -1,9 +1,12 @@
 import {Admin} from "./admin";
 
-export interface User {
-  id: number;
+export type User = {
+  username: string;
   name: string;
   surname: string;
-  location: string;
+  billingAddress: string;
+  token: string;
+  birthdate: Date;
+  roles: string[];
   referent: Admin;
 }

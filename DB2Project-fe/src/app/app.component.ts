@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {TokenStorageService} from "./services/token-storage.service";
 import {LoginComponent} from "./components/login/login.component";
+import {User} from "./interfaces/user";
 
 
 @Component({
@@ -31,9 +32,8 @@ export class AppComponent implements OnInit {
     this.tokenStorageService.isAuthenticated.subscribe(
       {next: value => {
           this.isLoggedIn = value;
-          console.log(value)
           if(this.isLoggedIn) {
-            const user = this.tokenStorageService.getUser();
+            const user: User = this.tokenStorageService.getUser();
             console.log(user);
             this.username = user.username;
             this.roles = user.roles;

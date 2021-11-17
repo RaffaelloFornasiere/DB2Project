@@ -2,7 +2,7 @@ package it.polimi.db2.telecoApp.security;
 
 
 import io.jsonwebtoken.*;
-import it.polimi.db2.telecoApp.services.models.UserDetailsImpl;
+import it.polimi.db2.telecoApp.services.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication){
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())

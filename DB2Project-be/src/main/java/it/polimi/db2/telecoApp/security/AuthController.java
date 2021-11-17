@@ -1,28 +1,26 @@
 package it.polimi.db2.telecoApp.security;
 
+import it.polimi.db2.telecoApp.dataaccess.entities.RoleEntity;
 import it.polimi.db2.telecoApp.dataaccess.repositories.RoleRepository;
 import it.polimi.db2.telecoApp.security.payload.JwtResponse;
 import it.polimi.db2.telecoApp.security.payload.LoginRequest;
-import it.polimi.db2.telecoApp.security.payload.SignupRequest;
 import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.enums.Role;
 import it.polimi.db2.telecoApp.services.models.User;
-import it.polimi.db2.telecoApp.services.models.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -48,47 +46,26 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
+        User user = (User) authentication.getPrincipal();
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        return ResponseEntity.ok(JwtResponse
-                .builder()
-                .token(jwt)
-                .username(userDetails.getUsername())
-                .roles(userDetails.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .toList())
-                .build());
+        return ResponseEntity.ok(new JwtResponse(jwt, user));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) throws RoleNotFoundException {
-        if (userService.findByUsername(signupRequest.getUsername()).isPresent()) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) throws RoleNotFoundException {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Error: Username is already taken");
         }
+        if(user.getRoles() == null || user.getRoles().isEmpty())
+            user.setRoles(Set.of(Role.ROLE_USER));
+        user.getRoles().stream()
+                .filter(r -> roleRepository.findByRole(r).isPresent()).findAny()
+                .orElseThrow(() -> new RoleNotFoundException("Error: role is not found"));
 
-        User user = User.builder()
-                .username(signupRequest.getUsername())
-                .name(signupRequest.getName())
-                .surname(signupRequest.getSurname())
-                .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .build();
 
-        Set<String> strRoles = Objects.requireNonNullElse(signupRequest.getRole(), Set.of("user"));
-        Set<Role> roles = new HashSet<>();
-
-        for (String role : strRoles) {
-            String match = "role_" + role;
-            match = match.toUpperCase();
-            Role certifiedRole = roleRepository.findByRole(Role.valueOf(match))
-                    .orElseThrow(() -> new RoleNotFoundException("Error: role is not found"))
-                    .getRole();
-            roles.add(certifiedRole);
-        }
-
-        user.setRoles(roles);
         userService.saveUser(user);
         return ResponseEntity.ok("{ \"message\": \"User registered successful\" }");
     }
