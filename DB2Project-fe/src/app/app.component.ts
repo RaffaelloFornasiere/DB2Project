@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   showUserBoard = false;
   username?: string;
-  title = 'DB2Project';
+  title = 'Winders';
 
   constructor(
     //private app: AppService,
