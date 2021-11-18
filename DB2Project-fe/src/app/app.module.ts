@@ -10,8 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { PackagesComponent } from './pages/packages/packages.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ChartComponent } from './components/chart/chart.component';
@@ -21,8 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatCardModule} from "@angular/material/card";
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
-import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.component';
+import { UserSettingsComponent } from './pages/user/user-settings/user-settings.component';
+import { AdminSettingsComponent } from './pages/admin/admin-settings/admin-settings.component';
 import {authInterceptorProviders} from "./helpers/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfileComponent } from './components/profile/profile.component';
@@ -30,12 +29,14 @@ import {FormControl} from '@angular/forms';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule, MatSelectTrigger} from "@angular/material/select";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainNavComponent,
-    DashboardComponent,
+    AdminDashboardComponent,
+    UserDashboardComponent,
+
     PackagesComponent,
     SettingsComponent,
     ChartComponent,

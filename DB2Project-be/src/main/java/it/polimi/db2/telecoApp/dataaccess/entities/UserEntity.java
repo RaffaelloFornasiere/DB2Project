@@ -3,7 +3,6 @@ package it.polimi.db2.telecoApp.dataaccess.entities;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-import org.mapstruct.Mapping;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -50,6 +49,6 @@ public class UserEntity {
     private Set<RoleEntity> roles;
 
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "userEntity")
-    private Set<PurchasesEntity> purchasesEntities;
+    private Set<PurchaseEntity> purchasesEntities;
 
 }

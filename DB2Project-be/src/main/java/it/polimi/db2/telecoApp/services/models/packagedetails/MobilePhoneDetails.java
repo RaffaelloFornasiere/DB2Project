@@ -1,7 +1,5 @@
-package it.polimi.db2.telecoApp.services.models;
+package it.polimi.db2.telecoApp.services.models.packagedetails;
 
-
-import it.polimi.db2.telecoApp.services.models.packagedetails.PackageDetails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class Package {
-    private Long id;
-    private String name;
-    private PackageDetails details;
+public class MobilePhoneDetails implements PackageDetails{
+    private Integer sms;
+    private Integer minutes;
+    private Integer extraSmsFee;
+    private Integer extraMinutesFee;
 }

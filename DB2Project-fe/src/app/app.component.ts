@@ -15,16 +15,30 @@ import {User} from "./interfaces/user";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private roles: string[] = [];
+  // private roles: string[] = [];
   isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  showUserBoard = false;
   username?: string;
   title = 'Winders';
+  dashboard = "/admin-dashboard";
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  pages = [
+    {title: "Dashboard", link: "/admin-dashboard"},
+    {title: "Packages", link: "/packages"},
+    {title: "Settings", link: "/settings"},
+  ];
+
+  setTitle(title:string){
+    this.title = title;
+  }
 
   constructor(
     //private app: AppService,
+    private breakpointObserver: BreakpointObserver,
     private http: HttpClient,
     private router: Router,
     private tokenStorageService: TokenStorageService,
@@ -36,7 +50,7 @@ export class AppComponent implements OnInit {
             const user: User = this.tokenStorageService.getUser();
             console.log(user);
             this.username = user.username;
-            this.roles = user.roles;
+            // this.roles = user.roles;
           }
         }}
     )
@@ -49,14 +63,15 @@ export class AppComponent implements OnInit {
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.username = user.username;
-      this.roles = user.roles;
+      // this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-      this.showUserBoard = this.roles.includes('ROLE_USER');
+      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      // this.showUserBoard = this.roles.includes('ROLE_USER');
 
     }
   }
+
+
 
   logout(): void {
     this.tokenStorageService.signOut();

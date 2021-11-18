@@ -1,5 +1,6 @@
 package it.polimi.db2.telecoApp.web.rest;
 
+import io.swagger.models.auth.In;
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.models.Package;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController

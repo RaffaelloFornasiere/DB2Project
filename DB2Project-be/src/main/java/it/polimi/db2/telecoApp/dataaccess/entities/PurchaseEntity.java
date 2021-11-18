@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class PurchasesEntity {
+public class PurchaseEntity {
 
     @Id
     private long id;

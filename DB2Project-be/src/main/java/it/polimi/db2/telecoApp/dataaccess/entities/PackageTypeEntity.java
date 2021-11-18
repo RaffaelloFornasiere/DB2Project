@@ -3,15 +3,11 @@ package it.polimi.db2.telecoApp.dataaccess.entities;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Type;
-import springfox.documentation.spring.web.json.Json;
 
 import javax.persistence.*;
-import java.util.Set;
-
 
 @Entity
-@Table(name = "PACKAGES")
+@Table(name = "package_types")
 @Getter
 @Setter
 @ToString
@@ -19,18 +15,11 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class PackageEntity {
+public class PackageTypeEntity {
     @Id
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "name")
     private String name;
-
-    //maybe this can be a simple string
-    @ManyToOne
-    @JoinColumn(name = "type")
-    private PackageTypeEntity type;
-
-    @Column(name = "details")
-    private String details;
 }

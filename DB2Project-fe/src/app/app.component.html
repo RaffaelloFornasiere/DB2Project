@@ -1,44 +1,49 @@
 
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a  *ngFor="let page of pages" mat-list-item routerLink="{{page.link}}"
+          (click)="setTitle(page.title)">
+        {{page.title}}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div id="app">
+      <mat-toolbar color="primary">{{title}}</mat-toolbar>
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+          <div class="navbar-nav mr-auto" routerLinkActive="active">
+            <a [href]="dashboard" class="nav-link" routerLinkActive="active" routerLink="dashboard">Home</a>
+          </div>
 
-<app-main-nav>
-  <div id="app">
-    <mat-toolbar color="primary">{{title}}</mat-toolbar>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <ul class="navbar-nav mr-auto" routerLinkActive="active">
-        <li class="nav-item">
-          <a href="/dashboard" class="nav-link" routerLink="dashboard">Home </a>
-        </li>
-        <li class="nav-item" *ngIf="showAdminBoard">
-          <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
-        </li>
-        <!--        <li class="nav-item" *ngIf="showModeratorBoard">-->
-        <!--          <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>-->
-        <!--        </li>-->
-        <li class="nav-item">
-          <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a href="/login" class="nav-link" routerLink="login">Login</a>
+          </li>
+        </ul>
 
-      <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-        <li class="nav-item">
-          <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a href="/login" class="nav-link" routerLink="login">Login</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+      </nav>
 
-      <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-        <li class="nav-item">
-          <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-        </li>
-        <li class="nav-item">
-          <a href class="nav-link" (click)="logout()">LogOut</a>
-        </li>
-      </ul>
-    </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-  </div>
-  <router-outlet></router-outlet>
-</app-main-nav>
+
+
 
