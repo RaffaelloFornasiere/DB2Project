@@ -26,7 +26,10 @@ import { AdminSettingsComponent } from './pages/admin-settings/admin-settings.co
 import {authInterceptorProviders} from "./helpers/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfileComponent } from './components/profile/profile.component';
-
+import {FormControl} from '@angular/forms';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule, MatSelectTrigger} from "@angular/material/select";
+import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -50,8 +53,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-
+    MatFormFieldModule,
     MatToolbarModule,
+    MatSelectModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
@@ -64,7 +68,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 
     ReactiveFormsModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
+  ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }
