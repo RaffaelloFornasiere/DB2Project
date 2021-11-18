@@ -4,10 +4,8 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -25,4 +23,7 @@ public class PackageEntity {
 
     @Column
     private String name;
+
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "packageEntity")
+    private Set<PurchasesEntity> purchasesEntities;
 }

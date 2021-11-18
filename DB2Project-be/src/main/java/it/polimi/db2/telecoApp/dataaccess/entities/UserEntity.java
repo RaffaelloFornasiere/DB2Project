@@ -49,4 +49,7 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
 
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private Set<PurchasesEntity> purchasesEntities;
+
 }
