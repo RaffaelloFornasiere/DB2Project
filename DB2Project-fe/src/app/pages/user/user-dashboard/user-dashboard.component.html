@@ -1,2 +1,9 @@
-<app-chart [config]="config"></app-chart>
-
+<!--<app-chart [config]="config"></app-chart>-->
+<div class="chart-wrapper">
+  <canvas baseChart
+          [data]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
+          [colors]="doughnutChartColors">
+  </canvas>
+</div>

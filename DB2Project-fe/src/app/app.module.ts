@@ -25,12 +25,11 @@ import { AdminSettingsComponent } from './pages/admin/admin-settings/admin-setti
 import {authInterceptorProviders} from "./helpers/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfileComponent } from './components/profile/profile.component';
-import {FormControl} from '@angular/forms';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatSelectModule, MatSelectTrigger} from "@angular/material/select";
+import {MatSelectModule} from "@angular/material/select";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
-// import { ChartsModule } from 'ng2-charts';
+import {ChartsModule} from "ng2-charts";
 
 
 
@@ -65,13 +64,12 @@ import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard
     MatIconModule,
     MatListModule,
     MatCardModule,
-
+    ChartsModule,
     FormsModule,
 
     HttpClientModule,
 
     ReactiveFormsModule,
-    // ChartsModule,
 
   ],
   providers: [authInterceptorProviders,

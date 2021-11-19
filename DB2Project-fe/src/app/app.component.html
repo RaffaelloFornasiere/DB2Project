@@ -17,7 +17,7 @@
       <mat-toolbar color="primary">{{title}}</mat-toolbar>
       <nav class="navbar navbar-expand navbar-dark bg-dark">
           <div class="navbar-nav mr-auto" routerLinkActive="active">
-            <a [href]="dashboard" class="nav-link" routerLinkActive="active" routerLink="dashboard">Home</a>
+            <a [href]="dashboard" class="nav-link" routerLinkActive="active" routerLink="{{dashboard}}">Home</a>
           </div>
 
         <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
