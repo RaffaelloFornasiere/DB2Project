@@ -29,14 +29,12 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, RoleRepository roleRepository, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
     }
 
@@ -50,7 +48,6 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         User user = (User) authentication.getPrincipal();
-
         return ResponseEntity.ok(new JwtResponse(jwt, user));
     }
 
