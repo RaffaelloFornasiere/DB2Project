@@ -2,6 +2,7 @@ package it.polimi.db2.telecoApp.services.mappers;
 
 import it.polimi.db2.telecoApp.dataaccess.entities.PackageEntity;
 import it.polimi.db2.telecoApp.services.models.Package;
+import it.polimi.db2.telecoApp.services.models.packagedetails.PackageDetails;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -19,5 +20,11 @@ public interface PackageMapper {
     @Mapping(source = "name", target = "name")
     PackageEntity toSource(Package source);
 
+    default PackageDetails map(String value){
+        return null;
+    }
 
+    default String map(PackageDetails value){
+        return null;
+    }
 }
