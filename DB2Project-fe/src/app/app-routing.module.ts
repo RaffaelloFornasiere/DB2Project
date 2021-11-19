@@ -8,11 +8,14 @@ import {AdminSettingsComponent} from "./pages/admin/admin-settings/admin-setting
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {ProfileComponent} from "./components/profile/profile.component";
+import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/admin-dashboard', pathMatch: 'full' },
   { path: 'admin-dashboard', component: AdminDashboardComponent},
+  { path: 'user-dashboard', component: UserDashboardComponent},
+
   { path: 'packages', component: PackagesComponent},
   { path: 'settings', component: SettingsComponent},
   { path: "user", component: UserSettingsComponent},

@@ -26,8 +26,9 @@ export class AppComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+
   pages = [
-    {title: "Dashboard", link: "/admin-dashboard"},
+    {title: "Dashboard", link: "/user-dashboard"},
     {title: "Packages", link: "/packages"},
     {title: "Settings", link: "/settings"},
   ];

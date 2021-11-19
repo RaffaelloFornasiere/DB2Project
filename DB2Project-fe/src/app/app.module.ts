@@ -30,6 +30,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule, MatSelectTrigger} from "@angular/material/select";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
+// import { ChartsModule } from 'ng2-charts';
+
+
 
 @NgModule({
   declarations: [
@@ -68,6 +71,8 @@ import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard
     HttpClientModule,
 
     ReactiveFormsModule,
+    // ChartsModule,
+
   ],
   providers: [authInterceptorProviders,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
