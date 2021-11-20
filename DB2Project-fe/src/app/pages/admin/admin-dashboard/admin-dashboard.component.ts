@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChartDataSets} from "chart.js";
 import {Color, Label} from "ng2-charts";
 import {ChartType} from "chart.js";
 
@@ -23,7 +22,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   ]
   // config!: ChartConfiguration<keyof ChartTypeRegistry, number[], string>;
 
-  lineChartData: ChartDataSets[] = [
+  lineChartData = [
     {data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices'},
   ];
 

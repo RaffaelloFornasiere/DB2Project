@@ -22,7 +22,7 @@ public class PurchaseEntity {
     private long id;
 
     @Column( name = "purchase_date")
-    private LocalDateTime purchase_date;
+    private LocalDateTime purchaseDate;
 
     @ManyToOne
     @JoinColumn( name = "user")

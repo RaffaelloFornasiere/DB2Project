@@ -26,7 +26,6 @@ public class PackageEntity {
     @Column(name = "name")
     private String name;
 
-    //maybe this can be a simple string
     @ManyToOne
     @JoinColumn(name = "type")
     private PackageTypeEntity type;

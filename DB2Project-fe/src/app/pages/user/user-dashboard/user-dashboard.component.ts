@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Color, Label, MultiDataSet} from "ng2-charts";
+import {Color, Label, MultiDataSet, MultiLineLabel} from "ng2-charts";
 import {ChartType, Chart} from "chart.js";
-import {MultiLineLabel} from "ng2-charts/lib/base-chart.directive";
+
 // import {ChartConfiguration, ChartData, ChartTypeRegistry} from "chart.js";
 // import {} from "/src/app/components/chart/utils.ts"
 
