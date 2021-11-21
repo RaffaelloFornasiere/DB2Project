@@ -42,7 +42,7 @@ public class User implements UserDetails {
     private String surname;
     @NotBlank
     @Size(min = 6)
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
     private Boolean gender;
     private LocalDate birthdate;

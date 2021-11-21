@@ -7,6 +7,6 @@ export type User = {
   billingAddress: string;
   token: string;
   birthdate: Date;
-  roles: string[];
+  roles: string;
   referent: Admin;
 }

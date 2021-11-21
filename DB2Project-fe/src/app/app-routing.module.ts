@@ -9,12 +9,20 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
+import {HomeComponent} from "./pages/home/home.component";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/admin-dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+
+
+
   { path: 'admin-dashboard', component: AdminDashboardComponent},
+  { path: 'admin-settings', component: AdminSettingsComponent},
+
   { path: 'user-dashboard', component: UserDashboardComponent},
+  { path: 'user-settings', component: UserSettingsComponent},
 
   { path: 'packages', component: PackagesComponent},
   { path: 'settings', component: SettingsComponent},

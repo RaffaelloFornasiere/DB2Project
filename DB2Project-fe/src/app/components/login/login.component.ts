@@ -16,13 +16,14 @@ export class LoginComponent implements OnInit {
   isLogged = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string[] = [];
+  role: string = "";
   needsToBeLogged = false;
 
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
               private navbarService: NavbarService) {
-    this.navbarService.loggingVisibilityChange.subscribe(value => {
+    this.navbarService.loggingVisibilityChange.subscribe(
+      value => {
       this.needsToBeLogged = value
     })
 
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLogged = true;
-      this.roles = this.tokenStorage.getUser().roles;
+      this.role = this.tokenStorage.getUser().role;
     }
     this.needsToBeLogged = this.navbarService.isLoggingInWarnVisible;
   }
@@ -43,13 +44,12 @@ export class LoginComponent implements OnInit {
     const {username, password} = this.form;
     this.authService.login(username, password).subscribe({
       next: data => {
-        console.log("data:", data)
         this.tokenStorage.saveUser(data);
         this.tokenStorage.saveToken(data.token);
 
         this.isLoginFailed = false;
         this.isLogged = true;
-        this.roles = this.tokenStorage.getUser().roles;
+        this.role = this.tokenStorage.getUser().roles[0];
       },
       error: error => {
         this.errorMessage = error.message;

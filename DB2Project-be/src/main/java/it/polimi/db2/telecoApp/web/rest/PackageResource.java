@@ -1,19 +1,14 @@
 package it.polimi.db2.telecoApp.web.rest;
 
-import io.swagger.models.auth.In;
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.models.Package;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -28,8 +23,8 @@ public class PackageResource {
         this.packageService = packageService;
     }
 
-    @GetMapping("/packages")
-    ResponseEntity<List<Package>> findAll(){
+    @GetMapping("home/packages")
+    ResponseEntity<List<Package>> findAll() {
         return ResponseEntity.ok().body(
                 packageService.findAll()
         );
@@ -40,8 +35,31 @@ public class PackageResource {
         return user;
     }
 
-
-
+    @GetMapping("/user-data/{username}/")
+    public ResponseEntity<Json> getUserData(@PathVariable String username) {
+        Json s = new Json("""
+      packageName: "mobile phone",
+      packageDetails: [
+        {type: "sms", amount: 10000},
+        {type: "minutes", amount: 10000},
+      ],
+      packageConsumption: [
+        {type: "sms", amount: 8900},
+        {type: "minutes", amount: 500},
+      ]
+    },
+    {
+      packageName: "mobile internet",
+      packageDetails: [
+        {type: "GigaBytes", amount: 100},
+      ],
+      packageConsumption: [
+        {type: "GigaBytes", amount: 12},
+      ]
+    }
+                  """);
+        return ResponseEntity.ok().body(s);
+    }
 
 
     @GetMapping("/all")

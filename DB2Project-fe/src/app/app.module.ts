@@ -30,8 +30,10 @@ import {MatSelectModule} from "@angular/material/select";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
 import {ChartsModule} from "ng2-charts";
-
-
+import { HomeComponent } from './pages/home/home.component';
+import {CarouselModule} from "primeng/carousel";
+import {ButtonModule} from "primeng/button";
+import {DataViewModule} from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import {ChartsModule} from "ng2-charts";
     UserSettingsComponent,
     AdminSettingsComponent,
     ProfileComponent,
+    HomeComponent,
 
   ],
   imports: [
@@ -70,11 +73,14 @@ import {ChartsModule} from "ng2-charts";
     HttpClientModule,
 
     ReactiveFormsModule,
+    CarouselModule,
+    ButtonModule,
+    DataViewModule
 
   ],
   providers: [authInterceptorProviders,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
   ,
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

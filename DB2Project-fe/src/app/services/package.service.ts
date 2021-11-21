@@ -8,7 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PackageService {
-  private packagesUrl = "api/packages"
+  private packagesUrl = "api/home/packages"
   constructor(
     private http: HttpClient
   ) { }
@@ -17,7 +17,7 @@ export class PackageService {
   getPackages(): Observable<Package[]>{
     return this.http.get<Package[]>(this.packagesUrl)
       .pipe(
-        tap(_ => console.log('fetched heroes')),
+        // tap(_ => console.log('fetched heroes')),
         catchError(this.handleError<Package[]>('getPackages', []))
       );
   }

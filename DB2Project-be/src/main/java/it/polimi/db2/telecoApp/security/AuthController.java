@@ -1,6 +1,5 @@
 package it.polimi.db2.telecoApp.security;
 
-import it.polimi.db2.telecoApp.dataaccess.entities.RoleEntity;
 import it.polimi.db2.telecoApp.dataaccess.repositories.RoleRepository;
 import it.polimi.db2.telecoApp.security.payload.JwtResponse;
 import it.polimi.db2.telecoApp.security.payload.LoginRequest;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,12 +26,15 @@ public class AuthController {
     private final UserService userService;
     private final RoleRepository roleRepository;
     private final JwtUtils jwtUtils;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, RoleRepository roleRepository, JwtUtils jwtUtils) {
+
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, RoleRepository roleRepository, JwtUtils jwtUtils, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.jwtUtils = jwtUtils;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -58,6 +57,7 @@ public class AuthController {
         }
         if(user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(Set.of(Role.ROLE_USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().stream()
                 .filter(r -> roleRepository.findByRole(r).isPresent()).findAny()
                 .orElseThrow(() -> new RoleNotFoundException("Error: role is not found"));

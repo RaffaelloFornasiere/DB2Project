@@ -15,9 +15,9 @@
   <mat-sidenav-content>
     <div id="app">
       <mat-toolbar color="primary">{{title}}</mat-toolbar>
-      <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <nav *ngIf="showLoginBar" class="navbar navbar-expand navbar-dark bg-dark">
           <div class="navbar-nav mr-auto" routerLinkActive="active">
-            <a [href]="dashboard" class="nav-link" routerLinkActive="active" routerLink="{{dashboard}}">Home</a>
+            <a href="/home" class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
           </div>
 
         <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
@@ -43,7 +43,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-

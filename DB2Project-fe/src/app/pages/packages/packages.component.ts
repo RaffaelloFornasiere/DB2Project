@@ -14,7 +14,10 @@ export class PackagesComponent implements OnInit {
   needsToBeLogged=false;
   constructor(private packageService: PackageService,
               private navbarService: NavbarService) {
-    navbarService.loggingVisibilityChange.subscribe(value => {this.needsToBeLogged = value})
+    // navbarService.loggingVisibilityChange.subscribe(value =>
+    // {
+    //   this.needsToBeLogged = value
+    // })
   }
 
   ngOnInit(): void {
