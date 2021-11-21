@@ -10,12 +10,13 @@ import {RegisterComponent} from "./components/register/register.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
 import {HomeComponent} from "./pages/home/home.component";
+import {PackageDetailsComponent} from "./pages/package-details/package-details.component";
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-
+  { path: 'detail', component: PackageDetailsComponent },
 
 
   { path: 'admin-dashboard', component: AdminDashboardComponent},
