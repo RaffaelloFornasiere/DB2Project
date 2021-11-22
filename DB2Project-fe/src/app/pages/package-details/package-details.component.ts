@@ -11,7 +11,7 @@ import {PackageService} from "../../services/package.service";
   styleUrls: ['./package-details.component.scss']
 })
 export class PackageDetailsComponent implements OnInit {
-  package!: Package;
+  package!: { id: number, name:string, type: string, details: object };
   constructor(private route: ActivatedRoute,
               private packageService: PackageService) { }
 
@@ -20,6 +20,7 @@ export class PackageDetailsComponent implements OnInit {
     this.packageService.getDetails(id).subscribe(
       {
         next: data=>{
+          console.log(data)
           this.package = data;
         }
       }

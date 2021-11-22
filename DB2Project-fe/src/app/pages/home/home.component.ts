@@ -7,14 +7,14 @@ import {PackageService} from "../../services/package.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  products!: { name: string, type: string, price: number }[];
+  products!: { id: number, name: string, type: string, price: number }[];
   responsiveOptions!: any;
 
   constructor(private packageService: PackageService) {
     packageService.getPackages().subscribe(data => {
       if (data)
         this.products = data.map(n => {
-          return {name: n.name, type: this.getRandomType(), price: this.getRandomInt(5,25)}
+          return {id: n.id, name: n.name, type: this.getRandomType(), price: this.getRandomInt(5,25)}
         })
       console.log(this.products);
     })

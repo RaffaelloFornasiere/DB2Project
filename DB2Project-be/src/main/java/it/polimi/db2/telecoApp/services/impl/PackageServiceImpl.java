@@ -23,4 +23,19 @@ public class PackageServiceImpl implements PackageService {
                 .map(PackageMapper.MAPPER::toTarget)
                 .toList();
     }
+
+    @Override
+    public Package getDetails(Long id) {
+        return packageRepository.findById(id)
+                .map(PackageMapper.MAPPER::toTarget)
+
+                .orElseThrow();
+    }
+
+
+    @Override
+    public Package save(Package p){
+        return PackageMapper.MAPPER.toTarget(
+                packageRepository.save(PackageMapper.MAPPER.toSource(p)));
+    }
 }

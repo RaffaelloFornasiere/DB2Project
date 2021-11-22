@@ -14,4 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class MobileInternetDetails implements PackageDetails{
     private Integer GBs;
     private Integer extraGBsFee;
+    private Integer costMonth;
 }

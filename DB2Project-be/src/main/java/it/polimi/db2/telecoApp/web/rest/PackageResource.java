@@ -29,6 +29,13 @@ public class PackageResource {
                 packageService.findAll()
         );
     }
+    @GetMapping("home/packages/detail/{id}")
+    ResponseEntity<Package> getDetails(@PathVariable String id) {
+
+        return ResponseEntity.ok().body(
+                packageService.find
+        );
+    }
 
     @RequestMapping("/user")
     public Principal user(Principal user) {

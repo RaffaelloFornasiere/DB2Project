@@ -1,5 +1,8 @@
 package it.polimi.db2.telecoApp.services.mappers;
 
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.google.gson.Gson;
 import it.polimi.db2.telecoApp.dataaccess.entities.PackageEntity;
 import it.polimi.db2.telecoApp.services.models.Package;
 import it.polimi.db2.telecoApp.services.models.packagedetails.PackageDetails;
@@ -25,6 +28,7 @@ public interface PackageMapper {
     }
 
     default String map(PackageDetails value){
-        return null;
+        Gson gson = new Gson();
+        return gson.toJson(value);
     }
 }
