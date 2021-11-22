@@ -16,7 +16,7 @@ import {PackageDetailsComponent} from "./pages/package-details/package-details.c
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'detail', component: PackageDetailsComponent },
+  { path: 'detail/:id', component: PackageDetailsComponent },
 
 
   { path: 'admin-dashboard', component: AdminDashboardComponent},
