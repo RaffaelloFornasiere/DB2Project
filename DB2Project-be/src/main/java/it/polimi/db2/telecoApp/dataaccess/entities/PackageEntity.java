@@ -26,9 +26,8 @@ public class PackageEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "type")
-    private PackageTypeEntity type;
+    @Column(name = "type")
+    private Long type;
 
     @Column(name = "details")
     private String details;

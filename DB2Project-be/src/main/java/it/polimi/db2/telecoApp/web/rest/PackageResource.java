@@ -23,18 +23,17 @@ public class PackageResource {
         this.packageService = packageService;
     }
 
-    @GetMapping("home/packages")
+    @GetMapping("/home/packages")
     ResponseEntity<List<Package>> findAll() {
         return ResponseEntity.ok().body(
                 packageService.findAll()
         );
     }
-    @GetMapping("home/packages/detail/{id}")
-    ResponseEntity<Package> getDetails(@PathVariable String id) {
-
+    @GetMapping("/home/packages/detail/{id}")
+    ResponseEntity<Package> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok().body(
-                packageService.find
-        );
+            packageService.getDetails(id));
+
     }
 
     @RequestMapping("/user")

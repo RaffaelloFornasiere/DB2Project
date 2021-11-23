@@ -1,5 +1,6 @@
 package it.polimi.db2.telecoApp.services.impl;
 
+import it.polimi.db2.telecoApp.dataaccess.entities.PackageEntity;
 import it.polimi.db2.telecoApp.dataaccess.repositories.PackageRepository;
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.mappers.PackageMapper;
@@ -35,7 +36,8 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Package save(Package p){
-        return PackageMapper.MAPPER.toTarget(
-                packageRepository.save(PackageMapper.MAPPER.toSource(p)));
+        PackageEntity toBeSaved = PackageMapper.MAPPER.toSource(p);
+        PackageEntity saved = packageRepository.save(toBeSaved);
+        return PackageMapper.MAPPER.toTarget(saved);
     }
 }

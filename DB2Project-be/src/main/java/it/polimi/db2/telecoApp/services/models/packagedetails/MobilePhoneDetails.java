@@ -2,11 +2,14 @@ package it.polimi.db2.telecoApp.services.models.packagedetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
@@ -14,6 +17,8 @@ import lombok.experimental.SuperBuilder;
 public class MobilePhoneDetails implements PackageDetails{
     private Integer sms;
     private Integer minutes;
-    private Integer extraSmsFee;
-    private Integer extraMinutesFee;
+    private Double extraSmsFee;
+    private Double extraMinutesFee;
+    private Integer costMonth;
+
 }

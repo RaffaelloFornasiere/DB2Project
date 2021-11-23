@@ -1,4 +1,4 @@
-package it.polimi.db2.telecoApp.services.utilities;
+package it.polimi.db2.telecoApp.services.utilities.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import it.polimi.db2.telecoApp.services.models.User;
 
 import java.io.IOException;
+import java.io.Serial;
 
 public class UserSerializer extends StdSerializer<User> {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public UserSerializer(Class<User> t) {
