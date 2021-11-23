@@ -1,6 +1,6 @@
 package it.polimi.db2.telecoApp.services.models.packagedetails;
 
-import io.swagger.models.auth.In;
+//import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,10 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class FixedInternetDetails implements PackageDetails{
+public class FixedInternetDetails extends PackageDetails {
     private Integer gigabytes;
     private Integer extraGigaBytesFee;
-    private Integer initialCost;
-    private Integer costMonth;
-
 }

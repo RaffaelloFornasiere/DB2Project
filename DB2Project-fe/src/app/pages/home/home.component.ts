@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PackageService} from "../../services/package.service";
+import {Package} from "../../interfaces/package";
 
 @Component({
   selector: 'app-home',
@@ -7,15 +8,13 @@ import {PackageService} from "../../services/package.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  products!: { id: number, name: string, type: string, price: number }[];
+  products!: Package[];
   responsiveOptions!: any;
 
   constructor(private packageService: PackageService) {
     packageService.getPackages().subscribe(data => {
       if (data)
-        this.products = data.map(n => {
-          return {id: n.id, name: n.name, type: this.getRandomType(), price: this.getRandomInt(5,25)}
-        })
+        this.products = data;
       console.log(this.products);
     })
   }

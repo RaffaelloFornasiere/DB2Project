@@ -11,7 +11,7 @@ import {PackageService} from "../../services/package.service";
   styleUrls: ['./package-details.component.scss']
 })
 export class PackageDetailsComponent implements OnInit {
-  package!: { id: number, name:string, type: string, details: object };
+  package!: Package;
   constructor(private route: ActivatedRoute,
               private packageService: PackageService) { }
 
@@ -21,10 +21,17 @@ export class PackageDetailsComponent implements OnInit {
       {
         next: data=>{
           console.log(data)
+          // @ts-ignore
+          delete data.details['@type'];
           this.package = data;
         }
       }
     )
+  }
+
+  camelToText(camel: string):string{
+    let result = camel.replace( /([A-Z])/g, " $1" );
+    return  result.charAt(0).toUpperCase() + result.slice(1);
   }
 
 }

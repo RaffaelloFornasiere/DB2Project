@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class FixedPhoneDetails implements PackageDetails{
+public class FixedPhoneDetails extends PackageDetails {
 //    private Integer costMonth;
 
 }

@@ -33,10 +33,6 @@ class PackageServiceImplTest {
                                 .costMonth(7)
                                 .extraMinutesFee(0.14)
                                 .extraSmsFee(0.15)
-
-//                        .gigabytes(4000)
-//                        .extraGigaBytesFee(5)
-//                        .costMonth(20)
                         .build())
                 .name("test")
                 .type(PackageType.MOBILE_INTERNET)
