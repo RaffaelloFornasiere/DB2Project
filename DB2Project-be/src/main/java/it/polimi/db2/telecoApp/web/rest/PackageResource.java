@@ -29,10 +29,11 @@ public class PackageResource {
                 packageService.findAll()
         );
     }
+
     @GetMapping("/home/packages/detail/{id}")
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok().body(
-            packageService.getDetails(id));
+                packageService.getDetails(id));
 
     }
 
@@ -44,26 +45,26 @@ public class PackageResource {
     @GetMapping("/user-data/{username}/")
     public ResponseEntity<Json> getUserData(@PathVariable String username) {
         Json s = new Json("""
-      packageName: "mobile phone",
-      packageDetails: [
-        {type: "sms", amount: 10000},
-        {type: "minutes", amount: 10000},
-      ],
-      packageConsumption: [
-        {type: "sms", amount: 8900},
-        {type: "minutes", amount: 500},
-      ]
-    },
-    {
-      packageName: "mobile internet",
-      packageDetails: [
-        {type: "GigaBytes", amount: 100},
-      ],
-      packageConsumption: [
-        {type: "GigaBytes", amount: 12},
-      ]
-    }
-                  """);
+                  packageName: "mobile phone",
+                  packageDetails: [
+                    {type: "sms", amount: 10000},
+                    {type: "minutes", amount: 10000},
+                  ],
+                  packageConsumption: [
+                    {type: "sms", amount: 8900},
+                    {type: "minutes", amount: 500},
+                  ]
+                },
+                {
+                  packageName: "mobile internet",
+                  packageDetails: [
+                    {type: "GigaBytes", amount: 100},
+                  ],
+                  packageConsumption: [
+                    {type: "GigaBytes", amount: 12},
+                  ]
+                }
+                              """);
         return ResponseEntity.ok().body(s);
     }
 

@@ -5,6 +5,6 @@
   <div *ngFor="let item of package.details | keyvalue">
     <h4>{{camelToText(item.key)}}: {{item.value}}</h4>
   </div>
-  <p>{{ package.type }}</p>
-<!--  <button (click)="addToCart(product)">Buy</button>-->
+  <p>type: {{ package.type }}</p>
+  <button class="btn btn-primary" (click)="buy(package)">Buy</button>
 </div>

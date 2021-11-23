@@ -34,6 +34,8 @@ import { HomeComponent } from './pages/home/home.component';
 import {CarouselModule} from "primeng/carousel";
 import {ButtonModule} from "primeng/button";
 import {DataViewModule} from 'primeng/dataview';
+import {MatDialogModule} from "@angular/material/dialog";
+import { BuyDialogComponent } from './components/buy-dialog/buy-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import {DataViewModule} from 'primeng/dataview';
     AdminSettingsComponent,
     ProfileComponent,
     HomeComponent,
+    BuyDialogComponent,
 
   ],
   imports: [
@@ -75,7 +78,8 @@ import {DataViewModule} from 'primeng/dataview';
     ReactiveFormsModule,
     CarouselModule,
     ButtonModule,
-    DataViewModule
+    DataViewModule,
+    MatDialogModule,
 
   ],
   providers: [authInterceptorProviders,
