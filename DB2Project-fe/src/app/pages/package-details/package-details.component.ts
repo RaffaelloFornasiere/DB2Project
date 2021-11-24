@@ -46,18 +46,15 @@ export class PackageDetailsComponent implements OnInit {
     let conf = new MatDialogConfig();
     conf.autoFocus = true;
     conf.data = {
-      name: "Payment", description: "Wanna make payment successful?"
+      title: "Payment", message: "Wanna make payment successful?"
     }
-    conf.height = '400px';
-    conf.width = '600px';
-    let result = this.dialog.open(BuyDialogComponent, conf);
 
-    this.purchaseService.buy(p)
-      .subscribe({
-        next: value => {
+    this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe(data => {
+      console.log(data)
+      console.log(data.payment)
+      }
+    );
 
-        }
-      })
   }
 
 }
