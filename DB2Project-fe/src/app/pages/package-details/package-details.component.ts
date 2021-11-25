@@ -7,6 +7,7 @@ import {PackageService} from "../../services/package.service";
 import {PurchaseService} from "../../services/purchase.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.component";
+import {PackageDetails} from "../../interfaces/packageDetails";
 
 @Component({
   selector: 'app-package-details',
@@ -14,7 +15,7 @@ import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.compone
   styleUrls: ['./package-details.component.scss'],
 })
 export class PackageDetailsComponent implements OnInit {
-  package!: Package;
+  packageDetails!: PackageDetails;
 
   constructor(private route: ActivatedRoute,
               private packageService: PackageService,
@@ -31,7 +32,21 @@ export class PackageDetailsComponent implements OnInit {
           console.log(data)
           // @ts-ignore
           delete data.details['@type'];
-          this.package = data;
+          this.packageDetails = {
+            package: data,
+            optionalPackages:
+              [
+                {id: 1, name: "optional package 1", description: "descOpt1", cost: 1},
+                {id: 2, name: "optional package 2", description: "descOpt2", cost: 2},
+                {id: 3, name: "optional package 3", description: "descOpt3", cost: 3}
+              ],
+            validityPeriods:
+              [
+                {id: 1, name: "period1", period: "jun-aug"},
+                {id: 2, name: "period2", period: "jul-sep"},
+                {id: 3, name: "period3", period: "gen-oct"}
+              ]
+          };
         }
       }
     )
@@ -46,12 +61,13 @@ export class PackageDetailsComponent implements OnInit {
     let conf = new MatDialogConfig();
     conf.autoFocus = true;
     conf.data = {
-      title: "Payment", message: "Wanna make payment successful?"
+      title: "buy " + p.name,
+      packageDetails: this.packageDetails
     }
 
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe(data => {
-      console.log(data)
-      console.log(data.payment)
+        console.log(data)
+        console.log(data.payment)
       }
     );
 

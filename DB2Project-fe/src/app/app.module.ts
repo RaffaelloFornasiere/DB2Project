@@ -36,6 +36,7 @@ import {ButtonModule} from "primeng/button";
 import {DataViewModule} from 'primeng/dataview';
 import {MatDialogModule} from "@angular/material/dialog";
 import { BuyDialogComponent } from './components/buy-dialog/buy-dialog.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -57,31 +58,32 @@ import { BuyDialogComponent } from './components/buy-dialog/buy-dialog.component
     BuyDialogComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    ChartsModule,
-    FormsModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatFormFieldModule,
+        MatToolbarModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatCardModule,
+        ChartsModule,
+        FormsModule,
 
-    HttpClientModule,
+        HttpClientModule,
 
-    ReactiveFormsModule,
-    CarouselModule,
-    ButtonModule,
-    DataViewModule,
-    MatDialogModule,
+        ReactiveFormsModule,
+        CarouselModule,
+        ButtonModule,
+        DataViewModule,
+        MatDialogModule,
+        MatAutocompleteModule,
 
-  ],
+    ],
   providers: [authInterceptorProviders,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
   ,
