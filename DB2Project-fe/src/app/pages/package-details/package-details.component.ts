@@ -36,7 +36,7 @@ export class PackageDetailsComponent implements OnInit {
             package: data,
             optionalPackages:
               [
-                {id: 1, name: "optional package 1", description: "descOpt1", cost: 1},
+                {id: 1, name: "optional package 1", description: "xaaaaaaaaaaaaaaaaaaaaaaaaaaaaall sky sport and family", cost: 1},
                 {id: 2, name: "optional package 2", description: "descOpt2", cost: 2},
                 {id: 3, name: "optional package 3", description: "descOpt3", cost: 3}
               ],
@@ -60,8 +60,9 @@ export class PackageDetailsComponent implements OnInit {
   buy(p: Package) {
     let conf = new MatDialogConfig();
     conf.autoFocus = true;
+    conf.width = '800px';
     conf.data = {
-      title: "buy " + p.name,
+      title: "Buy " + p.name + "package",
       packageDetails: this.packageDetails
     }
 

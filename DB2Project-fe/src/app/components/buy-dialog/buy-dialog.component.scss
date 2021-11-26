@@ -1,7 +1,14 @@
-.mat-option {
-  height: 50px;
-  line-height: 40px;
+.example-additional-selection {
+  opacity: 0.7;
+  font-size: 16px;
+  display: table-cell;
+  height: 20px;
+  line-height: 0px;
+  padding: 0 10px;
 }
-.small{
-  font-size: 2px;
+.mat-select-panel {
+  min-width: calc(100% + 264px) !important;
+}
+.mat-form-field{
+  width: 90%
 }

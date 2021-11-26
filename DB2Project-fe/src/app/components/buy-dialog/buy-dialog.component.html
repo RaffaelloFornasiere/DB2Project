@@ -7,10 +7,13 @@
     <mat-form-field appearance="fill">
       <mat-label>Optional packages</mat-label>
         <mat-select [formControl]="formOptionalPackages" multiple>
-          <mat-option *ngFor="let option of data.packageDetails.optionalPackages" [value]="option.name">
-            <span>{{option.name}}</span>
-<!--            <span>{{option.name}}</span><br>-->
-<!--            <small>{{option.description}}</small>-->
+          <mat-select-trigger>
+            {{formPeriods.value?.name}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let option of data.packageDetails.optionalPackages" [value]="option">
+            {{option.name}}
+            <span class="example-additional-selection">{{option.description}}</span>
+            <span class="example-additional-selection">{{option.cost | currency}}</span>
           </mat-option>
         </mat-select>
     </mat-form-field>
@@ -19,10 +22,17 @@
     <h6>Select the validity period</h6>
     <mat-form-field appearance="fill">
       <mat-label>Period</mat-label>
-      <mat-select [formControl]="formPeriods">
+      <mat-select  [formControl]="formPeriods">
+        <mat-select-trigger>
+          {{formPeriods.value?.name}}
+        </mat-select-trigger>
         <mat-option *ngFor="let period of data.packageDetails.validityPeriods" [value]="period">
-          {{period.name}}
+          {{period.name}}<br>
+          <span class="example-additional-selection">ID: {{period.id}}</span>
+          <span class="example-additional-selection">ID: {{period.id}}</span>
+          <span class="example-additional-selection">ID: {{period.id}}</span>
         </mat-option>
+
       </mat-select>
     </mat-form-field>
   </div>

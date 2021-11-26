@@ -32,11 +32,8 @@ public class PackageResource {
 
     @GetMapping("/home/packages/detail/{id}")
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
-//        var aux = new Object(packageService, id){
-//
-//        }
-
-        return ResponseEntity.ok().body(null );
+        return ResponseEntity.ok().body(
+                this.packageService.getDetails(id));
 
     }
 
