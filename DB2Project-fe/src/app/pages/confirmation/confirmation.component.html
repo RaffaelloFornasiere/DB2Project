@@ -1,0 +1,9 @@
+<p>confirmation works!</p>
+<div *ngIf="data">
+<!--  <h3>{{ data.package.name }}</h3>-->
+  <div *ngFor="let item of data | keyvalue">
+    <h4>{{item.key}}: {{item.value}}</h4>
+  </div>
+<!--  <p>type: {{ data.package.type }}</p>-->
+<!--  <button class="btn btn-primary" (click)="buy(data.package)">Buy</button>-->
+</div>

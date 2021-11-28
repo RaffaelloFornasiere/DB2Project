@@ -37,6 +37,7 @@ import {DataViewModule} from 'primeng/dataview';
 import {MatDialogModule} from "@angular/material/dialog";
 import { BuyDialogComponent } from './components/buy-dialog/buy-dialog.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     ProfileComponent,
     HomeComponent,
     BuyDialogComponent,
+    ConfirmationComponent,
 
   ],
     imports: [

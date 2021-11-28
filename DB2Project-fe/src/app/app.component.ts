@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
           }
         }
       )
-    this.tokenStorageService.isAuthenticated.subscribe(
+    this.tokenStorageService.authenticated.subscribe(
       {
         next: value => {
           this.isLoggedIn = value;
