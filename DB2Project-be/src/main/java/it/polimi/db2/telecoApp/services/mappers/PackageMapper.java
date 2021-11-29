@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.google.gson.Gson;
-import io.swagger.models.auth.In;
 import it.polimi.db2.telecoApp.dataaccess.entities.PackageEntity;
 import it.polimi.db2.telecoApp.dataaccess.entities.PackageTypeEntity;
 import it.polimi.db2.telecoApp.services.enums.PackageType;

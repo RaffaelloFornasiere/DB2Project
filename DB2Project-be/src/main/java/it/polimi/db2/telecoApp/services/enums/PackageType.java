@@ -1,8 +1,5 @@
 package it.polimi.db2.telecoApp.services.enums;
 
-import io.swagger.models.auth.In;
-import javassist.NotFoundException;
-
 import java.util.Arrays;
 
 public enum PackageType {

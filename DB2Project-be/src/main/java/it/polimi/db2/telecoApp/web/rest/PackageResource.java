@@ -5,7 +5,6 @@ import it.polimi.db2.telecoApp.services.models.Package;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
 
 import java.security.Principal;
 import java.util.List;
@@ -43,8 +42,8 @@ public class PackageResource {
     }
 
     @GetMapping("/user-data/{username}/")
-    public ResponseEntity<Json> getUserData(@PathVariable String username) {
-        Json s = new Json("""
+    public ResponseEntity<String> getUserData(@PathVariable String username) {
+        String s = """
                   packageName: "mobile phone",
                   packageDetails: [
                     {type: "sms", amount: 10000},
@@ -64,7 +63,7 @@ public class PackageResource {
                     {type: "GigaBytes", amount: 12},
                   ]
                 }
-                              """);
+                              """;
         return ResponseEntity.ok().body(s);
     }
 
