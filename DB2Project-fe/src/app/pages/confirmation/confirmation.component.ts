@@ -12,7 +12,12 @@ export class ConfirmationComponent implements OnInit {
 
   data: any;
   ngOnInit(): void {
-    this.data = this.route.snapshot.queryParams['data'];
+    this.route.queryParamMap.subscribe(
+      (params) => {
+        this.data = JSON.parse(params.get('data')!)
+      }
+    )
+    console.log(this.data)
   }
   camelToText(camel: string): string {
     let result = camel.replace(/([A-Z])/g, " $1");

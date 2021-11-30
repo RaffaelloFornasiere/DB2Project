@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     })
 
   }
-
+  returnData: any;
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLogged = true;
@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     this.needsToBeLogged = this.navbarService.isLoggingInWarnVisible;
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnData = this.route.snapshot.queryParams['data'];
   }
 
   onSubmit(): void {
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLogged = true;
         this.role = this.tokenStorage.getUser().roles[0];
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigate([this.returnUrl], {queryParams: {data: this.returnData}})
       },
       error: error => {
         this.errorMessage = error.message;

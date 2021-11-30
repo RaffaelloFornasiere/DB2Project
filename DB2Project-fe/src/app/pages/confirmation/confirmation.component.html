@@ -1,9 +1,18 @@
-<p>confirmation works!</p>
+<h2>Checkout:</h2>
+
 <div *ngIf="data">
-<!--  <h3>{{ data.package.name }}</h3>-->
-  <div *ngFor="let item of data | keyvalue">
-    <h4>{{item.key}}: {{item.value}}</h4>
-  </div>
-<!--  <p>type: {{ data.package.type }}</p>-->
-<!--  <button class="btn btn-primary" (click)="buy(data.package)">Buy</button>-->
+  <h4>Optional Packages:</h4>
+  <ul>
+    <li *ngFor="let opt of data.optionalPackages">
+      <h6>
+        {{opt.name}}
+      </h6>
+    </li>
+  </ul>
+
+  <h4>Validity period:</h4>
+  <ul><li><h6>{{data.period.name}}</h6></li></ul>
+
+
+ <button class="btn btn-primary">Buy</button>
 </div>

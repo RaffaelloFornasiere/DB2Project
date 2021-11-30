@@ -77,13 +77,12 @@ export class PackageDetailsComponent implements OnInit {
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe(data => {
         console.log(data)
         console.log(data.payment)
-        result = data;
+        result = JSON.stringify(data)
+
         if (!this.tokenService.isAuthenticated())
-          this.router.navigate(['login'], {queryParams: {returnUrl: this.router.url}}).then(
-            () => {
-              this.router.navigate(['confirm'], {queryParams: {data: result}})
-            }
-          );
+          this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
+        else
+          this.router.navigate(['confirm'], {queryParams: {data: result}})
       }
     );
 
