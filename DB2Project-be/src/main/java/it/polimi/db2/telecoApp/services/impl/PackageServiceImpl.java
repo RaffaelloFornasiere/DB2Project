@@ -29,7 +29,6 @@ public class PackageServiceImpl implements PackageService {
     public Package getDetails(Long id) {
         return packageRepository.findById(id)
                 .map(PackageMapper.MAPPER::toTarget)
-
                 .orElseThrow();
     }
 

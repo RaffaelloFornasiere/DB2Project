@@ -4,6 +4,7 @@ import {User} from "../interfaces/user";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenStorageService} from "./token-storage.service";
+import {Purchase} from "../interfaces/Purchase";
 
 
 
@@ -18,8 +19,7 @@ export class PurchaseService {
   constructor(private http: HttpClient,
               private tokenStorageService: TokenStorageService) { }
 
-  buy(p: Package):Observable<any>{
-
+  buy(p: Purchase):Observable<any>{
     return this.http.post("/buy", {"package": p, "user": this.tokenStorageService.getUser()}
     ,httpOptions);
   }

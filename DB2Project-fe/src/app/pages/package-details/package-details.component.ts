@@ -31,7 +31,7 @@ export class PackageDetailsComponent implements OnInit {
     let id = Number(this.route.snapshot.paramMap.get('id'));
     this.packageService.getDetails(id).subscribe(
       {
-        next: data => {
+        next: (data: Package) => {
           console.log(data)
           // @ts-ignore
           delete data.details['@type'];
@@ -74,15 +74,16 @@ export class PackageDetailsComponent implements OnInit {
       packageDetails: this.packageDetails
     }
     let result: any;
-    this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe(data => {
-        console.log(data)
-        console.log(data.payment)
-        result = JSON.stringify(data)
+    this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
+        next: (data: any) => {
+          console.log(data)
+          result = JSON.stringify(data)
 
-        if (!this.tokenService.isAuthenticated())
-          this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
-        else
-          this.router.navigate(['confirm'], {queryParams: {data: result}})
+          if (!this.tokenService.isAuthenticated())
+            this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
+          else
+            this.router.navigate(['confirm'], {queryParams: {data: result}})
+        }
       }
     );
 
