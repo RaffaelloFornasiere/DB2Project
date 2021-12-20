@@ -33,7 +33,6 @@ public class PackageResource {
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok().body(
                 this.packageService.getDetails(id));
-
     }
 
     @RequestMapping("/user")
