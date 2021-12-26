@@ -30,7 +30,5 @@ export class AuthService {
       },
       httpOptions)
   }
-
-
 }
 

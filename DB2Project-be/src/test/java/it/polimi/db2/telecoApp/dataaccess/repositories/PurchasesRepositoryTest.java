@@ -1,6 +1,6 @@
 package it.polimi.db2.telecoApp.dataaccess.repositories;
 
-import it.polimi.db2.telecoApp.dataaccess.entities.PurchaseEntity;
+import it.polimi.db2.telecoApp.dataaccess.entities.OrderEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,7 +28,7 @@ class PurchasesRepositoryTest {
 
     @Test
     void testFindById() {
-        Optional<PurchaseEntity> entity = purchasesRepository.findById(21L);
+        Optional<OrderEntity> entity = purchasesRepository.findById(21L);
         assertThat(entity).isNotNull();
         assertThat(entity).isNotEmpty();
     }
@@ -36,17 +36,17 @@ class PurchasesRepositoryTest {
     @Test
     void testFindByIdUser() {
         //retrieve data using spring auto-built queries
-        List<PurchaseEntity> entities = purchasesRepository.findAllByUserEntity_NameAndUserEntity_Surname("Salvi", "Petronilla");
+        List<OrderEntity> entities = purchasesRepository.findAllByUserEntity_NameAndUserEntity_Surname("Salvi", "Petronilla");
         assertThat(entities).isNotNull();
         assertThat(entities).isNotEmpty();
 
         //retrieve data using jpql query
-        List<PurchaseEntity> entities2 = purchasesRepository.findAllIdByUserNameAndSurname("Salvi", "Petronilla");
+        List<OrderEntity> entities2 = purchasesRepository.findAllIdByUserNameAndSurname("Salvi", "Petronilla");
         assertThat(entities2).isNotNull();
         assertThat(entities2).isNotEmpty();
 
         //retrieve data using native query
-        List<PurchaseEntity> entities3 = purchasesRepository.findAllIdByUserNameAndSurnameNATIVE("Salvi", "Petronilla");
+        List<OrderEntity> entities3 = purchasesRepository.findAllIdByUserNameAndSurnameNATIVE("Salvi", "Petronilla");
         assertThat(entities3).isNotNull();
         assertThat(entities3).isNotEmpty();
 

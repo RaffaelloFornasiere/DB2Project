@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Table(name = "Purchases")
 @Entity
 @Getter
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class PurchaseEntity {
+public class OrderEntity {
 
     @Id
     private long id;

@@ -49,6 +49,6 @@ public class UserEntity {
     private Set<RoleEntity> roles;
 
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "userEntity")
-    private Set<PurchaseEntity> purchasesEntities;
+    private Set<OrderEntity> purchasesEntities;
 
 }
