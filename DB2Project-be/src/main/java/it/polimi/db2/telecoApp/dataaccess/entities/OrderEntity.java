@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Table(name = "Purchases")
+@Table(name = "orders")
 @Entity
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class OrderEntity {
     @Id
     private long id;
 
-    @Column( name = "purchase_date")
+    @Column( name = "order_date")
     private LocalDateTime purchaseDate;
 
     @ManyToOne
@@ -29,5 +29,5 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn( name = "package")
-    private PackageEntity packageEntity;
+    private ServicePackageEntity servicePackageEntity;
 }

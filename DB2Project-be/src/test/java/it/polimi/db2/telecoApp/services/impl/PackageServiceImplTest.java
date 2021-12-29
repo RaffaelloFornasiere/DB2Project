@@ -12,11 +12,14 @@ import it.polimi.db2.telecoApp.services.models.packagedetails.MobileInternetDeta
 import it.polimi.db2.telecoApp.services.models.packagedetails.MobilePhoneDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PackageServiceImplTest {
 
 
@@ -25,20 +28,7 @@ class PackageServiceImplTest {
 
     @Test
     void testSave() {
-        Package test = Package.builder()
-                .id(50L)
-                .details(MobilePhoneDetails.builder()
-                                .sms(1000)
-                                .minutes(1000)
-                                .costMonth(7)
-                                .extraMinutesFee(0.14)
-                                .extraSmsFee(0.15)
-                        .build())
-                .name("test")
-                .type(PackageType.MOBILE_INTERNET)
-                .build();
-
-        Package res = packageService.save(test);
+        var res = packageService.findById(14L);
         System.out.println(res);
     }
 }

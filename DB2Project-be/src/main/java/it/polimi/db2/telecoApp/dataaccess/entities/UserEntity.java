@@ -17,7 +17,7 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true)
+@Builder(toBuilder = true)
 @Accessors(chain = true)
 public class UserEntity {
     @Id
@@ -46,9 +46,11 @@ public class UserEntity {
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ToString.Exclude
     private Set<RoleEntity> roles;
 
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "userEntity")
+    @ToString.Exclude
     private Set<OrderEntity> purchasesEntities;
 
 }

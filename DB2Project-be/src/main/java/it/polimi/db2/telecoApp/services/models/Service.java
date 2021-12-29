@@ -1,21 +1,19 @@
 package it.polimi.db2.telecoApp.services.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import it.polimi.db2.telecoApp.services.models.packagedetails.ServiceDetails;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class Package {
-    private Long id;
-    private String name;
-    private List<Service> services;
+public class Service {
+    private Integer serviceId;
+    private String serviceName;
+    private ServiceDetails serviceDetails;
 }

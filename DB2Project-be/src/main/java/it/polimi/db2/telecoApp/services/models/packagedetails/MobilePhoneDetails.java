@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class MobilePhoneDetails extends PackageDetails{
+public class MobilePhoneDetails extends ServiceDetails {
     private Integer sms;
     private Integer minutes;
     private Double extraSmsFee;

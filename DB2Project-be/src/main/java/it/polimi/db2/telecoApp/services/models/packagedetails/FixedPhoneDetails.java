@@ -1,6 +1,5 @@
 package it.polimi.db2.telecoApp.services.models.packagedetails;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class FixedPhoneDetails extends PackageDetails {
+public class FixedPhoneDetails extends ServiceDetails {
 //    private Integer costMonth;
 
 }

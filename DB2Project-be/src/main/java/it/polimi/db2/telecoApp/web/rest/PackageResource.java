@@ -2,6 +2,7 @@ package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.models.Package;
+import it.polimi.db2.telecoApp.services.models.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,15 @@ public class PackageResource {
                 packageService.findAll()
         );
     }
+
+
+    @PostMapping("/packages/save")
+    ResponseEntity<Package> save(@RequestBody Package servicePackage) {
+        return ResponseEntity.ok().body(
+                this.packageService.save(servicePackage)
+        );
+    }
+
 
     @GetMapping("/home/packages/detail/{id}")
     ResponseEntity<Package> getDetails(@PathVariable Long id) {

@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class FixedInternetDetails extends PackageDetails {
+public class FixedInternetDetails extends ServiceDetails {
     private Integer gigabytes;
     private Integer extraGigaBytesFee;
 }

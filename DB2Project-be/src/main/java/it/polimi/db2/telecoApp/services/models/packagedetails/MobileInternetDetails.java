@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class MobileInternetDetails extends PackageDetails{
+public class MobileInternetDetails extends ServiceDetails {
     private Integer gigabytes;
     private Integer extraGigaBytesFee;
 
