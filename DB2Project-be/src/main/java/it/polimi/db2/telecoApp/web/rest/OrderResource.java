@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 public class OrderResource {
-    //implement a rest method that retrives all the orders from a username(String)
+    //implement a rest method that retrieves all the orders from a username(String)
 }

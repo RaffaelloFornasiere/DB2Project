@@ -1,16 +1,13 @@
 package it.polimi.db2.telecoApp.services.mappers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.db2.telecoApp.dataaccess.entities.ServicePackageEntity;
-import it.polimi.db2.telecoApp.services.enums.PackageType;
 import it.polimi.db2.telecoApp.services.models.Package;
-import it.polimi.db2.telecoApp.services.models.packagedetails.ServiceDetails;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = ServiceMapper.class)
+@Mapper(componentModel = "spring", uses = ServiceMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface PackageMapper {
     PackageMapper MAPPER = Mappers.getMapper(PackageMapper.class);
 

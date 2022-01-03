@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 public class Service {
-    private Integer serviceId;
-    private String serviceName;
-    private ServiceDetails serviceDetails;
+    private Integer id;
+    private String name;
+    private ServiceDetails details;
 }

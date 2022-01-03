@@ -25,7 +25,7 @@ public class PackageServiceImpl implements PackageService {
     public List<Package> findAll() {
         return  packageRepository.findAll()
                 .stream()
-                .map(PackageMapper.MAPPER::toTarget)
+                .map(packageMapper::toTarget)
                 .toList();
     }
 
@@ -39,16 +39,16 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public Package getDetails(Long id) {
         return packageRepository.findById(id)
-                .map(PackageMapper.MAPPER::toTarget)
+                .map(packageMapper::toTarget)
                 .orElseThrow();
     }
 
 
     @Override
     public Package save(Package p){
-        ServicePackageEntity toBeSaved = PackageMapper.MAPPER.toSource(p);
+        ServicePackageEntity toBeSaved = packageMapper.toSource(p);
         ServicePackageEntity saved = packageRepository.save(toBeSaved);
-        return PackageMapper.MAPPER.toTarget(saved);
+        return packageMapper.toTarget(saved);
     }
 
 
