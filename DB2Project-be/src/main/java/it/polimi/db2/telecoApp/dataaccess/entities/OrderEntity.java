@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name = "orders")
@@ -30,4 +31,12 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn( name = "package")
     private ServicePackageEntity servicePackageEntity;
+
+    @ManyToOne
+    @JoinColumn( name= "validityPeriod")
+    private ValidityPeriodEntity validityPeriod;
+
+    @Column( name = "startDate")
+    private LocalDate startDate;
+
 }
