@@ -22,5 +22,4 @@ public class Order {
     private ValidityPeriod validityPeriod;
     private List<OptionalPackage> optionalPackages;
     private LocalDate startDate;
-
 }

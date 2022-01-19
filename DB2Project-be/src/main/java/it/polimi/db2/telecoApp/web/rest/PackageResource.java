@@ -1,6 +1,7 @@
 package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.PackageService;
+import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
 import it.polimi.db2.telecoApp.services.models.User;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class PackageResource {
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok().body(
                 this.packageService.getDetails(id));
+    }
+
+    @GetMapping("/home/packages/optional/{id}")
+    ResponseEntity<List<OptionalPackage>> getOptionalPackages(@PathVariable Long id) {
+        return ResponseEntity.ok().body(
+                this.packageService.getOptionalPackage(id));
     }
 
     @RequestMapping("/user")

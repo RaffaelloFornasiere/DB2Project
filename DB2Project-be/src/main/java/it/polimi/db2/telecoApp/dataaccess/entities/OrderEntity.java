@@ -30,4 +30,6 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn( name = "package")
     private ServicePackageEntity servicePackageEntity;
+
+
 }

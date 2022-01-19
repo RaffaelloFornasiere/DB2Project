@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PackageComponent} from "../../components/package/package.component";
 import {Package} from "../../interfaces/package";
-import {AppRoutingModule} from "../../app-routing.module";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PackageService} from "../../services/package.service";
 import {PurchaseService} from "../../services/purchase.service";
@@ -9,6 +7,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.component";
 import {PackageDetails} from "../../interfaces/packageDetails";
 import {TokenStorageService} from "../../services/token-storage.service";
+import {OptionalPackage} from "../../interfaces/OptionalPackage";
 
 @Component({
   selector: 'app-package-details',
@@ -29,25 +28,16 @@ export class PackageDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     let id = Number(this.route.snapshot.paramMap.get('id'));
+
     this.packageService.getDetails(id).subscribe(
       {
         next: (data: Package) => {
-          console.log(data)
+          console.log("data: ", data)
           // @ts-ignore
-          delete data.details['@type'];
+          data.services.forEach(i => delete i.details["@type"])
           this.packageDetails = {
             package: data,
-            optionalPackages:
-              [
-                {
-                  id: 1,
-                  name: "optional package 1",
-                  description: "xaaaaaaaaaaaaaaaaaaaaaaaaaaaaall sky sport and family",
-                  cost: 1
-                },
-                {id: 2, name: "optional package 2", description: "descOpt2", cost: 2},
-                {id: 3, name: "optional package 3", description: "descOpt3", cost: 3}
-              ],
+            optionalPackages: [],
             validityPeriods:
               [
                 {id: 1, name: "period1", period: "jun-aug"},
@@ -55,6 +45,13 @@ export class PackageDetailsComponent implements OnInit {
                 {id: 3, name: "period3", period: "gen-oct"}
               ]
           };
+          this.packageService.getOptionalPackages(id).subscribe(
+            {
+              next: (data: OptionalPackage[]) => {
+                this.packageDetails.optionalPackages = data;
+              }
+            }
+          )
         }
       }
     )

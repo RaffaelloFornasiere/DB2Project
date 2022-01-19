@@ -17,7 +17,7 @@
         <mat-option *ngFor="let option of data.packageDetails.optionalPackages" [value]="option">
           {{option.name}}
           <span class="example-additional-selection">{{option.description}}</span>
-          <span class="example-additional-selection">{{option.cost | currency}}</span>
+          <span class="example-additional-selection">{{option.monthlyFee | currency}}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>

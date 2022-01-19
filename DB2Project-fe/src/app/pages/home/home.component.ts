@@ -8,21 +8,15 @@ import {Package} from "../../interfaces/package";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  products!: Package[];
+  packages!: Package[];
   responsiveOptions!: any;
 
   constructor(private packageService: PackageService) {
     packageService.getPackages().subscribe(data => {
       if (data)
-        this.products = data;
-      console.log(this.products);
+        this.packages = data;
+      console.log("products: ", this.packages);
     })
-  }
-
-  getRandomType(): string {
-    let types = ["mobile phone", "mobile internet", "fixed internet", "fixed phone"]
-    let i = this.getRandomInt(0, 3);
-    return types[i];
   }
 
   getRandomInt(min: number, max: number): number {

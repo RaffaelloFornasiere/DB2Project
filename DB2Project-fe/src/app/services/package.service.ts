@@ -4,6 +4,7 @@ import {Observable, of} from "rxjs";
 import {Package} from "../interfaces/package";
 import { catchError, map, tap } from 'rxjs/operators';
 import {PackageDetails} from "../interfaces/packageDetails";
+import {OptionalPackage} from "../interfaces/OptionalPackage";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,13 @@ export class PackageService {
         // tap(_ => console.log('fetched heroes')),
         catchError(this.handleError<Package[]>('getPackages', []))
       );
+  }
+
+  getOptionalPackages(packageId: number): Observable<OptionalPackage[]>{
+    return this.http.get<OptionalPackage[]>("api/home/packages/optional/" + packageId)
+      .pipe(
+        catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
+      )
   }
 
   getDetails(id: number): Observable<Package>{
