@@ -5,7 +5,6 @@ import it.polimi.db2.telecoApp.services.models.Package;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = ServiceMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface PackageMapper {
@@ -13,12 +12,12 @@ public interface PackageMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "services", source = "services")
+    @Mapping(target = "telecoServices", source = "services")
     Package toTarget(ServicePackageEntity source);
 
     @Mapping(source = "id"  , target = "id")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "services", target = "services")
+    @Mapping(source = "telecoServices", target = "services")
     ServicePackageEntity toSource(Package source);
 
 
