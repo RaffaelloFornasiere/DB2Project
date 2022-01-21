@@ -25,7 +25,7 @@ export class PackageService {
   }
 
   getOptionalPackages(packageId: number): Observable<OptionalPackage[]>{
-    return this.http.get<OptionalPackage[]>("api/home/packages/optional/" + packageId)
+    return this.http.get<OptionalPackage[]>("api/home/optionalPackages/package/" + packageId)
       .pipe(
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
       )

@@ -9,7 +9,7 @@
       <mat-label>Optional packages</mat-label>
       <mat-select [formControl]="formOptionalPackages" multiple>
         <mat-select-trigger>
-          {{formOptionalPackages.value ? formOptionalPackages.value[0] : ''}}
+          {{formOptionalPackages.value ? formOptionalPackages.value[0].name : ''}}
           <span *ngIf="formOptionalPackages.value?.length > 1" class="example-additional-selection">
         (+{{formOptionalPackages.value.length - 1}} {{formOptionalPackages.value?.length === 2 ? 'other' : 'others'}})
       </span>

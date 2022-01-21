@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface OptionalPackageService {
     List<OptionalPackage> findAll();
+
+    List<OptionalPackage> findAllByPackageId(Long id);
+
     OptionalPackage save(OptionalPackage optionalPackage);
 }

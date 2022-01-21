@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Set;
 
 @RestController
@@ -37,6 +38,10 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
+    }
 
 
     @PostMapping("/login")

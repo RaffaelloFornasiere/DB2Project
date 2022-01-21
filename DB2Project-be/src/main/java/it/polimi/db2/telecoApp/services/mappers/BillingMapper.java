@@ -8,15 +8,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface BillingMapper {
 
-
     @Mapping(source = "id", target = "id")
     @Mapping(source = "userId", target = "userId")
-    @Mapping(source = "result", target = "userId")
+    @Mapping(source = "result", target = "result")
     BillingEntity toSource(Billing billing);
 
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "userId", target = "userId")
-    @Mapping(source = "result", target = "userId")
+    @Mapping(source = "result", target = "result")
     Billing toTarget(BillingEntity billing);
 }

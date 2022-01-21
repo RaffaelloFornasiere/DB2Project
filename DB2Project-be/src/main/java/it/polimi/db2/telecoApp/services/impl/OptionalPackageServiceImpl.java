@@ -27,6 +27,13 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
     }
 
     @Override
+    public List<OptionalPackage> findAllByPackageId(Long id) {
+        return optionalPackageRepository.findAllByPackageId(id)
+                .stream().map(optionalPackageMapper::toTarget)
+                .toList();
+    }
+
+    @Override
     public OptionalPackage save(OptionalPackage optionalPackage) {
         return optionalPackageMapper.toTarget(
                 optionalPackageRepository

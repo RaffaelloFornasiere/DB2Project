@@ -13,7 +13,6 @@ import it.polimi.db2.telecoApp.services.models.Service;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ServiceMapper {
-    ServiceMapper MAPPER = Mappers.getMapper(ServiceMapper.class);
 
     @Mapping(target = "id", source = "serviceId")
     @Mapping(target = "name", source = "serviceName")

@@ -73,6 +73,8 @@ export class PackageDetailsComponent implements OnInit {
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
         next: (data: any) => {
+          if(data === undefined)
+            return;
           console.log(data)
           result = JSON.stringify(data)
 

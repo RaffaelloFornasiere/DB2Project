@@ -14,11 +14,13 @@ class ServiceRepositoryTest {
 
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    ServiceMapper serviceMapper;
 
     @Test
     void testFind(){
         var res = serviceRepository.findAll()
-                .stream().map(ServiceMapper.MAPPER::toTarget).toList();
+                .stream().map(serviceMapper::toTarget).toList();
         System.out.println(res);
 
     }

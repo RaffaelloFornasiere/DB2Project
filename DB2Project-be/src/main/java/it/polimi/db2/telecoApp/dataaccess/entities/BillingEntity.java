@@ -26,5 +26,5 @@ public class BillingEntity {
     private Integer userId;
 
     @Column(name = "result")
-    private Byte result;
+    private Boolean result;
 }

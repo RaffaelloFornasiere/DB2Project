@@ -46,16 +46,9 @@ public class PackageResource {
                 this.packageService.getDetails(id));
     }
 
-    @GetMapping("/home/packages/optional/{id}")
-    ResponseEntity<List<OptionalPackage>> getOptionalPackages(@PathVariable Long id) {
-        return ResponseEntity.ok().body(
-                this.packageService.getOptionalPackage(id));
-    }
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
+
+
 
     @GetMapping("/user-data/{username}/")
     public ResponseEntity<String> getUserData(@PathVariable String username) {
