@@ -14,5 +14,6 @@ public interface OrderService {
 
     List<Order> findAllByPackageId(Long packageId);
 
-    Order save(Order order);
+    Order save(Order order, Boolean result);
+
 }
