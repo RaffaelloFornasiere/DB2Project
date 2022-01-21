@@ -17,7 +17,7 @@ public class ServiceResource {
         this.serviceService = serviceService;
     }
 
-    @GetMapping("/home/services")
+    @GetMapping("/services")
     ResponseEntity<List<TelecoService>> findAll() {
         return ResponseEntity.ok().body(
                 serviceService.findAll()

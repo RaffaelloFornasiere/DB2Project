@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 @Accessors(chain = true)
 public class Billing {
     private Long id;
-    private Long userId;
+    private Long orderId;
     private Boolean result;
 }

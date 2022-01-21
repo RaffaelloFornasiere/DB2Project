@@ -47,9 +47,6 @@ public class PackageResource {
     }
 
 
-
-
-
     @GetMapping("/user-data/{username}/")
     public ResponseEntity<String> getUserData(@PathVariable String username) {
         String s = """

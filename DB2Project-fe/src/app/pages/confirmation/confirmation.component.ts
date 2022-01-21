@@ -28,6 +28,6 @@ export class ConfirmationComponent implements OnInit {
   }
 
   buy(){
-    this.purchaseService
+    this.purchaseService.buy()
   }
 }

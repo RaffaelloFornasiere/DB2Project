@@ -25,7 +25,7 @@ export class PackageService {
   }
 
   getOptionalPackages(packageId: number): Observable<OptionalPackage[]>{
-    return this.http.get<OptionalPackage[]>("api/home/optionalPackages/package/" + packageId)
+    return this.http.get<OptionalPackage[]>("api/optionalPackages/package/" + packageId)
       .pipe(
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
       )
@@ -43,7 +43,7 @@ export class PackageService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.log("error: " + error); // log to console instead
+      console.log("error: " + JSON.stringify(error)); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
