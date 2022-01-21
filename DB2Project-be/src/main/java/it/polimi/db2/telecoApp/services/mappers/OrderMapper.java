@@ -4,13 +4,12 @@ package it.polimi.db2.telecoApp.services.mappers;
 import it.polimi.db2.telecoApp.dataaccess.entities.OrderEntity;
 import it.polimi.db2.telecoApp.services.models.Order;
 import org.mapstruct.Mapper;
-import org.springframework.web.bind.annotation.Mapping;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {OptionalPackageMapper.class,
         PackageMapper.class,
         ValidityPeriodMapper.class})
 public interface OrderMapper {
-    OrderMapper MAPPER = Mappers.getMapper(OrderMapper.class);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "orderDate", source = "orderDate")
