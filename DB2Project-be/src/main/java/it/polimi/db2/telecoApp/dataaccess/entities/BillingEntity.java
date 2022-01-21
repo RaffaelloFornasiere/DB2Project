@@ -22,7 +22,7 @@ public class BillingEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "user_id")
+    @Column(name = "order_id")
     private Integer userId;
 
     @Column(name = "result")

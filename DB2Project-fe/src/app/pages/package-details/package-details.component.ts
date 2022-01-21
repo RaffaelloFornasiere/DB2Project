@@ -34,7 +34,7 @@ export class PackageDetailsComponent implements OnInit {
         next: (data: Package) => {
           console.log("data: ", data)
           // @ts-ignore
-          data.services.forEach(i => delete i.details["@type"])
+          data.telecoServices.forEach(i => delete i.details["@type"])
           this.packageDetails = {
             package: data,
             optionalPackages: [],

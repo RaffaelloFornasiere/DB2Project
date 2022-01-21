@@ -40,6 +40,7 @@ public class OrderResource {
         List<Order> res = orderService.findAllByOrderDate(startDate, endDate);
         return ResponseEntity.ok().body(res);
     }
+
     @GetMapping("/orders/packages/{packageId}")
     ResponseEntity<List<Order>> findAllByPackageId(@PathVariable Long packageId){
         List<Order> res = orderService.findAllByPackageId(packageId);
