@@ -4,6 +4,7 @@ package it.polimi.db2.telecoApp.services.impl;
 import it.polimi.db2.telecoApp.dataaccess.repositories.OrderRepository;
 import it.polimi.db2.telecoApp.services.OrderService;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
+import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Order;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,13 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();
+    }
+    @Override
+    public Order save(Order order) {
+        return orderMapper.toTarget(
+                orderRepository
+                        .save(orderMapper.toSource(order)));
+
     }
 
     //repository declaration
