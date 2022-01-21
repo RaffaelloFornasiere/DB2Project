@@ -13,11 +13,11 @@ public interface OptionalPackageMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "monthlyFee", target = "monthlyFee")
-    OptionalPackage toTarget(OptionalPackageEntity sfgdfg);
+    OptionalPackage toTarget(OptionalPackageEntity source);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "monthlyFee", target = "monthlyFee")
-    OptionalPackage toSource(OptionalPackageEntity source);
+    OptionalPackageEntity toSource(OptionalPackage source);
 }

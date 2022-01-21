@@ -19,10 +19,11 @@ import java.time.LocalDateTime;
 public class OrderEntity {
 
     @Id
-    private long id;
+    @Column(name = "order_id")
+    private Long id;
 
     @Column( name = "order_date")
-    private LocalDateTime purchaseDate;
+    private LocalDateTime orderDate;
 
     @ManyToOne
     @JoinColumn( name = "user")
@@ -33,10 +34,10 @@ public class OrderEntity {
     private ServicePackageEntity servicePackageEntity;
 
     @ManyToOne
-    @JoinColumn( name= "validityPeriod")
+    @JoinColumn( name= "validity_period_id")
     private ValidityPeriodEntity validityPeriod;
 
-    @Column( name = "startDate")
+    @Column( name = "start_date")
     private LocalDate startDate;
 
 }

@@ -17,7 +17,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class Order {
     private Long id;
-    private LocalDateTime dateTime;
+    private LocalDateTime orderDate;
+    private User user;
     private Package servicePackage;
     private ValidityPeriod validityPeriod;
     private List<OptionalPackage> optionalPackages;

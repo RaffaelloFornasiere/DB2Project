@@ -9,7 +9,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = ServiceMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface PackageMapper {
-    PackageMapper MAPPER = Mappers.getMapper(PackageMapper.class);
 
 
     @Mapping(target = "id", source = "id")

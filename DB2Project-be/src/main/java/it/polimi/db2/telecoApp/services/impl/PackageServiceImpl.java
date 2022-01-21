@@ -20,7 +20,7 @@ public class PackageServiceImpl implements PackageService {
     private final PackageRepository packageRepository;
     private final PackageMapper packageMapper;
     private final OptionalPackageRepository optionalPackageRepository;
-    private final OptionalPackageMapper optionalPackageMapper;7
+    private final OptionalPackageMapper optionalPackageMapper;
 
 
     public PackageServiceImpl(PackageRepository packageRepository, PackageMapper packageMapper, OptionalPackageRepository optionalPackageRepository, OptionalPackageMapper optionalPackageMapper) {
