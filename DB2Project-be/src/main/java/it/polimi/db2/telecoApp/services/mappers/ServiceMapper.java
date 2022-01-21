@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.db2.telecoApp.dataaccess.entities.ServiceEntity;
 import it.polimi.db2.telecoApp.services.models.packagedetails.ServiceDetails;
-import lombok.AllArgsConstructor;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import it.polimi.db2.telecoApp.services.models.Service;
+import it.polimi.db2.telecoApp.services.models.TelecoService;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ServiceMapper {
@@ -17,13 +16,13 @@ public interface ServiceMapper {
     @Mapping(target = "id", source = "serviceId")
     @Mapping(target = "name", source = "serviceName")
     @Mapping(target = "details", source = "serviceDetails")
-    Service toTarget(ServiceEntity source);
+    TelecoService toTarget(ServiceEntity source);
 
 
     @Mapping(source = "id", target = "serviceId")
     @Mapping(source = "name", target = "serviceName")
     @Mapping(source = "details", target = "serviceDetails")
-    ServiceEntity toSource(Service source);
+    ServiceEntity toSource(TelecoService source);
 
 
     default ServiceDetails map(String value){

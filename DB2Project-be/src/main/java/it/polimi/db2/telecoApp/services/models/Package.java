@@ -17,5 +17,5 @@ import java.util.List;
 public class Package {
     private Long id;
     private String name;
-    private List<Service> services;
+    private List<TelecoService> telecoServices;
 }
