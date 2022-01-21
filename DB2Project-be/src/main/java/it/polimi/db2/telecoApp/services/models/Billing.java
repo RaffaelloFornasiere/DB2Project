@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class ValidityPeriod {
+public class Billing {
     private Long id;
-    private Integer months;
-    private String fee;
+    private Long userId;
+    private Boolean result;
 }
