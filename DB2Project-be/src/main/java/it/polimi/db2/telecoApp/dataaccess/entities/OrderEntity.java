@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "orders")
 @Entity
@@ -39,5 +40,13 @@ public class OrderEntity {
 
     @Column( name = "start_date")
     private LocalDate startDate;
+
+    @ManyToMany
+    @ToString.Exclude
+    @JoinTable(
+            name = "orders_optional_packages",
+            joinColumns = {@JoinColumn(name = "id_order")},
+            inverseJoinColumns = {@JoinColumn(name = "id_optional_package")})
+    private List<OptionalPackageEntity> optionalPackages;
 
 }
