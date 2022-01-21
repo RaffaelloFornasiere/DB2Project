@@ -2,6 +2,7 @@ package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.OrderService;
 import it.polimi.db2.telecoApp.services.models.Order;
+import it.polimi.db2.telecoApp.services.models.TelecoService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,13 @@ public class OrderResource {
     ResponseEntity<List<Order>> findAllByPackageId(@PathVariable Long packageId){
         List<Order> res = orderService.findAllByPackageId(packageId);
         return ResponseEntity.ok().body(res);
+    }
+
+    @PostMapping("/orders/save")
+    ResponseEntity<Order> save(@RequestBody Order order) {
+        return ResponseEntity.ok().body(
+                this.orderService.save(order));
+
     }
 
 

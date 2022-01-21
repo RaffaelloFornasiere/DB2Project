@@ -13,4 +13,6 @@ public interface OrderService {
     List<Order> findAllByOrderDate(LocalDateTime start, LocalDateTime end);
 
     List<Order> findAllByPackageId(Long packageId);
+
+    Order save(Order order);
 }
