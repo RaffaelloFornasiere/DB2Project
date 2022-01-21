@@ -28,6 +28,7 @@ export class ConfirmationComponent implements OnInit {
   }
 
   buy(){
-    this.purchaseService.buy()
+    console.log(this.data);
+     this.purchaseService.buy(this.data)
   }
 }

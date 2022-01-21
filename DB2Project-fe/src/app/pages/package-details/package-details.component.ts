@@ -8,6 +8,7 @@ import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.compone
 import {PackageDetails} from "../../interfaces/packageDetails";
 import {TokenStorageService} from "../../services/token-storage.service";
 import {OptionalPackage} from "../../interfaces/OptionalPackage";
+import {Order} from "../../interfaces/Order";
 
 @Component({
   selector: 'app-package-details',
@@ -72,16 +73,28 @@ export class PackageDetailsComponent implements OnInit {
     }
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
-        next: (data: any) => {
-          if(data === undefined)
+        next: (data: { optionalPackages: [], validityPeriod: any, startDate: Date }) => {
+          if (data === undefined)
             return;
+
+
           console.log(data)
           result = JSON.stringify(data)
 
           if (!this.tokenService.isAuthenticated())
             this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
-          else
-            this.router.navigate(['confirm'], {queryParams: {data: result}})
+
+          let order: Order = {
+            id: null,
+            package: p,
+            user: this.tokenService.getUser(),
+            orderDate: new Date(),
+            optionalPackages: data.optionalPackages,
+            validityPeriod: data.validityPeriod,
+            startDate: data.startDate
+          }
+          result = JSON.stringify(order)
+          this.router.navigate(['confirm'], {queryParams: {data: result}})
         }
       }
     );

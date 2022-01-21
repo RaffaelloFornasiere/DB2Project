@@ -1,8 +1,13 @@
 import {Package} from "./package";
+import {User} from "./user";
 
-export type Order = {
+export interface  Order  {
+  id: number | null,
+  orderDate: Date
   package: Package,
-  additionalPackages: {id: number, name: string}[],
+  user: User
+  optionalPackages: {id: number, name: string}[],
   validityPeriod: {id:number},
+  startDate: Date
 
 }

@@ -27,17 +27,17 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
   res!: any;
 
   success() {
-    this.res = {optionalPackages: this.formOptionalPackages.value, period: this.formPeriods.value};
+    this.res = {optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
     this.ngOnDestroy()
   }
 
   failure() {
-    this.res = {payment: "failure", optionalPackages: this.formOptionalPackages.value, period: this.formPeriods.value};
+    this.res = {optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
     this.ngOnDestroy()
   }
 
   close(){
-    this.res = {payment: "failure", optionalPackages: this.formOptionalPackages.value, period: this.formPeriods.value};
+    this.res = {payment: "failure", optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
     this.ngOnDestroy()
   }
 
