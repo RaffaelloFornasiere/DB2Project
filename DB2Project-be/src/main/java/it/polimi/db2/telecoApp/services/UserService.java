@@ -12,7 +12,6 @@ public interface UserService extends UserDetailsService {
     Optional<User> findByNameAndSurname(String name, String surname);
     User saveUser(User user);
 
-    List<User> getInsolventUsers();
 
     void markCurrentAsInsolvent();
 

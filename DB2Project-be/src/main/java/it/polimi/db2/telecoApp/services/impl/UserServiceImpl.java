@@ -18,11 +18,9 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final OrderService orderService;
 
-    public UserServiceImpl(UserRepository userRepository, OrderService orderService) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.orderService = orderService;
     }
 
     @Override
@@ -58,12 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public List<User> getInsolventUsers() {
-        var rejectedOrders = orderService.getRejectedOrders()
-                .stream().map(Order::getUser).distinct().toList();
-        return rejectedOrders;
-    }
+
 
     @Override
     public void markCurrentAsInsolvent(){

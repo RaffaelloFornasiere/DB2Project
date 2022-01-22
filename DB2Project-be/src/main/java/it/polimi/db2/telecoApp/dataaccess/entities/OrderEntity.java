@@ -35,8 +35,7 @@ public class OrderEntity {
     @JoinColumn(name = "package")
     private ServicePackageEntity servicePackageEntity;
 
-    @ManyToOne(
-            cascade = CascadeType.ALL)
+    @ManyToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "validity_period_id")
     private ValidityPeriodEntity validityPeriod;
 

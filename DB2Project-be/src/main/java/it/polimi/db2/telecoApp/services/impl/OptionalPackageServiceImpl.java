@@ -71,4 +71,32 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
 
         return res;
     }
+
+    @Override
+    public OptionalPackage getBestSeller() {
+        List<OptionalPackage> boughtOP = orderRepository.findAll()
+                .stream().map(orderMapper::toTarget)
+                .flatMap(order -> order.getOptionalPackages().stream()).toList();
+
+        List<OptionalPackage> optionalPackages = optionalPackageRepository.findAll()
+                .stream().map(optionalPackageMapper::toTarget).toList();
+
+        OptionalPackage best = null;
+        long maxSize = 0;
+        for (int i = 0; i < optionalPackages.size(); i++) {
+            int finalI = i;
+            long locSize = boughtOP
+                    .stream()
+                    .filter(optionalPackage ->
+                            optionalPackage.getId().equals(optionalPackages.get(finalI).getId()))
+                    .count();
+
+            if(locSize > maxSize)
+            {
+                maxSize = locSize;
+                best = optionalPackages.get(i);
+            }
+        }
+        return best;
+    }
 }

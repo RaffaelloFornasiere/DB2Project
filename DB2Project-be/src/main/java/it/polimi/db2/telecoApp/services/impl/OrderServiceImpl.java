@@ -1,12 +1,16 @@
 package it.polimi.db2.telecoApp.services.impl;
 
 
+import it.polimi.db2.telecoApp.dataaccess.entities.AlertEntity;
+import it.polimi.db2.telecoApp.dataaccess.repositories.AlertRepository;
 import it.polimi.db2.telecoApp.dataaccess.repositories.BillingRepository;
 import it.polimi.db2.telecoApp.dataaccess.repositories.OrderRepository;
 import it.polimi.db2.telecoApp.services.OrderService;
 import it.polimi.db2.telecoApp.services.UserService;
+import it.polimi.db2.telecoApp.services.mappers.AlertMapper;
 import it.polimi.db2.telecoApp.services.mappers.BillingMapper;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
+import it.polimi.db2.telecoApp.services.models.Alert;
 import it.polimi.db2.telecoApp.services.models.Billing;
 import it.polimi.db2.telecoApp.services.models.Order;
 import it.polimi.db2.telecoApp.services.models.User;
@@ -26,12 +30,17 @@ public class OrderServiceImpl implements OrderService {
     private final BillingRepository billingRepository;
     private final UserService userService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper, BillingMapper billingMapper, BillingRepository billingRepository, UserService userService) {
+    private final AlertRepository alertRepository;
+    private final AlertMapper alertMapper;
+
+    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper, BillingMapper billingMapper, BillingRepository billingRepository, UserService userService, AlertRepository alertRepository, AlertMapper alertMapper) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
         this.billingMapper = billingMapper;
         this.billingRepository = billingRepository;
         this.userService = userService;
+        this.alertRepository = alertRepository;
+        this.alertMapper = alertMapper;
     }
 
     @Override
@@ -85,7 +94,18 @@ public class OrderServiceImpl implements OrderService {
                 billingRepository
                         .save(billingMapper.toSource(billing))
         );
-        if (getRejectedOrders().size() > 3)
+        if (billingRepository.findAllByOrderIdNative(order.getId()).size() > 3)
+        {
+            AlertEntity alertEntity = new AlertEntity()
+                    .setUsername(
+                            ((User) SecurityContextHolder
+                                    .getContext()
+                                    .getAuthentication()
+                                    .getPrincipal())
+                                    .getUsername());
+            alertRepository.save(alertEntity);
+        }
+        if(!result)
             userService.markCurrentAsInsolvent();
         return order;
     }
@@ -108,6 +128,18 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderMapper::toTarget)
                 .toList();
         return extractRejected(orders);
+    }
+
+    @Override
+    public List<Alert> findAllAlerts() {
+        return alertRepository.findAll().stream().map(alertMapper::toTarget).toList();
+    }
+
+    @Override
+    public List<User> getInsolventUsers() {
+        var rejectedOrders = getRejectedOrders()
+                .stream().map(Order::getUser).distinct().toList();
+        return rejectedOrders;
     }
 
     private List<Order> extractRejected(List<Order> orders){

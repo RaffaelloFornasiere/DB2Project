@@ -42,4 +42,9 @@ public class OptionalPackageResource {
                 this.optionalPackageService.findAverageOptionalPackages());
     }
 
+    @GetMapping("/optionalPackages/best-seller")
+    ResponseEntity<OptionalPackage> getBestSeller(){
+        return ResponseEntity.ok().body(optionalPackageService.getBestSeller());
+    }
+
 }

@@ -1,8 +1,10 @@
 package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.OrderService;
+import it.polimi.db2.telecoApp.services.models.Alert;
 import it.polimi.db2.telecoApp.services.models.Order;
 import it.polimi.db2.telecoApp.services.models.TelecoService;
+import it.polimi.db2.telecoApp.services.models.User;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +59,19 @@ public class OrderResource {
     ResponseEntity<Order> retryPayment(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
         return ResponseEntity.ok().body(
                 this.orderService.save(order, result));
+    }
+
+    @GetMapping("/orders/alerts/}")
+    ResponseEntity<List<Alert>> findAllAlerts(){
+        List<Alert> res = orderService.findAllAlerts();
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/orders/users/insolvent")
+    ResponseEntity<List<User>> getInsolventUsers(){
+        return ResponseEntity.ok().body(
+                this.orderService.getInsolventUsers()
+        );
     }
 }
 

@@ -19,8 +19,14 @@ public interface BillingRepository extends JpaRepository<BillingEntity, Integer>
                     limit  1
                     """
     )
-    BillingEntity findOneByOrderIdNative(Long orderId) ;
+    BillingEntity findOneByOrderIdNative(Long orderId);
 
-
-
+    @Query(
+            nativeQuery = true,
+            value = """
+                    select * from billings
+                    where order_id = ?1       
+                    """
+    )
+    List<BillingEntity> findAllByOrderIdNative(Long orderId) ;
 }

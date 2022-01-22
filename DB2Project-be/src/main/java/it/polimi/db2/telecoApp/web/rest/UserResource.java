@@ -17,11 +17,4 @@ public class UserResource {
     public UserResource(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/users/insolvent")
-    ResponseEntity<List<User>> getInsolventUsers(){
-        return ResponseEntity.ok().body(
-                this.userService.getInsolventUsers()
-        );
-    }
 }

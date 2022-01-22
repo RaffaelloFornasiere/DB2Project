@@ -14,4 +14,6 @@ public interface OptionalPackageService {
     OptionalPackage save(OptionalPackage optionalPackage);
 
     List<Pair<Package, Double>> findAverageOptionalPackages();
+
+    OptionalPackage getBestSeller();
 }

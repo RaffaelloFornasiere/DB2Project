@@ -1,6 +1,8 @@
 package it.polimi.db2.telecoApp.services;
 
+import it.polimi.db2.telecoApp.services.models.Alert;
 import it.polimi.db2.telecoApp.services.models.Order;
+import it.polimi.db2.telecoApp.services.models.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,4 +24,8 @@ public interface OrderService {
     List<Order> getRejectedOrders();
 
     List<Order> getSuspended();
+
+    List<Alert> findAllAlerts();
+
+    List<User> getInsolventUsers();
 }
