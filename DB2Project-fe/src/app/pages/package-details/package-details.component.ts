@@ -83,7 +83,6 @@ export class PackageDetailsComponent implements OnInit {
           let order: Order = {
             id: null,
             servicePackage: p,
-            user: this.tokenService.getUser(),
             orderDate: new Date(),
             optionalPackages: data.optionalPackages,
             validityPeriod: data.validityPeriod,

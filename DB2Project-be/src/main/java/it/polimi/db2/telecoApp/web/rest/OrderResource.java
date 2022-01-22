@@ -48,7 +48,7 @@ public class OrderResource {
     }
 
     @PostMapping("/orders/save/{result}")
-    ResponseEntity<Order> save(@PathVariable Boolean result, @RequestBody Order order) {
+    ResponseEntity<Order> save(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
         System.out.println("aaaa");
         return ResponseEntity.ok().body(
                 this.orderService.save(order, result));

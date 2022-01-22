@@ -66,8 +66,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order save(Order order, Boolean result) throws Exception {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(!user.getUsername().equals( order.getUser().getUsername()))
-            throw new Exception("not the current user");
         order.setUser(user);
         Order res = orderMapper.toTarget(
                 orderRepository

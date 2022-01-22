@@ -9,13 +9,15 @@ import org.mapstruct.Mapping;
 public interface BillingMapper {
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "orderId", target = "orderId")
     @Mapping(source = "result", target = "result")
+    @Mapping(source = "billingDateTime", target = "billingDateTime")
     BillingEntity toSource(Billing billing);
 
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "orderId", target = "orderId")
     @Mapping(source = "result", target = "result")
+    @Mapping(source = "billingDateTime", target = "billingDateTime")
     Billing toTarget(BillingEntity billing);
 }

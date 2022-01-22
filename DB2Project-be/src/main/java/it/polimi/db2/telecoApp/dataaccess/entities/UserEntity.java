@@ -49,7 +49,7 @@ public class UserEntity {
     @ToString.Exclude
     private Set<RoleEntity> roles;
 
-    @OneToMany( fetch = FetchType.LAZY, mappedBy = "userEntity")
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
     private Set<OrderEntity> purchasesEntities;
 

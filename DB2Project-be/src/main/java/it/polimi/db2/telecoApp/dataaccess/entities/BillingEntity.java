@@ -25,7 +25,7 @@ public class BillingEntity {
     private Integer id;
 
     @Column(name = "order_id")
-    private Integer userId;
+    private Integer orderId;
 
     @Column(name = "result")
     private Boolean result;

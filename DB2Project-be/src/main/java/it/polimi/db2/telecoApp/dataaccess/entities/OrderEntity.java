@@ -29,7 +29,7 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn( name = "user")
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn( name = "package")

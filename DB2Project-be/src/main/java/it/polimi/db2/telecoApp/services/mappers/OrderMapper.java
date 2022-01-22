@@ -17,6 +17,7 @@ public interface OrderMapper {
     @Mapping(target = "validityPeriod", source = "validityPeriod")
     @Mapping(target = "optionalPackages", source = "optionalPackages")
     @Mapping(target = "startDate", source = "startDate")
+    @Mapping(target = "user", source = "user")
     Order toTarget(OrderEntity source);
 
     @Mapping(target = "id", source = "id")
@@ -25,6 +26,8 @@ public interface OrderMapper {
     @Mapping(target = "validityPeriod", source = "validityPeriod")
     @Mapping(target = "optionalPackages", source = "optionalPackages")
     @Mapping(target = "startDate", source = "startDate")
+    @Mapping(target = "user", source = "user")
+
     OrderEntity toSource(Order source);
 
 
