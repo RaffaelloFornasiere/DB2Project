@@ -32,4 +32,5 @@ public class BillingEntity {
 
     @Column(name = "billing_date_time")
     private LocalDateTime billingDateTime;
+
 }

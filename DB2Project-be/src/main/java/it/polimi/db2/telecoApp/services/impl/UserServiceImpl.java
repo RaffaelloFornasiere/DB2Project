@@ -6,6 +6,7 @@ import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.mappers.UserMapper;
 import it.polimi.db2.telecoApp.services.models.Order;
 import it.polimi.db2.telecoApp.services.models.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -62,5 +63,14 @@ public class UserServiceImpl implements UserService {
         var rejectedOrders = orderService.getRejectedOrders()
                 .stream().map(Order::getUser).distinct().toList();
         return rejectedOrders;
+    }
+
+    @Override
+    public void markCurrentAsInsolvent(){
+        markAsInsolvent((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    }
+    @Override
+    public void markAsInsolvent(User user){
+        user.setInsolvent(true);
     }
 }

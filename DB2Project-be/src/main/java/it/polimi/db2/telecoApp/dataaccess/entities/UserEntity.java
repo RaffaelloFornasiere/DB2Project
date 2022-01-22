@@ -53,4 +53,8 @@ public class UserEntity {
     @ToString.Exclude
     private Set<OrderEntity> purchasesEntities;
 
+
+    @Column(name = "insolvent")
+    private Boolean insolvent;
+
 }
