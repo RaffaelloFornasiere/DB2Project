@@ -42,6 +42,8 @@ public class User implements UserDetails {
     private LocalDate birthdate;
     private String billingAddress;
 
+    private Boolean insolvent;
+
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
 

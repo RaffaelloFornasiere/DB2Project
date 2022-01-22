@@ -4,6 +4,7 @@ package it.polimi.db2.telecoApp.services.impl;
 import it.polimi.db2.telecoApp.dataaccess.repositories.BillingRepository;
 import it.polimi.db2.telecoApp.dataaccess.repositories.OrderRepository;
 import it.polimi.db2.telecoApp.services.OrderService;
+import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.mappers.BillingMapper;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
 import it.polimi.db2.telecoApp.services.models.Billing;
@@ -23,12 +24,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final BillingMapper billingMapper;
     private final BillingRepository billingRepository;
+    private final UserService userService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper, BillingMapper billingMapper, BillingRepository billingRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper, BillingMapper billingMapper, BillingRepository billingRepository, UserService userService) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
         this.billingMapper = billingMapper;
         this.billingRepository = billingRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -71,18 +74,25 @@ public class OrderServiceImpl implements OrderService {
         Order res = orderMapper.toTarget(
                 orderRepository
                         .save(orderMapper.toSource(order)));
-        Billing billing = new Billing().setOrderId(res.getId()).setResult(result);
-         billingMapper.toTarget(
-                billingRepository
-                        .save(billingMapper.toSource(billing))
-
-        );
-         return res;
-
+        tryPayment(order, result);
+        return res;
     }
 
     @Override
-    public List<Order> getRejectedOrders()  {
+    public Order tryPayment(Order order, Boolean result) throws Exception {
+        Billing billing = new Billing().setOrderId(order.getId()).setResult(result);
+        billingMapper.toTarget(
+                billingRepository
+                        .save(billingMapper.toSource(billing))
+        );
+        if (getRejectedOrders().size() > 3)
+            userService.markCurrentAsInsolvent();
+        return order;
+    }
+
+
+    @Override
+    public List<Order> getRejectedOrders() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Order> orders = orderRepository.findAllByUser_Username(user.getUsername())
                 .stream()
@@ -103,12 +113,13 @@ public class OrderServiceImpl implements OrderService {
     private List<Order> extractRejected(List<Order> orders){
         List<Order> res = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
-            Billing lastBilling = billingMapper.toTarget( billingRepository
+            Billing lastBilling = billingMapper.toTarget(billingRepository
                     .findOneByOrderIdNative(orders.get(i).getId()));
-            if(lastBilling.getResult().equals(false))
+            if (lastBilling.getResult().equals(false))
                 res.add(orders.get(i));
         }
         return res;
     }
+
 
 }

@@ -13,4 +13,8 @@ public interface UserService extends UserDetailsService {
     User saveUser(User user);
 
     List<User> getInsolventUsers();
+
+    void markCurrentAsInsolvent();
+
+    void markAsInsolvent(User user);
 }
