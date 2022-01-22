@@ -21,25 +21,26 @@ public class OrderEntity {
 
     @Id
     @Column(name = "order_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( name = "order_date")
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn( name = "user")
+    @JoinColumn(name = "user")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn( name = "package")
+    @JoinColumn(name = "package")
     private ServicePackageEntity servicePackageEntity;
 
-    @ManyToOne
-    @JoinColumn( name= "validity_period_id")
+    @ManyToOne(
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "validity_period_id")
     private ValidityPeriodEntity validityPeriod;
 
-    @Column( name = "start_date")
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @ManyToMany
