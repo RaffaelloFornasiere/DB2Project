@@ -27,7 +27,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProfileComponent } from './components/profile/profile.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
-import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {UserDashboardComponent} from "./pages/user/user-dashboard/user-dashboard.component";
 import {ChartsModule} from "ng2-charts";
 import { HomeComponent } from './pages/home/home.component';
@@ -38,6 +38,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { BuyDialogComponent } from './components/buy-dialog/buy-dialog.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -60,35 +63,38 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
     ConfirmationComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        LayoutModule,
-        MatFormFieldModule,
-        MatToolbarModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatCardModule,
-        ChartsModule,
-        FormsModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    ChartsModule,
+    FormsModule,
 
-        HttpClientModule,
+    HttpClientModule,
 
-        ReactiveFormsModule,
-        CarouselModule,
-        ButtonModule,
-        DataViewModule,
-        MatDialogModule,
-        MatAutocompleteModule,
+    ReactiveFormsModule,
+    CarouselModule,
+    ButtonModule,
+    DataViewModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatCheckboxModule
 
-    ],
-  providers: [authInterceptorProviders,
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
-  ,
+  ],
+  providers: [authInterceptorProviders,MatDatepickerModule,
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -8,6 +8,8 @@ import it.polimi.db2.telecoApp.services.mappers.BillingMapper;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
 import it.polimi.db2.telecoApp.services.models.Billing;
 import it.polimi.db2.telecoApp.services.models.Order;
+import it.polimi.db2.telecoApp.services.models.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -62,7 +64,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order save(Order order, Boolean result) {
+    public Order save(Order order, Boolean result) throws Exception {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!user.getUsername().equals( order.getUser().getUsername()))
+            throw new Exception("not the current user");
+        order.setUser(user);
         Order res = orderMapper.toTarget(
                 orderRepository
                         .save(orderMapper.toSource(order)));

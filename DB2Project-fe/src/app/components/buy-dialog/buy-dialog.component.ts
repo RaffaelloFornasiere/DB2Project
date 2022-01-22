@@ -11,6 +11,8 @@ import {PackageDetails} from "../../interfaces/packageDetails";
 export class BuyDialogComponent implements OnInit, OnDestroy {
   formOptionalPackages = new FormControl();
   formPeriods = new FormControl();
+  startDate: Date = new Date();
+  makeItFail: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<BuyDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {
@@ -26,18 +28,8 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
 
   res!: any;
 
-  success() {
-    this.res = {optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
-    this.ngOnDestroy()
-  }
-
-  failure() {
-    this.res = {optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
-    this.ngOnDestroy()
-  }
-
   close(){
-    this.res = {payment: "failure", optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value};
+    this.res = {payment: this.makeItFail, optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value,  startDate: this.startDate};
     this.ngOnDestroy()
   }
 

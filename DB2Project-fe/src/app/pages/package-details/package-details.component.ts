@@ -35,7 +35,7 @@ export class PackageDetailsComponent implements OnInit {
         next: (data: Package) => {
           console.log("data: ", data)
           // @ts-ignore
-          data.telecoServices.forEach(i => delete i.details["@type"])
+          // data.telecoServices.forEach(i => delete i.details["@type"])
           this.packageDetails = {
             package: data,
             optionalPackages: [],
@@ -73,28 +73,25 @@ export class PackageDetailsComponent implements OnInit {
     }
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
-        next: (data: { optionalPackages: [], validityPeriod: any, startDate: Date }) => {
+        next: (data: { payment: boolean, optionalPackages: [], validityPeriod: any, startDate: Date }) => {
           if (data === undefined)
             return;
-
-
-          console.log(data)
-          result = JSON.stringify(data)
 
           if (!this.tokenService.isAuthenticated())
             this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
 
           let order: Order = {
             id: null,
-            package: p,
+            servicePackage: p,
             user: this.tokenService.getUser(),
             orderDate: new Date(),
             optionalPackages: data.optionalPackages,
             validityPeriod: data.validityPeriod,
             startDate: data.startDate
           }
-          result = JSON.stringify(order)
-          this.router.navigate(['confirm'], {queryParams: {data: result}})
+          let a = {order: order, payment: data.payment}
+          result = JSON.stringify(a);
+          this.router.navigate(['confirm'], {queryParams: {data: result}});
         }
       }
     );

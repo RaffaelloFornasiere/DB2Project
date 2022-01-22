@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   showLoginBar = true;
   username?: string;
-  title = 'Winders';
+  title = 'Teleco Application';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
