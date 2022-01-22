@@ -49,5 +49,4 @@ public class OrderEntity {
             joinColumns = {@JoinColumn(name = "id_order")},
             inverseJoinColumns = {@JoinColumn(name = "id_optional_package")})
     private List<OptionalPackageEntity> optionalPackages;
-
 }

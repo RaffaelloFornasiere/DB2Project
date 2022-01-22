@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByUser(String username) {
-        return orderRepository.findAllByUserEntity_Username(username)
+        return orderRepository.findAllByUser_Username(username)
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();

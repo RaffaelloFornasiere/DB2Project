@@ -6,9 +6,11 @@ import it.polimi.db2.telecoApp.services.models.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {OptionalPackageMapper.class,
+@Mapper(componentModel = "spring", uses = {
+        OptionalPackageMapper.class,
         PackageMapper.class,
-        ValidityPeriodMapper.class})
+        ValidityPeriodMapper.class,
+        UserMapper.class})
 public interface OrderMapper {
 
     @Mapping(target = "id", source = "id")
@@ -27,7 +29,6 @@ public interface OrderMapper {
     @Mapping(target = "optionalPackages", source = "optionalPackages")
     @Mapping(target = "startDate", source = "startDate")
     @Mapping(target = "user", source = "user")
-
     OrderEntity toSource(Order source);
 
 
