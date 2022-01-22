@@ -16,7 +16,7 @@ public interface OrderService {
 
     Order save(Order order, Boolean result) throws Exception;
 
-    List<Order> getRejectedOrders() throws Exception;
+    List<Order> getRejectedOrders();
 
     List<Order> getSuspended();
 }

@@ -54,7 +54,11 @@ public class OrderResource {
                 this.orderService.save(order, result));
     }
 
-
+    @GetMapping("/orders/rejectedOrders")
+    ResponseEntity<List<Order>> getRejectedOrders(){
+        List<Order> res = orderService.getRejectedOrders();
+        return ResponseEntity.ok().body(res);
+    }
 }
 
 
