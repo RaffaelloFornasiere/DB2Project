@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,4 +29,7 @@ public class BillingEntity {
 
     @Column(name = "result")
     private Boolean result;
+
+    @Column(name = "billing_date_time")
+    private LocalDateTime billingDateTime;
 }
