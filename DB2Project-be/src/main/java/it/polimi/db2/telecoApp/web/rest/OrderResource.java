@@ -73,6 +73,12 @@ public class OrderResource {
                 this.orderService.getInsolventUsers()
         );
     }
+
+    @GetMapping("/orders/rejectedOrders")
+    ResponseEntity<List<Order>> getRejectedOrders(){
+        List<Order> res = orderService.getRejectedOrders();
+        return ResponseEntity.ok().body(res);
+    }
 }
 
 
