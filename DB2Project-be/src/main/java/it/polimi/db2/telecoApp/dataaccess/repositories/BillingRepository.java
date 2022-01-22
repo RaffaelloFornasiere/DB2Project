@@ -15,9 +15,11 @@ public interface BillingRepository extends JpaRepository<BillingEntity, Integer>
             value = """
                     select * from billings
                     where order_id = ?1
+                    order by billing_date_time desc
+                    limit  1
                     """
     )
-    List<BillingEntity> findAllByOrderIdNative(Integer orderId) ;
+    BillingEntity findOneByOrderIdNative(Long orderId) ;
 
 
 

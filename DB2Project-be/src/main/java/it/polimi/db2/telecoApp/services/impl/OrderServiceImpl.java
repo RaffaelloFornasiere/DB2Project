@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -81,10 +82,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getRejectedOrders() throws Exception {
+    public List<Order> getRejectedOrders()  {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-
+        List<Order> orders = orderRepository.findAllByUser_Username(user.getUsername())
+                .stream()
+                .map(orderMapper::toTarget)
+                .toList();
+        List<Order> res = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            Billing lastBilling = billingMapper.toTarget( billingRepository
+                    .findOneByOrderIdNative(orders.get(i).getId()));
+            if(lastBilling.getResult().equals(false))
+                res.add(orders.get(i));
+        }
+        return res;
     }
 
 }
