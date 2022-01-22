@@ -48,13 +48,12 @@ public class OrderResource {
     }
 
     @PostMapping("/orders/save/{result}")
-    ResponseEntity<Order> save(@RequestBody Order order, @PathVariable Boolean result) {
+    ResponseEntity<Order> save(@PathVariable Boolean result, @RequestBody Order order) {
+        System.out.println("aaaa");
         return ResponseEntity.ok().body(
                 this.orderService.save(order, result));
 
     }
-
-
 }
 
 

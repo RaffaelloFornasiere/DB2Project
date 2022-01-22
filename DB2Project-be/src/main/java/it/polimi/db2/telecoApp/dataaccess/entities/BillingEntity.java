@@ -20,6 +20,7 @@ import javax.persistence.*;
 public class BillingEntity {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "order_id")

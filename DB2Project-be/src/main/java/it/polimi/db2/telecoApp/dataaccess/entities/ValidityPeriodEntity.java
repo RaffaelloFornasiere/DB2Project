@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Accessors(chain = true)
-@Table(name = "ValidityPeriods")
+@Table(name = "validity_periods")
 public class ValidityPeriodEntity {
     @Id
     @Column(name = "id")

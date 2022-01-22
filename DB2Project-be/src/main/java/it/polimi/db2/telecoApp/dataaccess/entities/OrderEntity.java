@@ -21,6 +21,7 @@ public class OrderEntity {
 
     @Id
     @Column(name = "order_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column( name = "order_date")

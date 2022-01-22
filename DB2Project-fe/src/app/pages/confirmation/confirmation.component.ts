@@ -20,15 +20,15 @@ export class ConfirmationComponent implements OnInit {
         console.log("data: ", this.data)
       }
     )
-
   }
+
   camelToText(camel: string): string {
     let result = camel.replace(/([A-Z])/g, " $1");
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
   buy(){
-    console.log(this.data);
-     this.purchaseService.buy(this.data)
+     this.purchaseService.buy(this.data.order, this.data.payment)
+       .subscribe({next:data => console.log(data)})
   }
 }

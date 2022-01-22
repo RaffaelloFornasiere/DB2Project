@@ -3,6 +3,8 @@ package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.OptionalPackageService;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
+import it.polimi.db2.telecoApp.services.models.Package;
+import it.polimi.db2.telecoApp.services.models.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,4 +35,11 @@ public class OptionalPackageResource {
         return ResponseEntity.ok().body(
                 this.optionalPackageService.findAllByPackageId(id));
     }
+
+    @GetMapping("/optionalPackages/average/")
+    ResponseEntity<List<Pair<Package,Double>>> getAverageOptionalPackages() {
+        return ResponseEntity.ok().body(
+                this.optionalPackageService.findAverageOptionalPackages());
+    }
+
 }
