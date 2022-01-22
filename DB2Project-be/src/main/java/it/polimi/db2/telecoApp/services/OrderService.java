@@ -20,4 +20,6 @@ public interface OrderService {
     Order tryPayment(Order order, Boolean result) throws Exception;
 
     List<Order> getRejectedOrders();
+
+    List<Order> getSuspended();
 }

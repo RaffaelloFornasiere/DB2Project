@@ -98,6 +98,19 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();
+        return extractRejected(orders);
+    }
+
+    @Override
+    public List<Order> getSuspended()  {
+        List<Order> orders = orderRepository.findAll()
+                .stream()
+                .map(orderMapper::toTarget)
+                .toList();
+        return extractRejected(orders);
+    }
+
+    private List<Order> extractRejected(List<Order> orders){
         List<Order> res = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
             Billing lastBilling = billingMapper.toTarget(billingRepository
