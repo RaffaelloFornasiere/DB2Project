@@ -1,8 +1,8 @@
 <h2>Product Details</h2>
 
 <div *ngIf="packageDetails">
-  <h3>{{ packageDetails.package.name }}</h3>
-  <ul *ngFor="let item of packageDetails.package.telecoServices">
+  <h3>{{ packageDetails.package!.name }}</h3>
+  <ul *ngFor="let item of packageDetails.package!.telecomServices">
     <li>id: {{item.id}}</li>
     <li>name: {{item.name}}</li>
 

@@ -1,8 +1,9 @@
 import {Package} from "./package";
 import {OptionalPackage} from "./OptionalPackage";
+import {ValidityPeriod} from "./ValidityPeriod";
 
 export interface PackageDetails {
-  package: Package,
+  package: Package | undefined,
   optionalPackages: OptionalPackage[],
-  validityPeriods: { id: number, name: string, period: string }[]
+  validityPeriods: ValidityPeriod[]
 }

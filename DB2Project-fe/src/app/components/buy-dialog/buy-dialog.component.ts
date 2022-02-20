@@ -12,7 +12,7 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
   formOptionalPackages = new FormControl();
   formPeriods = new FormControl();
   startDate: Date = new Date();
-  makeItFail: boolean = false;
+  result: boolean = true;
 
   constructor(private dialogRef: MatDialogRef<BuyDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {
@@ -29,7 +29,7 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
   res!: any;
 
   close(){
-    this.res = {payment: this.makeItFail, optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value,  startDate: this.startDate};
+    this.res = {payment: this.result, optionalPackages: this.formOptionalPackages.value, validityPeriod: this.formPeriods.value,  startDate: this.startDate};
     this.ngOnDestroy()
   }
 

@@ -5,6 +5,7 @@ import {Package} from "../interfaces/package";
 import { catchError, map, tap } from 'rxjs/operators';
 import {PackageDetails} from "../interfaces/packageDetails";
 import {OptionalPackage} from "../interfaces/OptionalPackage";
+import {ValidityPeriod} from "../interfaces/ValidityPeriod";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class PackageService {
     return this.http.get<OptionalPackage[]>("api/optionalPackages/package/" + packageId)
       .pipe(
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
+      )
+  }
+
+  getValidityPeriods(packageId: number): Observable<ValidityPeriod[]>{
+    return this.http.get<ValidityPeriod[]>("api/packages/validity-periods/" + packageId)
+      .pipe(
+        catchError(this.handleError<ValidityPeriod[]>('getOptionalPackages', []))
       )
   }
 

@@ -1,6 +1,5 @@
 package it.polimi.db2.telecoApp.services.models;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.polimi.db2.telecoApp.services.enums.Role;
 import it.polimi.db2.telecoApp.services.utilities.serialization.UserSerializer;

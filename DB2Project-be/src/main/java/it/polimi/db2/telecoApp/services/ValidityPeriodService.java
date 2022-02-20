@@ -1,5 +1,9 @@
 package it.polimi.db2.telecoApp.services;
 
-public interface ValidityPeriodService {
+import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
 
+import java.util.List;
+
+public interface ValidityPeriodService {
+    List<ValidityPeriod> findAllByPackageId(Long packageId);
 }

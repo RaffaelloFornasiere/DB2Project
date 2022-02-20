@@ -1,14 +1,13 @@
 package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.PackageService;
-import it.polimi.db2.telecoApp.services.models.OptionalPackage;
+import it.polimi.db2.telecoApp.services.ValidityPeriodService;
 import it.polimi.db2.telecoApp.services.models.Package;
-import it.polimi.db2.telecoApp.services.models.User;
+import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 
@@ -17,10 +16,11 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PackageResource {
 
-
+    private final ValidityPeriodService validityPeriodService;
     private final PackageService packageService;
 
-    public PackageResource(PackageService packageService) {
+    public PackageResource(ValidityPeriodService validityPeriodService, PackageService packageService) {
+        this.validityPeriodService = validityPeriodService;
         this.packageService = packageService;
     }
 
@@ -46,32 +46,13 @@ public class PackageResource {
                 this.packageService.getDetails(id));
     }
 
-
-    @GetMapping("/user-data/{username}/")
-    public ResponseEntity<String> getUserData(@PathVariable String username) {
-        String s = """
-                  packageName: "mobile phone",
-                  packageDetails: [
-                    {type: "sms", amount: 10000},
-                    {type: "minutes", amount: 10000},
-                  ],
-                  packageConsumption: [
-                    {type: "sms", amount: 8900},
-                    {type: "minutes", amount: 500},
-                  ]
-                },
-                {
-                  packageName: "mobile internet",
-                  packageDetails: [
-                    {type: "GigaBytes", amount: 100},
-                  ],
-                  packageConsumption: [
-                    {type: "GigaBytes", amount: 12},
-                  ]
-                }
-                              """;
-        return ResponseEntity.ok().body(s);
+    @GetMapping("/packages/validity-periods/{packageId}")
+    ResponseEntity<List<ValidityPeriod>> findValidityPeriodsByPackageId(@PathVariable Long packageId){
+        return ResponseEntity.ok().body(
+                this.validityPeriodService.findAllByPackageId(packageId)
+        );
     }
+
 
 
     @GetMapping("/all")

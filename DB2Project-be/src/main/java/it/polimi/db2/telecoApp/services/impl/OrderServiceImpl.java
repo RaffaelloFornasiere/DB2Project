@@ -83,17 +83,22 @@ public class OrderServiceImpl implements OrderService {
         Order res = orderMapper.toTarget(
                 orderRepository
                         .save(orderMapper.toSource(order)));
-        tryPayment(order, result);
+        tryPayment(res, result);
         return res;
     }
 
+
+
     @Override
-    public Order tryPayment(Order order, Boolean result) throws Exception {
-        Billing billing = new Billing().setOrderId(order.getId()).setResult(result);
+    public Boolean tryPayment(Order order, Boolean result) {
+        Billing billing = new Billing().setOrderId(order.getId()).setResult(result)
+                .setBillingDateTime(LocalDateTime.now());
         billingMapper.toTarget(
                 billingRepository
                         .save(billingMapper.toSource(billing))
         );
+
+        //implemented through triggers
         if (billingRepository.findAllByOrderIdNative(order.getId()).size() > 3)
         {
             AlertEntity alertEntity = new AlertEntity()
@@ -107,7 +112,8 @@ public class OrderServiceImpl implements OrderService {
         }
         if(!result)
             userService.markCurrentAsInsolvent();
-        return order;
+
+        return result;
     }
 
 

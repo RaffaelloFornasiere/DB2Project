@@ -37,6 +37,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     )
     List<OrderEntity> findAllByOrderDateAfterAndOrderDateBeforeJPQL(LocalDateTime orderDate, LocalDateTime orderDate2);
 
+
     @Query(
             nativeQuery = true,
             value = """

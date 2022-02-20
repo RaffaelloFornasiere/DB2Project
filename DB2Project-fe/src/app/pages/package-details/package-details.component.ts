@@ -9,6 +9,7 @@ import {PackageDetails} from "../../interfaces/packageDetails";
 import {TokenStorageService} from "../../services/token-storage.service";
 import {OptionalPackage} from "../../interfaces/OptionalPackage";
 import {Order} from "../../interfaces/Order";
+import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
 
 @Component({
   selector: 'app-package-details',
@@ -27,35 +28,17 @@ export class PackageDetailsComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     let id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.packageService.getDetails(id).subscribe(
-      {
-        next: (data: Package) => {
-          console.log("data: ", data)
-          // @ts-ignore
-          // data.telecoServices.forEach(i => delete i.details["@type"])
-          this.packageDetails = {
-            package: data,
-            optionalPackages: [],
-            validityPeriods:
-              [
-                {id: 1, name: "period1", period: "jun-aug"},
-                {id: 2, name: "period2", period: "jul-sep"},
-                {id: 3, name: "period3", period: "gen-oct"}
-              ]
-          };
-          this.packageService.getOptionalPackages(id).subscribe(
-            {
-              next: (data: OptionalPackage[]) => {
-                this.packageDetails.optionalPackages = data;
-              }
-            }
-          )
-        }
-      }
-    )
+    this.packageDetails = {
+      package: await this.packageService
+        .getDetails(id).toPromise(),
+      optionalPackages: await this.packageService
+        .getOptionalPackages(id).toPromise(),
+      validityPeriods: await this.packageService
+        .getValidityPeriods(id).toPromise()
+    };
+    console.log(this.packageDetails.validityPeriods)
   }
 
   camelToText(camel: string): string {
@@ -63,7 +46,9 @@ export class PackageDetailsComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  buy(p: Package) {
+  buy(p: Package | undefined) {
+    if(p == undefined)
+      return;
     let conf = new MatDialogConfig();
     conf.autoFocus = true;
     conf.width = '800px';
@@ -76,10 +61,7 @@ export class PackageDetailsComponent implements OnInit {
         next: (data: { payment: boolean, optionalPackages: [], validityPeriod: any, startDate: Date }) => {
           if (data === undefined)
             return;
-
-          if (!this.tokenService.isAuthenticated())
-            this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
-
+          console.log(this.tokenService.isAuthenticated())
           let order: Order = {
             id: null,
             servicePackage: p,
@@ -90,7 +72,12 @@ export class PackageDetailsComponent implements OnInit {
           }
           let a = {order: order, payment: data.payment}
           result = JSON.stringify(a);
-          this.router.navigate(['confirm'], {queryParams: {data: result}});
+          if (!this.tokenService.isAuthenticated())
+            this.router.navigate(['login'],
+              {queryParams: {returnUrl: 'confirm', data: result}})
+          else
+            this.router.navigate(['confirm'],
+              {queryParams: {data: result}});
         }
       }
     );

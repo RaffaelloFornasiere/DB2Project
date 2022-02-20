@@ -1,6 +1,5 @@
 package it.polimi.db2.telecoApp.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
         prePostEnabled = true)
 public class SecurityConfig extends  WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
@@ -69,26 +66,5 @@ public class SecurityConfig extends  WebSecurityConfigurerAdapter {
     }
 
 
-
-
-
-    // OLD
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user1")
-//                .password(passwordEncoder().encode("user1Pass"))
-//                .authorities("ROLE_USER");
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/index.html", "/", "/home", "/login").permitAll()
-//                .anyRequest().authenticated();
-//    }
 
 }

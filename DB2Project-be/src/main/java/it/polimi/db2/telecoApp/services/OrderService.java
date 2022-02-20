@@ -19,7 +19,7 @@ public interface OrderService {
     Order save(Order order, Boolean result) throws Exception;
 
 
-    Order tryPayment(Order order, Boolean result) throws Exception;
+    Boolean tryPayment(Order order, Boolean result) throws Exception;
 
     List<Order> getRejectedOrders();
 

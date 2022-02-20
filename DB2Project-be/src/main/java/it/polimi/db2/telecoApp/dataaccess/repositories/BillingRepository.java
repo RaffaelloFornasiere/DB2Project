@@ -25,7 +25,7 @@ public interface BillingRepository extends JpaRepository<BillingEntity, Integer>
             nativeQuery = true,
             value = """
                     select * from billings
-                    where order_id = ?1       
+                    where order_id = ?1
                     """
     )
     List<BillingEntity> findAllByOrderIdNative(Long orderId) ;
