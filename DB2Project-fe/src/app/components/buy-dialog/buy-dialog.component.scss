@@ -10,5 +10,12 @@
   min-width: calc(100% + 264px) !important;
 }
 .mat-form-field{
-  width: 90%
+  width: 90%;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.mat-form-field-wrapper{
+  margin-bottom: 0px;
+  padding-bottom: 0px !important;
 }

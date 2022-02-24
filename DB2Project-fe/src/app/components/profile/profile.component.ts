@@ -16,6 +16,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 
+/**
+ * This Component gets current User from Storage using TokenStorageService and show information
+ * and allows user to edit them
+ * (username, password, roles).
+ */
+
 
 
 @Component({
@@ -37,13 +43,10 @@ export class ProfileComponent implements OnInit {
   submitted= false;
   constructor(private token: TokenStorageService) {
   }
-  onSubmit() { this.submitted = true; }
-
-  newUser(){
-
-  }
-
   ngOnInit(): void {
     this.user = this.token.getUser();
+  }
+  onSubmit() {
+    this.submitted = true;
   }
 }

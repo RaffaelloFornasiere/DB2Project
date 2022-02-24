@@ -1,10 +1,7 @@
 package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.OrderService;
-import it.polimi.db2.telecoApp.services.models.Alert;
-import it.polimi.db2.telecoApp.services.models.Order;
-import it.polimi.db2.telecoApp.services.models.TelecoService;
-import it.polimi.db2.telecoApp.services.models.User;
+import it.polimi.db2.telecoApp.services.models.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +43,11 @@ public class OrderResource {
     @GetMapping("/orders/packages/{packageId}")
     ResponseEntity<List<Order>> findAllByPackageId(@PathVariable Long packageId){
         List<Order> res = orderService.findAllByPackageId(packageId);
+        return ResponseEntity.ok().body(res);
+    }
+    @GetMapping("/orders/packages/{packageId}/{validityPeriod}")
+    ResponseEntity<List<Order>> findAllByPackageIdAndVP(@PathVariable Long packageId, @PathVariable ValidityPeriod validityPeriod){
+        List<Order> res = orderService.findAllByPackageIdAndVP(packageId, validityPeriod);
         return ResponseEntity.ok().body(res);
     }
 

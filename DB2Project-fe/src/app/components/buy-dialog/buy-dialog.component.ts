@@ -1,7 +1,18 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {PackageDetails} from "../../interfaces/packageDetails";
+import {ErrorStateMatcher} from "@angular/material/core";
+
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 
 @Component({
   selector: 'app-buy-dialog',
@@ -9,8 +20,8 @@ import {PackageDetails} from "../../interfaces/packageDetails";
   styleUrls: ['./buy-dialog.component.scss']
 })
 export class BuyDialogComponent implements OnInit, OnDestroy {
-  formOptionalPackages = new FormControl();
-  formPeriods = new FormControl();
+  formOptionalPackages = new FormControl(null, [Validators.required]);
+  formPeriods = new FormControl(null, [Validators.required]);
   startDate: Date = new Date();
   result: boolean = true;
 

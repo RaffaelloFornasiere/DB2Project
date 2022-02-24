@@ -4,6 +4,8 @@
     <h2 class="modal-title">{{data.title}}</h2>
   </div>
   <div class="modal-body">
+
+
     <h6>Select the optional packages to add</h6>
     <mat-form-field appearance="fill">
       <mat-label>Optional packages</mat-label>
@@ -20,6 +22,9 @@
           <span class="example-additional-selection">{{option.monthlyFee | currency}}</span>
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="formOptionalPackages.hasError('required')">
+        Optional package is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
 
@@ -35,7 +40,12 @@
           <span class="example-additional-selection">ID: {{period.months}}</span>
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="formPeriods.hasError('required')">
+        Optional package is required
+      </mat-error>
     </mat-form-field>
+
+
 
     <h6>Select the start date of the service</h6>
     <mat-form-field appearance="fill">
@@ -47,7 +57,11 @@
     <section class="example-section">
       <mat-checkbox class="example-margin" [(ngModel)]="result">Make payment fail</mat-checkbox>
     </section>
+
+
   </div>
+
+
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="close()">Back</button>

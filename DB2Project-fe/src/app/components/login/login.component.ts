@@ -4,6 +4,13 @@ import {TokenStorageService} from "../../services/token-storage.service";
 import {NavbarService} from "../../services/navbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
+
+/**
+ * Login Component also uses AuthService to work with Observable object. Besides, it calls
+ * TokenStorageService methods to check loggedIn status and save Token, User info to Session Storage.
+ *
+ * it also manages the status bar for the login
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,6 +27,8 @@ export class LoginComponent implements OnInit {
   role: string = "";
   needsToBeLogged = false;
   returnUrl!: string;
+  returnData: any;
+
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router,
@@ -31,14 +40,14 @@ export class LoginComponent implements OnInit {
     })
 
   }
-  returnData: any;
+
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLogged = true;
       this.role = this.tokenStorage.getUser().role;
 
     }
-    console.log("loggin");
+    console.log("logging");
     this.needsToBeLogged = this.navbarService.isLoggingInWarnVisible;
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -49,6 +58,7 @@ export class LoginComponent implements OnInit {
     const {username, password} = this.form;
     this.authService.login(username, password).subscribe({
       next: data => {
+        console.log("login done: ", data)
         this.tokenStorage.saveUser(data);
         this.tokenStorage.saveToken(data.token);
 

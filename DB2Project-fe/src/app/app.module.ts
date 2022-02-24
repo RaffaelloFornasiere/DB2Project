@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutModule } from '@angular/cdk/layout';
+import {BreakpointObserver, LayoutModule} from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -62,6 +62,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     BuyDialogComponent,
     ConfirmationComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -90,8 +91,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatCheckboxModule
-
+    MatCheckboxModule,
+    LayoutModule,
   ],
   providers: [authInterceptorProviders,MatDatepickerModule,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],

@@ -1,19 +1,25 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+<mat-sidenav-container autosize class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav mat-elevation-z8" fixedInViewport="true"
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+               [opened]="(isHandset$ | async) === false"
+               >
+    <mat-toolbar>
+      <button mat-button (click)="sidenav.close()" id="close-button"><mat-icon>close</mat-icon></button>
+      Menu
+    </mat-toolbar>
     <mat-nav-list>
-      <a  *ngFor="let page of pages" mat-list-item routerLink="{{page.link}}"
-          (click)="setTitle(page.title)">
-        {{page.title}}
+      <a  *ngFor="let element of navElements" mat-list-item routerLink="{{element.link}}"
+          (click)="setTitle(element.title)">
+        {{element.title}}
       </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div id="app">
-      <mat-toolbar color="primary">{{title}}</mat-toolbar>
+      <mat-toolbar color="primary">
+        <button mat-button (click)="sidenav.open()" id="menu-button"><mat-icon style="color: #fff;">menu</mat-icon></button>
+        {{title}}</mat-toolbar>
       <nav *ngIf="showLoginBar" class="navbar navbar-expand navbar-dark bg-dark">
           <div class="navbar-nav mr-auto" routerLinkActive="active">
             <a href="/home" class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
@@ -30,15 +36,16 @@
 
         <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
           <li class="nav-item">
-            <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+            <a href="/profile" class="nav-link" routerLink="profile">{{"ROLE:" + role + " | Username: " + username }}</a>
           </li>
+          <mat-divider vertical style="border-right-width: 2px; border-right-color: #673ab7"></mat-divider>
           <li class="nav-item">
             <a href class="nav-link" (click)="logout()">LogOut</a>
           </li>
         </ul>
       </nav>
-
     </div>
-    <router-outlet></router-outlet>
+    <div id="content"><router-outlet></router-outlet></div>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

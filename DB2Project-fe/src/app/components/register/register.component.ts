@@ -1,7 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {FormBuilder, Validators} from "@angular/forms";
 
+
+/**
+ * This component binds form data (username, password) from template to
+ * AuthService.register() method that returns an Observable object.
+ *
+ * For the inputs it is used the Form Validation:
+ * username: required, minLength=3, maxLength=20
+ * password: required, minLength=6
+ */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -17,18 +25,16 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
+  ngOnInit(): void {}
 
-
-  ngOnInit(): void {
-  }
 
   onSubmit(): void {
     const {username, password} = this.form;
     this.authService.register(username, password)
       .subscribe({
           next: data => {
+            //console.log(data)
             this.isSuccessful = true;
             this.isSignUpFailed = false;
           },

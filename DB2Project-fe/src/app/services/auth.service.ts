@@ -7,6 +7,8 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
+
+//This service sends signup, login HTTP POST requests to back-end
 @Injectable({
   providedIn: 'root'
 })
@@ -30,5 +32,7 @@ export class AuthService {
       },
       httpOptions)
   }
+
+
 }
 

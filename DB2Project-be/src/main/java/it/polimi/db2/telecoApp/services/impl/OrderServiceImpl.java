@@ -10,10 +10,7 @@ import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.mappers.AlertMapper;
 import it.polimi.db2.telecoApp.services.mappers.BillingMapper;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
-import it.polimi.db2.telecoApp.services.models.Alert;
-import it.polimi.db2.telecoApp.services.models.Billing;
-import it.polimi.db2.telecoApp.services.models.Order;
-import it.polimi.db2.telecoApp.services.models.User;
+import it.polimi.db2.telecoApp.services.models.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +71,11 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();
+    }
+
+    @Override
+    public List<Order> findAllByPackageIdAndVP(Long packageId, ValidityPeriod validityPeriod) {
+        return null;
     }
 
     @Override

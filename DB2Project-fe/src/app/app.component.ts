@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {filter, map, shareReplay} from "rxjs/operators";
@@ -7,6 +7,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {TokenStorageService} from "./services/token-storage.service";
 import {LoginComponent} from "./components/login/login.component";
 import {User} from "./interfaces/user";
+import {MatSidenav} from "@angular/material/sidenav";
 
 
 @Component({
@@ -15,10 +16,14 @@ import {User} from "./interfaces/user";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('drawer')
+  public sidenav!: MatSidenav;
+
   isLoggedIn = false;
   showLoginBar = true;
   username?: string;
   title = 'Teleco Application';
+  role!: String;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,10 +32,13 @@ export class AppComponent implements OnInit {
     );
 
   pages = [
-    {title: "Dashboard", link: "/user-dashboard"},
+    {title: "Dashboard", link: "/dashboard"},
     {title: "Packages", link: "/packages"},
-    {title: "Settings", link: "/user-settings"},
+    {title: "Settings", link: "/settings"},
+    {title: "Profile", link: "/profile"},
   ];
+
+  navElements !: { title: string, link: string }[];
 
   setTitle(title: string) {
     this.title = title;
@@ -44,7 +52,7 @@ export class AppComponent implements OnInit {
   ) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe({
-          next:event=> {
+          next: event => {
             this.showLoginBar = !(event instanceof NavigationEnd && event.url === '/home' && !this.isLoggedIn);
           }
         }
@@ -56,12 +64,24 @@ export class AppComponent implements OnInit {
           if (this.isLoggedIn) {
             const user: User = this.tokenStorageService.getUser();
             this.username = user.username;
+            this.role = user.roles[0];
 
-            let role = user.roles[0];
-            this.pages.filter(p => p.title != 'Packages')
-              .forEach(p => p.link = '/'
-                + role.substring('ROLE_'.length).toLocaleLowerCase()
-                + '-' + p.title.toLocaleLowerCase())
+            this.navElements = this.pages.filter(p => p.title != 'Packages')
+              .map((p) => {
+                  return {
+                    title: p.title,
+                    link:
+                      '/'
+                      + this.role.substring('ROLE_'.length).toLocaleLowerCase()
+                      + '-'
+                      + p.title.toLocaleLowerCase()
+                  }
+                }
+              );
+            this.navElements.push({title: "Packages", link: "/packages"})
+          } else {
+            console.log("ciaooooo")
+            this.navElements = [{title: "Packages", link: "/packages"}];
           }
         }
       }
@@ -69,10 +89,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
+      console.log("user: ", user)
       this.username = user.username;
+      this.role = user.roles[0];
     }
   }
 

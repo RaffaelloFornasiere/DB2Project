@@ -22,9 +22,12 @@ const routes: Routes = [
 
   { path: 'admin-dashboard', component: AdminDashboardComponent},
   { path: 'admin-settings', component: AdminSettingsComponent},
+  { path: "admin-profile", component: ProfileComponent},
 
   { path: 'user-dashboard', component: UserDashboardComponent},
   { path: 'user-settings', component: UserSettingsComponent},
+  { path: "user-profile", component: ProfileComponent},
+
 
   { path: 'packages', component: PackagesComponent},
   { path: 'settings', component: SettingsComponent},
@@ -33,7 +36,8 @@ const routes: Routes = [
 
   { path: "login", component: LoginComponent},
   { path: "register", component: RegisterComponent},
-  { path: "profile", component: ProfileComponent}
+  { path: "profile", component: ProfileComponent},
+
 ]
 
 @NgModule({
