@@ -22,7 +22,7 @@ export class PurchaseService {
 
   buy(o: Order, payment: boolean):Observable<any>{
     console.log("by service: ", o)
-    return this.http.post("/api/orders/save/"+payment, o,httpOptions)
+    return this.http.post("/api/orders/buy/"+payment, o,httpOptions)
       .pipe(
         tap(() => console.log('fetched heroes')),
         catchError(this.handleError<Package>('buy'))

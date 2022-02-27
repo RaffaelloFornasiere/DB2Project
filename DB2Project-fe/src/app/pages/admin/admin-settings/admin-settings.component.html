@@ -1,1 +1,144 @@
-<p>admin-settings works!</p>
+<mat-tab-group>
+  <mat-tab label="Package Manager">
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-10">
+                <button class="btn btn-primary">
+                  New Service
+                </button>
+                <br> <br>
+                <h2> Edit current packages: </h2>
+
+                <div *ngFor="let package of packages">
+                  <mat-card>
+                    <mat-card-title>
+                      {{package.name}}
+                      <button class="btn btn-secondary float-right" routerLink="/detail/{{package.id}}">Edit</button>
+                    </mat-card-title>
+                  </mat-card>
+                  <br>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <br><br><br><br><br>
+          <mat-card>
+            <mat-card-title>Editor</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+            <app-form-field #nameForm
+              [propertyName]="{name:'Package name', value:'zaoo'}"
+              [propertyType]="'string'"
+            ></app-form-field>
+            <app-form-field #servicesForm
+              [propertyName]="{name: 'service', value:''}"
+              [propertyType]="'select'"
+              [multipleSelection] = "true"
+              [selectionArgs]="{options: servicesNames, selected:servicesNames}"
+            ></app-form-field>
+
+
+            <mat-card-actions align="end">
+              <button class="btn ml-1 btn-primary" (click)="getData()">{{buttonTile}}</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Service Manager">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-6">
+                <button class="btn btn-primary">
+                  New Service
+                </button>
+                <br> <br>
+                <h2> Edit current services: </h2>
+
+                <div *ngFor="let service of services">
+                  <mat-card>
+                    <mat-card-title>
+                      {{service.name}}
+                      <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
+                    </mat-card-title>
+                  </mat-card>
+                  <br>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          TWO
+        </div>
+      </div>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Optional Package Manager">
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-6">
+          <button class="btn btn-primary">
+            New Service
+          </button>
+          <br> <br>
+          <h2> Edit current services: </h2>
+
+          <div *ngFor="let service of services">
+            <mat-card>
+              <mat-card-title>
+                {{service.name}}
+                <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
+              </mat-card-title>
+            </mat-card>
+            <br>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Validity Period Manager">
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-6">
+          <button class="btn btn-primary">
+            New Service
+          </button>
+          <br> <br>
+          <h2> Edit current services: </h2>
+
+          <div *ngFor="let service of services">
+            <mat-card>
+              <mat-card-title>
+                {{service.name}}
+                <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
+              </mat-card-title>
+            </mat-card>
+            <br>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+

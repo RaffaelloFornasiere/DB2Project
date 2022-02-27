@@ -1,22 +1,27 @@
 package it.polimi.db2.telecoApp.services.impl;
 
 
+import it.polimi.db2.telecoApp.Utils.Pair;
 import it.polimi.db2.telecoApp.dataaccess.entities.AlertEntity;
+import it.polimi.db2.telecoApp.dataaccess.entities.OrderEntity;
 import it.polimi.db2.telecoApp.dataaccess.repositories.AlertRepository;
 import it.polimi.db2.telecoApp.dataaccess.repositories.BillingRepository;
 import it.polimi.db2.telecoApp.dataaccess.repositories.OrderRepository;
 import it.polimi.db2.telecoApp.services.OrderService;
+import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.UserService;
 import it.polimi.db2.telecoApp.services.mappers.AlertMapper;
 import it.polimi.db2.telecoApp.services.mappers.BillingMapper;
 import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
 import it.polimi.db2.telecoApp.services.models.*;
+import it.polimi.db2.telecoApp.services.models.Package;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -79,16 +84,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order save(Order order, Boolean result) throws Exception {
+    public Pair<Order, Boolean> buy(Order order, Boolean result) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         order.setUser(user);
         Order res = orderMapper.toTarget(
                 orderRepository
                         .save(orderMapper.toSource(order)));
-        tryPayment(res, result);
-        return res;
+        return Pair.of(res, result);
     }
-
 
 
     @Override
@@ -101,8 +104,7 @@ public class OrderServiceImpl implements OrderService {
         );
 
         //implemented through triggers
-        if (billingRepository.findAllByOrderIdNative(order.getId()).size() > 3)
-        {
+        if (billingRepository.findAllByOrderIdNative(order.getId()).size() > 3) {
             AlertEntity alertEntity = new AlertEntity()
                     .setUsername(
                             ((User) SecurityContextHolder
@@ -112,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
                                     .getUsername());
             alertRepository.save(alertEntity);
         }
-        if(!result)
+        if (!result)
             userService.markCurrentAsInsolvent();
 
         return result;
@@ -130,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getSuspended()  {
+    public List<Order> getSuspended() {
         List<Order> orders = orderRepository.findAll()
                 .stream()
                 .map(orderMapper::toTarget)
@@ -150,7 +152,39 @@ public class OrderServiceImpl implements OrderService {
         return rejectedOrders;
     }
 
-    private List<Order> extractRejected(List<Order> orders){
+    @Override
+    public List<Pair<Package, Integer>> findAllByPackage() {
+        var aux = orderRepository.findAll()
+                .stream().map(orderMapper::toTarget).toList();
+        return aux.stream()
+                .map(i -> new Pair<Package, Integer>(i.getServicePackage(), 1))
+                .distinct()
+                .peek(i ->
+                        i.setSecond((int) aux.stream()
+                                .filter(order -> order.getServicePackage().getId().equals(i.getFirst().getId()))
+                                .count()
+                        )
+                ).toList();
+    }
+
+    @Override
+    public Map<Pair<Package, ValidityPeriod>, Integer> findAllByPackageAndVP() {
+        var aux = orderRepository.findAll()
+                .stream().map(orderMapper::toTarget).toList();
+        return aux.stream()
+                .map(i -> Map.entry(new Pair<>(i.getServicePackage(), i.getValidityPeriod()), 1))
+                .distinct()
+                .map(i ->
+                        Map.entry(i.getKey(), (int) aux.stream()
+                                .filter(order ->
+                                        order.getServicePackage().getId().equals(i.getKey().getFirst().getId()) &&
+                                                order.getValidityPeriod().getId().equals(i.getKey().getSecond().getId())
+                                )
+                                .count())
+                ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private List<Order> extractRejected(List<Order> orders) {
         List<Order> res = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
             Billing lastBilling = billingMapper.toTarget(billingRepository

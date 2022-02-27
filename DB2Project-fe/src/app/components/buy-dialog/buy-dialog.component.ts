@@ -34,7 +34,6 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
   }
 
   res!: any;

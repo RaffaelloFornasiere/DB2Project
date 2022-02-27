@@ -41,6 +41,8 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatTabsModule} from "@angular/material/tabs";
+import { FormFieldComponent } from './components/form-field/form-field.component';
 
 @NgModule({
   declarations: [
@@ -61,39 +63,42 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     HomeComponent,
     BuyDialogComponent,
     ConfirmationComponent,
+    FormFieldComponent,
 
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    ChartsModule,
-    FormsModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatFormFieldModule,
+        MatToolbarModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatCardModule,
+        ChartsModule,
+        FormsModule,
 
-    HttpClientModule,
+        HttpClientModule,
 
-    ReactiveFormsModule,
-    CarouselModule,
-    ButtonModule,
-    DataViewModule,
-    MatDialogModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatCheckboxModule,
-    LayoutModule,
-  ],
+        ReactiveFormsModule,
+        CarouselModule,
+        ButtonModule,
+        DataViewModule,
+        MatDialogModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatInputModule,
+        MatCheckboxModule,
+        LayoutModule,
+        MatTabsModule,
+
+    ],
   providers: [authInterceptorProviders,MatDatepickerModule,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
   bootstrap: [AppComponent],

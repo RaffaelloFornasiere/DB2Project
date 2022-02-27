@@ -7,9 +7,6 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.component";
 import {PackageDetails} from "../../interfaces/packageDetails";
 import {TokenStorageService} from "../../services/token-storage.service";
-import {OptionalPackage} from "../../interfaces/OptionalPackage";
-import {Order} from "../../interfaces/Order";
-import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
 
 @Component({
   selector: 'app-package-details',
@@ -18,6 +15,7 @@ import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
 })
 export class PackageDetailsComponent implements OnInit {
   packageDetails!: PackageDetails;
+  map!: Map<string, string>;
 
   constructor(private route: ActivatedRoute,
               private packageService: PackageService,
@@ -30,15 +28,16 @@ export class PackageDetailsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     let id = Number(this.route.snapshot.paramMap.get('id'));
-    this.packageDetails = {
-      package: await this.packageService
-        .getDetails(id).toPromise(),
-      optionalPackages: await this.packageService
-        .getOptionalPackages(id).toPromise(),
-      validityPeriods: await this.packageService
-        .getValidityPeriods(id).toPromise()
-    };
-    console.log(this.packageDetails.validityPeriods)
+    this.packageDetails = {} as PackageDetails;
+    await this.packageService
+      .getDetails(id).toPromise().then(res => this.packageDetails!.package = res);
+    await this.packageService
+      .getOptionalPackages(id).toPromise().then(res => this.packageDetails!.optionalPackages = res)
+    await this.packageService
+      .getValidityPeriods(id).toPromise().then(res => this.packageDetails!.validityPeriods = res)
+
+    console.log(this.packageDetails)
+    console.log(this.packageDetails.package.telecomServices)
   }
 
   camelToText(camel: string): string {
@@ -46,9 +45,7 @@ export class PackageDetailsComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  buy(p: Package | undefined) {
-    if(p == undefined)
-      return;
+  buy(p: Package) {
     let conf = new MatDialogConfig();
     conf.autoFocus = true;
     conf.width = '800px';
@@ -58,26 +55,14 @@ export class PackageDetailsComponent implements OnInit {
     }
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
-        next: (data: { payment: boolean, optionalPackages: [], validityPeriod: any, startDate: Date }) => {
-          if (data === undefined)
-            return;
-          console.log(this.tokenService.isAuthenticated())
-          let order: Order = {
-            id: null,
-            servicePackage: p,
-            orderDate: new Date(),
-            optionalPackages: data.optionalPackages,
-            validityPeriod: data.validityPeriod,
-            startDate: data.startDate
-          }
-          let a = {order: order, payment: data.payment}
-          result = JSON.stringify(a);
+        next: (data: any) => {
+          console.log(data)
+          result = JSON.stringify(data)
+
           if (!this.tokenService.isAuthenticated())
-            this.router.navigate(['login'],
-              {queryParams: {returnUrl: 'confirm', data: result}})
+            this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
           else
-            this.router.navigate(['confirm'],
-              {queryParams: {data: result}});
+            this.router.navigate(['confirm'], {queryParams: {data: result}})
         }
       }
     );

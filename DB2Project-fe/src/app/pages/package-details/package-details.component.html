@@ -1,16 +1,13 @@
 <h2>Product Details</h2>
 
-<div *ngIf="packageDetails">
-  <h3>{{ packageDetails.package!.name }}</h3>
-  <ul *ngFor="let item of packageDetails.package!.telecomServices">
-    <li>id: {{item.id}}</li>
-    <li>name: {{item.name}}</li>
-
-    Details:
-    <ul *ngFor="let item of item.details | keyvalue">
-      <li>{{camelToText(item.key)}}: {{item.value}}</li>
-    </ul>
-
+<div *ngIf="packageDetails && packageDetails.package">
+  <h3>{{ packageDetails.package.name }}</h3>
+  <h4>Services offered: </h4>
+  <ul *ngFor="let item of packageDetails.package.telecomServices">
+    <li>Service name: {{item.name}}</li>
+      <ul *ngFor="let item of item.details | keyvalue">
+        <li *ngIf="item.key != '@type'">{{item.key}}: {{item.value}}</li>
+      </ul>
   </ul>
   <!--  <p>type: {{ packageDetails.package.type }}</p>-->
   <button class="btn btn-primary" (click)="buy(packageDetails.package)">Buy</button>

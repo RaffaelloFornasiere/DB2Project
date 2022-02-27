@@ -1,12 +1,13 @@
 package it.polimi.db2.telecoApp.services;
 
-import it.polimi.db2.telecoApp.services.models.Alert;
-import it.polimi.db2.telecoApp.services.models.Order;
-import it.polimi.db2.telecoApp.services.models.User;
-import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
+import it.polimi.db2.telecoApp.Utils.Pair;
+import it.polimi.db2.telecoApp.services.models.*;
+import it.polimi.db2.telecoApp.services.models.Package;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     List<Order> findAll();
@@ -17,9 +18,10 @@ public interface OrderService {
 
     List<Order> findAllByPackageId(Long packageId);
     List<Order> findAllByPackageIdAndVP(Long packageId, ValidityPeriod validityPeriod);
+    Map<Pair<Package, ValidityPeriod>, Integer> findAllByPackageAndVP();
 
 
-    Order save(Order order, Boolean result) throws Exception;
+    Pair<Order, Boolean> buy(Order order, Boolean result) throws Exception;
 
 
     Boolean tryPayment(Order order, Boolean result) throws Exception;
@@ -31,4 +33,7 @@ public interface OrderService {
     List<Alert> findAllAlerts();
 
     List<User> getInsolventUsers();
+
+    List<Pair<Package, Integer>> findAllByPackage();
+
 }

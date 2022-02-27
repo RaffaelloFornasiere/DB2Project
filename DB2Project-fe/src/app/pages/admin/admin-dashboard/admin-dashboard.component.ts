@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Color, Label} from "ng2-charts";
-import {ChartType} from "chart.js";
 import {OptionalPackage} from "../../../interfaces/OptionalPackage";
 import {User} from "../../../interfaces/user";
 import {Package} from "../../../interfaces/package";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {Order} from "../../../interfaces/Order";
+import {StatService} from "../../../services/stat.service";
+import {Alert} from "../../../interfaces/Alert";
 
 
 @Component({
@@ -16,7 +16,7 @@ import {Order} from "../../../interfaces/Order";
 export class AdminDashboardComponent implements OnInit, OnDestroy {
   public static title = "Dashboard"
 
-  public averageOptionalPackages !: OptionalPackage[];
+  public averageOptionalPackages !: {first: Package, second: number}[];
   public bestOptionalPackage !: OptionalPackage;
 
   public totalPurchases !: {package: Package, purchases: number}[];
@@ -24,12 +24,12 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   public suspendedOrders !: Order[];
   public insolventUsers !: User[];
-  public alerts !: {id: number, username: string}[];
+  public alerts !: Alert[];
 
 
 
 
-  constructor() {
+  constructor(private statService: StatService) {
   }
 
   adminPages = [
@@ -39,6 +39,31 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   ]
 
   ngOnInit(): void {
+    this.statService.getAlerts().subscribe({next: value => this.alerts = value});
+    this.statService.getAverageOptionalPackages().subscribe({next: value => this.averageOptionalPackages = value})
+    this.statService.getBestSellerOptionalPackage().subscribe({next: value => this.bestOptionalPackage = value})
+    this.statService.getOrderPerPackage().subscribe(
+      {
+        next: (value:{first: Package, second:number}[]) => {
+          this.totalPurchases = value.map((i) => {return {package: i.first, purchases: i.second}})
+        }
+      }
+    )
+    this.statService.getOrderPerPackageAndVP().subscribe(
+      {
+        next: (value:{key: {first: Package,second: ValidityPeriod},value: number}[]) => {
+          this.totalPurchases = value.map((i) =>
+          {return {package: i.key.first, validityPeriod : i.key.second,  purchases: i.value}})
+        }
+      }
+    )
+    this.statService.getInsolventUsers().subscribe({
+      next: value => this.insolventUsers = value
+    })
+    this.statService.getSuspendedOrders().subscribe({
+      next: value => this.suspendedOrders = value
+    })
+
 
   }
 

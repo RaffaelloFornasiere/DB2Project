@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BillingRepository extends JpaRepository<BillingEntity, Integer> {
+public interface BillingRepository extends JpaRepository<BillingEntity, Integer>{
 
     @Query(
             nativeQuery = true,

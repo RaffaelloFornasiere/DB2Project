@@ -3,14 +3,16 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="(isHandset$ | async) === false"
-               >
+  >
     <mat-toolbar>
-      <button mat-button (click)="sidenav.close()" id="close-button"><mat-icon>close</mat-icon></button>
+      <button mat-button (click)="sidenav.close()" id="close-button">
+        <mat-icon>close</mat-icon>
+      </button>
       Menu
     </mat-toolbar>
     <mat-nav-list>
-      <a  *ngFor="let element of navElements" mat-list-item routerLink="{{element.link}}"
-          (click)="setTitle(element.title)">
+      <a *ngFor="let element of navElements" mat-list-item routerLink="{{element.link}}"
+         (click)="setTitle(element.title)">
         {{element.title}}
       </a>
     </mat-nav-list>
@@ -18,34 +20,39 @@
   <mat-sidenav-content>
     <div id="app">
       <mat-toolbar color="primary">
-        <button mat-button (click)="sidenav.open()" id="menu-button"><mat-icon style="color: #fff;">menu</mat-icon></button>
-        {{title}}</mat-toolbar>
-      <nav *ngIf="showLoginBar" class="navbar navbar-expand navbar-dark bg-dark">
-          <div class="navbar-nav mr-auto" routerLinkActive="active">
-            <a href="/home" class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
-          </div>
+        <mat-toolbar-row>
+          <button mat-button (click)="sidenav.toggle()" id="menu-button">
+            <mat-icon style="color: #fff;">menu</mat-icon>
+          </button>
 
-        <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-          <li class="nav-item">
-            <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a href="/login" class="nav-link" routerLink="login">Login</a>
-          </li>
-        </ul>
 
-        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-          <li class="nav-item">
-            <a href="/profile" class="nav-link" routerLink="profile">{{"ROLE:" + role + " | Username: " + username }}</a>
-          </li>
-          <mat-divider vertical style="border-right-width: 2px; border-right-color: #673ab7"></mat-divider>
-          <li class="nav-item">
-            <a href class="nav-link" (click)="logout()">LogOut</a>
-          </li>
-        </ul>
-      </nav>
+          <mat-toolbar-row>
+            <div class="navbar-nav mr-auto" routerLinkActive="active">
+              <a href="/home" class="nav-link" routerLinkActive="active" routerLink="home"
+                 style="color: #fff;">Teleco Application</a>
+            </div>
+            <span class="example-spacer"></span>
+
+            <a *ngIf="!isLoggedIn" href="/register" class="nav-link" routerLink="register" style="color: #fff;">Sign
+              Up</a>
+            <a *ngIf="!isLoggedIn" href="/login"  class="nav-link" routerLink="login" style="color: #fff;">Login</a>
+            <a *ngIf="isLoggedIn" href="/profile" class="nav-link"  routerLink="profile" style="color: #fff;">
+              {{"ROLE:" + role + " | Username: " + username }}
+            </a>
+            <a *ngIf="isLoggedIn" class="nav-item" href="/login" (click)="logout()" style="color: #fff;">
+              LogOut
+            </a>
+
+          </mat-toolbar-row>
+
+
+        </mat-toolbar-row>
+      </mat-toolbar>
+
     </div>
-    <div id="content"><router-outlet></router-outlet></div>
+    <div id="content">
+      <router-outlet></router-outlet>
+    </div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

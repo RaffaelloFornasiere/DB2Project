@@ -1,21 +1,21 @@
 package it.polimi.db2.telecoApp.web.rest;
 
+import it.polimi.db2.telecoApp.Utils.Pair;
 import it.polimi.db2.telecoApp.services.OrderService;
 import it.polimi.db2.telecoApp.services.models.*;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.domain.Pageable;
+import it.polimi.db2.telecoApp.services.models.Package;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class OrderResource {
-    //implement a rest method that retrieves all the orders from a username(String)
-
     private final OrderService orderService;
+
 
     public OrderResource(OrderService orderService) {
         this.orderService = orderService;
@@ -45,40 +45,48 @@ public class OrderResource {
         List<Order> res = orderService.findAllByPackageId(packageId);
         return ResponseEntity.ok().body(res);
     }
+    @GetMapping("/orders/packages/")
+    ResponseEntity<List<Pair<Package, Integer>>> findAllByPackage(){
+        var res = orderService.findAllByPackage();
+        return ResponseEntity.ok().body(res);
+    }
+    @GetMapping("/orders/packages-and-vp/")
+    ResponseEntity<Map<Pair<Package, ValidityPeriod>, Integer>> findAllByPackageAndVP() {
+        var res = orderService.findAllByPackageAndVP();
+        return ResponseEntity.ok().body(res);
+    }
+
     @GetMapping("/orders/packages/{packageId}/{validityPeriod}")
     ResponseEntity<List<Order>> findAllByPackageIdAndVP(@PathVariable Long packageId, @PathVariable ValidityPeriod validityPeriod){
         List<Order> res = orderService.findAllByPackageIdAndVP(packageId, validityPeriod);
         return ResponseEntity.ok().body(res);
     }
 
-    @PostMapping("/orders/save/{result}")
-    ResponseEntity<Order> save(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
+
+
+    @PostMapping("/orders/buy/{result}")
+    ResponseEntity<Pair<Order, Boolean>> buy(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
         return ResponseEntity.ok().body(
-                this.orderService.save(order, result));
+                this.orderService.buy(order, result));
     }
 
     @PostMapping("/orders/retry-payment/{result}")
-    ResponseEntity<Order> retryPayment(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
+    ResponseEntity<Boolean> retryPayment(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
         return ResponseEntity.ok().body(
-                this.orderService.save(order, result));
+                this.orderService.tryPayment(order, result));
     }
 
-    @GetMapping("/orders/alerts/}")
+    @GetMapping("/orders/alerts/")
     ResponseEntity<List<Alert>> findAllAlerts(){
         List<Alert> res = orderService.findAllAlerts();
         return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping("/orders/users/insolvent")
-    ResponseEntity<List<User>> getInsolventUsers(){
-        return ResponseEntity.ok().body(
-                this.orderService.getInsolventUsers()
-        );
-    }
 
-    @GetMapping("/orders/rejectedOrders")
-    ResponseEntity<List<Order>> getRejectedOrders(){
-        List<Order> res = orderService.getRejectedOrders();
+
+    @GetMapping("/orders/suspended/")
+    ResponseEntity<List<Order>> getSuspendedOrders(){
+        List<Order> res = orderService.getSuspended();
         return ResponseEntity.ok().body(res);
     }
 }

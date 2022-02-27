@@ -12,12 +12,12 @@ public interface PackageMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "telecoServices", source = "services")
+    @Mapping(target = "telecomServices", source = "services")
     Package toTarget(ServicePackageEntity source);
 
     @Mapping(source = "id"  , target = "id")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "telecoServices", target = "services")
+    @Mapping(source = "telecomServices", target = "services")
     ServicePackageEntity toSource(Package source);
 
 

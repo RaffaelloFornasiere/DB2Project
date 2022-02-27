@@ -4,7 +4,7 @@ package it.polimi.db2.telecoApp.web.rest;
 import it.polimi.db2.telecoApp.services.OptionalPackageService;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
-import it.polimi.db2.telecoApp.services.models.Pair;
+import it.polimi.db2.telecoApp.Utils.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

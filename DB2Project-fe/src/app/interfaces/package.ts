@@ -1,7 +1,7 @@
-import {telecoServices} from "./TelecoServices";
+import {TelecomService} from "./TelecomService";
 
 export type Package = {
-  id: number,
-  name: string,
-  telecomServices: telecoServices[]
+  id: number;
+  name: string;
+  telecomServices: TelecomService[];
 }

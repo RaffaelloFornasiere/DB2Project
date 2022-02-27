@@ -3,7 +3,7 @@ import {OptionalPackage} from "./OptionalPackage";
 import {ValidityPeriod} from "./ValidityPeriod";
 
 export interface PackageDetails {
-  package: Package | undefined,
+  package: Package,
   optionalPackages: OptionalPackage[],
   validityPeriods: ValidityPeriod[]
 }

@@ -25,11 +25,7 @@ export class AppComponent implements OnInit {
   title = 'Teleco Application';
   role!: String;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isHandset$!: Observable<boolean>;
 
   pages = [
     {title: "Dashboard", link: "/dashboard"},
@@ -50,6 +46,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private tokenStorageService: TokenStorageService,
   ) {
+
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe({
           next: event => {
@@ -61,42 +58,48 @@ export class AppComponent implements OnInit {
       {
         next: value => {
           this.isLoggedIn = value;
-          if (this.isLoggedIn) {
-            const user: User = this.tokenStorageService.getUser();
-            this.username = user.username;
-            this.role = user.roles[0];
-
-            this.navElements = this.pages.filter(p => p.title != 'Packages')
-              .map((p) => {
-                  return {
-                    title: p.title,
-                    link:
-                      '/'
-                      + this.role.substring('ROLE_'.length).toLocaleLowerCase()
-                      + '-'
-                      + p.title.toLocaleLowerCase()
-                  }
-                }
-              );
-            this.navElements.push({title: "Packages", link: "/packages"})
-          } else {
-            console.log("ciaooooo")
-            this.navElements = [{title: "Packages", link: "/packages"}];
-          }
+          this.setupSideBar();
         }
       }
     )
+    this.showLoginBar = true;
+    this.isLoggedIn = false;
+  }
+
+  setupSideBar(){
+    if (this.isLoggedIn) {
+      const user: User = this.tokenStorageService.getUser();
+      this.username = user.username;
+      this.role = user.roles[0];
+
+      this.navElements = this.pages.filter(p => p.title != 'Packages')
+        .map((p) => {
+            return {
+              title: p.title,
+              link:
+                '/'
+                + this.role.substring('ROLE_'.length).toLocaleLowerCase()
+                + '-'
+                + p.title.toLocaleLowerCase()
+            }
+          }
+        );
+      this.navElements.push({title: "Packages", link: "/packages"})
+    } else {
+      this.navElements = [{title: "Packages", link: "/packages"}];
+    }
   }
 
   ngOnInit(): void {
-
+    console.log("")
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      console.log("user: ", user)
-      this.username = user.username;
-      this.role = user.roles[0];
-    }
+    this.setupSideBar();
+    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+        map(result => result.matches),
+        shareReplay()
+      )
+
   }
 
 

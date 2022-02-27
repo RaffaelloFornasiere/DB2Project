@@ -16,9 +16,13 @@ class AlertRepositoryTest {
 
     @Test
     public void testCustomFind(){
-        var res = alertRepository.findAllCustom();
-        assertThat(res).isNotEmpty();
-        System.out.println(res);
+//        var res = alertRepository.findAllCustom();
+//        assertThat(res).isNotEmpty();
+//        System.out.println(res);
+
+
+        var res2 = alertRepository.findAll();
+        System.out.println(res2);
     }
 
 }

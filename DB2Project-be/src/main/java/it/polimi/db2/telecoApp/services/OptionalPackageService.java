@@ -2,7 +2,7 @@ package it.polimi.db2.telecoApp.services;
 
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
-import it.polimi.db2.telecoApp.services.models.Pair;
+import it.polimi.db2.telecoApp.Utils.Pair;
 
 import java.util.List;
 

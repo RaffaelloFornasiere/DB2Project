@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -19,5 +20,9 @@ public class AlertRepositoryCustomImpl implements AlertRepositoryCustom {
     @Override
     public List<AlertEntity> findAllCustom() {
         return (List<AlertEntity>) entityManager.createQuery("select a from AlertEntity a").getResultList();
+    }
+
+    public Optional<AlertEntity> findAllByIdCustom(Long id) {
+        return Optional.of(entityManager.find(AlertEntity.class, id));
     }
 }

@@ -8,8 +8,7 @@ import it.polimi.db2.telecoApp.services.mappers.OrderMapper;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Order;
 import it.polimi.db2.telecoApp.services.models.Package;
-import it.polimi.db2.telecoApp.services.models.Pair;
-import org.springframework.security.core.parameters.P;
+import it.polimi.db2.telecoApp.Utils.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
