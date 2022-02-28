@@ -84,11 +84,11 @@ public class OrderResource {
 
 
 
-    @GetMapping("/orders/suspended/")
-    ResponseEntity<List<Order>> getSuspendedOrders(){
-        List<Order> res = orderService.getSuspended();
-        return ResponseEntity.ok().body(res);
-    }
+//    @GetMapping("/orders/suspended/")
+//    ResponseEntity<List<Order>> getSuspendedOrders(){
+//        List<Order> res = orderService.getSuspended();
+//        return ResponseEntity.ok().body(res);
+//    }
 }
 
 

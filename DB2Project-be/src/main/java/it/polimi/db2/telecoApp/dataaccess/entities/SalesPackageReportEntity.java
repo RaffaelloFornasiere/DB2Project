@@ -19,6 +19,7 @@ import javax.persistence.*;
 @Table(name = "SalesPackageReport")
 public class SalesPackageReportEntity {
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "package_id")
     private ServicePackageEntity package_id;

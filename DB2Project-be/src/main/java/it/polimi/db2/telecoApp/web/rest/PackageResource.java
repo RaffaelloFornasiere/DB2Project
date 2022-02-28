@@ -2,6 +2,7 @@ package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.ValidityPeriodService;
+import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
 import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,10 @@ public class PackageResource {
     }
 
 
-    @PostMapping("/packages/save")
-    ResponseEntity<Package> save(@RequestBody Package servicePackage) {
+    @PostMapping("/packages/save/")
+    ResponseEntity<Package> save(@RequestParam(name = "package") Package servicePackage,
+                                 @RequestParam(name = "optionalPackages", required = false) List<OptionalPackage> optionalPackages,
+                                 @RequestParam(name = "validityPeriods", required = false) List<ValidityPeriod> validityPeriods) {
         return ResponseEntity.ok().body(
                 this.packageService.save(servicePackage)
         );
@@ -52,7 +55,12 @@ public class PackageResource {
                 this.validityPeriodService.findAllByPackageId(packageId)
         );
     }
-
+    @GetMapping("/packages/validity-periods/")
+    ResponseEntity<List<ValidityPeriod>> findValidityPeriods(){
+        return ResponseEntity.ok().body(
+                this.validityPeriodService.findAll()
+        );
+    }
 
 
     @GetMapping("/all")

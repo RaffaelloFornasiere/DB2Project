@@ -5,9 +5,10 @@ import {NavbarService} from "../../../services/navbar.service";
 import {TelecomService} from "../../../interfaces/TelecomService";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {OptionalPackage} from "../../../interfaces/OptionalPackage";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatFormField} from "@angular/material/form-field";
 import {FormFieldComponent} from "../../../components/form-field/form-field.component";
+import {F} from "@angular/cdk/keycodes";
 
 
 enum FormType {
@@ -38,7 +39,7 @@ export class AdminSettingsComponent implements OnInit {
 
   packages: Package[] = [];
   services: TelecomService[] = [];
-  servicesNames : string[] = [];
+  servicesNames: string[] = [];
   validityPeriods: ValidityPeriod[] = [];
   optionalPackages: OptionalPackage[] = [];
 
@@ -47,91 +48,117 @@ export class AdminSettingsComponent implements OnInit {
   width = 1;
   needsToBeLogged = false;
   managers: Manager[] = [];
+
+  packageEditor = {
+    name: {placeHolder: "Package Name", value: ""},
+    description: {placeHolder: "Description", value: ""},
+    services: {placeHolder: "Services", options: this.services.map(s => s.name), value: []}
+  }
+  serviceEditor = {}
+
   @ViewChild('nameForm') nameForm!: FormFieldComponent;
   @ViewChild('servicesForm') servicesForm!: FormFieldComponent;
 
+  packageFormGroup: FormGroup = new FormGroup({
+    packageName: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    services: new FormControl([], [Validators.min(2)]),
+    optionalPackages: new FormControl([], [Validators.required]),
+    validityPeriods: new FormControl([])
+  })
 
-  getData(){
-    console.log(this.nameForm.getData());
-    console.log(this.servicesForm.getData());
+  selectedPackage?: number;
+
+  selectPackage(packageId?: number) {
+    if (packageId === undefined)
+      return;
+    this.selectedPackage = packageId;
+    this.buttonTile = "Edit";
+    this.packageService.getOptionalPackages(packageId).subscribe(data =>
+      this.packageFormGroup.get('optionalPackages')?.setValue(data));
+    this.packageService.getDetails(packageId).subscribe(data => {
+      this.packageFormGroup.get('packageName')?.setValue(data.name)
+      this.packageFormGroup.get('services')?.setValue(data.telecomServices)
+    });
+    this.packageService.getValidityPeriods(packageId).subscribe(
+      data => {
+        console.log(data)
+        console.log(this.packageFormGroup.get('validityPeriods')?.value)
+        this.packageFormGroup.get('validityPeriods')?.setValue(data)
+      }
+    )
 
   }
 
-  packageForm: FormControl = new FormControl();
+
+  getData() {
+    console.log(this.packageEditor.services.options)
+    console.log(this.packageFormGroup);
+  }
+
+  send() {
+    if (this.selectedPackage === undefined) {
+      let p: Package = {
+        id: undefined,
+        name: this.packageFormGroup.get('packageName')?.value,
+        telecomServices: this.packageFormGroup.get('services')?.value
+      }
+      console.log(p)
+      this.packageService.save(p, this.packageFormGroup.get('optionalPacakges')?.value,
+        this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
+        console.log(data)
+      });
+    } else {
+      let p = this.packages.find(p => p.id === this.selectedPackage);
+      if (p === undefined)
+        console.error("errore")
+      else {
+        p!.name = this.packageFormGroup.get('packageName')?.value
+        p!.telecomServices = this.packageFormGroup.get('services')?.value
+        console.log(p)
+        this.packageService.save(p, this.packageFormGroup.get('optionalPacakges')?.value,
+          this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
+          console.log(data)
+        });
+      }
+    }
+  }
+
 
   constructor(private packageService: PackageService,
-              private navbarService: NavbarService) {
-    let i:string[] = this.services.map(s => s.name);
+              private navbarService: NavbarService
+  ) {
+    let i: string[] = this.services.map(s => s.name);
 
-    this.managers.push(
-      new Manager(this.packages, [
-        {property: "id", type: FormType.NUMBER_INTEGER},
-        {property: "name", type: FormType.STRING},
-        {property: "telecomServices", type: FormType.SELECT, args: this.services},
-      ]),
-      new Manager(this.services, [
-        {property: "id", type: FormType.NUMBER_INTEGER},
-        {property: "name", type: FormType.STRING},
-        {
-          property: "details", type: FormType.SELECT, args: [
-            {
-              service: "fixedPhone", properties: [
-                {property: "costMonth", type: "number"}
-              ]
-            },
-            {
-              service: "fixedInternet", properties: [
-                {property: "gigabytes", type: "number"},
-                {property: "extraGigaBytesFee", type: "number"},
-                {property: "costMonth", type: "number"}
-              ]
-            },
-            {
-              service: "mobileInternet", properties: [
-                {property: "gigabytes", type: "number"},
-                {property: "extraGigaBytesFee", type: "number"},
-                {property: "costMonth", type: "number"}
-              ]
-            },
-            {
-              service: "mobilePhone", properties: [
-                {property: "sms", type: "number"},
-                {property: "minutes", type: "number"},
-                {property: "extraSmsFee", type: "number"},
-                {property: "extraMinutesFee", type: "number"}
-              ]
-            }
-          ]
-        },
-      ]),
-      new Manager(this.optionalPackages, [
-        {property: "id", type: FormType.NUMBER_INTEGER},
-        {property: "name", type: FormType.STRING},
-        {property: "description", type: FormType.STRING},
-        {property: "monthly_fee", type: FormType.NUMBER_DOUBLE},
-      ]),
-      new Manager(this.validityPeriods, [
-        {property: "id", type: FormType.NUMBER_INTEGER},
-        {property: "months", type: FormType.NUMBER_INTEGER},
-        {property: "fee", type: FormType.NUMBER_DOUBLE},
-      ])
-    )
   }
 
-  ngOnInit(): void {
-    this.packageService.getPackages()
+  setupEditor() {
+
+  }
+
+  ngOnInit()
+    :
+    void {
+
+    this.packageService.getAllPackages()
       .subscribe(packages => {
         this.packages = packages
       });
 
-    this.packageService.getServices()
+    this.packageService.getAllServices()
       .subscribe(
         services => {
           this.services = services
           this.servicesNames = services.map(s => s.name)
         }
       )
-
+    this.packageService.getAllOptionalPackages()
+      .subscribe(
+        optionalPackages => this.optionalPackages = optionalPackages
+      )
+    this.packageService.getAllValidityPeriods()
+      .subscribe(
+        validityPeriods => this.validityPeriods = validityPeriods
+      )
 
   }
 

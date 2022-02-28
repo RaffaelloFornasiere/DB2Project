@@ -1,7 +1,7 @@
 import {TelecomService} from "./TelecomService";
 
 export type Package = {
-  id: number;
+  id?: number;
   name: string;
   telecomServices: TelecomService[];
 }

@@ -25,4 +25,11 @@ public class ValidityPeriodServiceImpl implements ValidityPeriodService {
                 .stream().map(validityPeriodMapper::toTarget)
                 .toList();
     }
+
+    @Override
+    public List<ValidityPeriod> findAll() {
+        return validityPeriodRepository.findAll()
+                .stream().map(validityPeriodMapper::toTarget)
+                .toList();
+    }
 }

@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -16,9 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class ServicePackageEntity {
+public class ServicePackageEntity implements Serializable {
     @Id
     @Column(name = "package_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "package_name")

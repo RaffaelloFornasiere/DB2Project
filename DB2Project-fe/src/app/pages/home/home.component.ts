@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   responsiveOptions!: any;
 
   constructor(private packageService: PackageService) {
-    packageService.getPackages().subscribe(data => {
+    packageService.getAllPackages().subscribe(data => {
       if (data)
         this.packages = data;
       console.log("products: ", this.packages);

@@ -49,20 +49,20 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         }
       }
     )
-    this.statService.getOrderPerPackageAndVP().subscribe(
-      {
-        next: (value:{key: {first: Package,second: ValidityPeriod},value: number}[]) => {
-          this.totalPurchases = value.map((i) =>
-          {return {package: i.key.first, validityPeriod : i.key.second,  purchases: i.value}})
-        }
-      }
-    )
+    // this.statService.getOrderPerPackageAndVP().subscribe(
+    //   {
+    //     next: (value:{key: {first: Package,second: ValidityPeriod},value: number}[]) => {
+    //       this.totalPurchases = value.map((i) =>
+    //       {return {package: i.key.first, validityPeriod : i.key.second,  purchases: i.value}})
+    //     }
+    //   }
+    // )
     this.statService.getInsolventUsers().subscribe({
       next: value => this.insolventUsers = value
     })
-    this.statService.getSuspendedOrders().subscribe({
-      next: value => this.suspendedOrders = value
-    })
+    // this.statService.getSuspendedOrders().subscribe({
+    //   next: value => this.suspendedOrders = value
+    // })
 
 
   }

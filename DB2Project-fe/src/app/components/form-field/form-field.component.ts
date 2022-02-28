@@ -28,7 +28,7 @@ export class FormFieldComponent implements OnInit {
   @Input() multipleSelection: boolean = false;
   selectionFormControl: FormControl = new FormControl(this.selectionArgs.selected);
   nameFormField: FormControl = new FormControl(this.propertyName.value)
-
+  value: string = "";
 
 
   constructor() {
@@ -43,6 +43,7 @@ export class FormFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.value = this.propertyName.value;
   }
 
 }

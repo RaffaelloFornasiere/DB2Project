@@ -23,7 +23,7 @@ public class OptionalPackageResource {
         this.optionalPackageService = optionalPackageService;
     }
 
-    @GetMapping("/optionalPackages")
+    @GetMapping("/optionalPackages/")
     ResponseEntity<List<OptionalPackage>> findAll(){
         return ResponseEntity.ok().body(
                 optionalPackageService.findAll()

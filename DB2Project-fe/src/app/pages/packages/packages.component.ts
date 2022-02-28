@@ -21,7 +21,7 @@ export class PackagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.packageService.getPackages()
+   this.packageService.getAllPackages()
      .subscribe(packages =>
      {
        this.packages = packages
