@@ -20,9 +20,12 @@ import javax.persistence.*;
 public class SalesPackageReportEntity {
 
     @Id
+    @Column(name = "package_id")
+    private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "package_id")
-    private ServicePackageEntity package_id;
+    @JoinColumn(name = "package_id", insertable = false, updatable = false)
+    private ServicePackageEntity servicePackage;
 
     @Column(name = "total_sold")
     private Integer total_sold;

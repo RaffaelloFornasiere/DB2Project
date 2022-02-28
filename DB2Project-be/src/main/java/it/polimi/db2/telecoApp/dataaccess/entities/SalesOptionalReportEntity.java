@@ -19,10 +19,13 @@ import javax.persistence.*;
 @Table(name = "SalesOptionalReport")
 public class SalesOptionalReportEntity {
 
-    @OneToOne
     @Id
-    @JoinColumn (name = "optional_package_id")
-    private OptionalPackageEntity id;
+    @Column(name = "optional_package_id")
+    private Long id;
+
+    @OneToOne
+    @JoinColumn (name = "optional_package_id", insertable = false, updatable = false)
+    private OptionalPackageEntity optionalPackage;
 
     @Column(name = "score")
     private Double score;
