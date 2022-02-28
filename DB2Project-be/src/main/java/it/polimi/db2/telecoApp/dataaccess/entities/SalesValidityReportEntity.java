@@ -1,5 +1,6 @@
 package it.polimi.db2.telecoApp.dataaccess.entities;
 
+import it.polimi.db2.telecoApp.dataaccess.entities.ids.SalesValidityId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -19,19 +21,12 @@ import javax.persistence.*;
 @Table(name = "SalesValidityReport")
 public class SalesValidityReportEntity {
 
-    @Id
-    @OneToOne
-    @JoinColumn(name = "package_id")
-    private ServicePackageEntity package_id;
+    @EmbeddedId
+    private SalesValidityId salesValidityId;
 
-    @Id
-    @OneToOne
-    @JoinColumn(name = "validity_period_id")
-    private ValidityPeriodEntity id;
 
     @Column(name = "total")
     private Integer total;
 
-
-
 }
+
