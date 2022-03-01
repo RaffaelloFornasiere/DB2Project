@@ -7,4 +7,4 @@ import java.util.List;
 public interface ReportRepositoryCustom {
     List<SalesValidityReportEntity> findAllCustom();
 
-    }
+}

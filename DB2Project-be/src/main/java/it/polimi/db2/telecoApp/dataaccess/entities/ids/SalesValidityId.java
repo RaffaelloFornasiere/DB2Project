@@ -1,10 +1,12 @@
 package it.polimi.db2.telecoApp.dataaccess.entities.ids;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-
+@Data
 @Embeddable
 public class SalesValidityId implements Serializable {
 
