@@ -14,5 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class ValidityPeriod {
     private Long id;
     private Integer months;
-    private String fee;
+    private Double fee;
 }

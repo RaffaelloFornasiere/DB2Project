@@ -45,16 +45,6 @@ export class AdminSettingsComponent implements OnInit {
 
   buttonTile = "Create"
 
-  width = 1;
-  needsToBeLogged = false;
-  managers: Manager[] = [];
-
-  packageEditor = {
-    name: {placeHolder: "Package Name", value: ""},
-    description: {placeHolder: "Description", value: ""},
-    services: {placeHolder: "Services", options: this.services.map(s => s.name), value: []}
-  }
-  serviceEditor = {}
 
   @ViewChild('nameForm') nameForm!: FormFieldComponent;
   @ViewChild('servicesForm') servicesForm!: FormFieldComponent;
@@ -68,31 +58,39 @@ export class AdminSettingsComponent implements OnInit {
 
   selectedPackage?: number;
 
+  newPackage(){
+    this.buttonTile = "Create";
+    this.selectedPackage = undefined;
+    this.packageFormGroup.get('optionalPackages')?.setValue(null)
+    this.packageFormGroup.get('packageName')?.setValue(null)
+    this.packageFormGroup.get('services')?.setValue(null)
+    this.packageFormGroup.get('validityPeriods')?.setValue(null)
+
+  }
+
+
   selectPackage(packageId?: number) {
     if (packageId === undefined)
       return;
     this.selectedPackage = packageId;
     this.buttonTile = "Edit";
-    this.packageService.getOptionalPackages(packageId).subscribe(data =>
-      this.packageFormGroup.get('optionalPackages')?.setValue(data));
+    this.packageService.getOptionalPackages(packageId).subscribe(data => {
+      console.log("getOptionalPackages: ", data)
+      this.packageFormGroup.get('optionalPackages')?.setValue(this.optionalPackages.filter(op => data.find(i => i.id === op.id)))
+    });
     this.packageService.getDetails(packageId).subscribe(data => {
+      console.log("getDetails: ", data)
+
       this.packageFormGroup.get('packageName')?.setValue(data.name)
-      this.packageFormGroup.get('services')?.setValue(data.telecomServices)
+      this.packageFormGroup.get('services')?.setValue(this.services.filter(s => data.telecomServices.find(i => i.id === s.id)));
     });
     this.packageService.getValidityPeriods(packageId).subscribe(
       data => {
-        console.log(data)
-        console.log(this.packageFormGroup.get('validityPeriods')?.value)
-        this.packageFormGroup.get('validityPeriods')?.setValue(data)
+        console.log("getValidityPeriods: ", data)
+        this.packageFormGroup.get('validityPeriods')?.setValue(this.validityPeriods.filter(vp => data.find(i => i.id === vp.id)))
       }
     )
 
-  }
-
-
-  getData() {
-    console.log(this.packageEditor.services.options)
-    console.log(this.packageFormGroup);
   }
 
   send() {

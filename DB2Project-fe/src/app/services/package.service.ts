@@ -87,7 +87,7 @@ export class PackageService {
 
 
   getDetails(id: number): Observable<Package> {
-    return this.http.get<Package>(this.packagesUrl + '/detail/' + id)
+    return this.http.get<Package>('api/home/packages/detail/' + id)
       .pipe(
         // tap(_ => console.log('fetched heroes')),
         catchError(this.handleError<Package>('getPackageDetail'))

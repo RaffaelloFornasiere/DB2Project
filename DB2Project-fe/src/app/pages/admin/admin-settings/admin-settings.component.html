@@ -7,7 +7,7 @@
             <div class="row">
 
               <div class="col-10">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" (click)="newPackage()">
                   New Service
                 </button>
                 <br> <br>
@@ -42,8 +42,8 @@
 
               <mat-form-field appearance="fill">
                 <mat-label>Services</mat-label>
-                <mat-select [formControlName]="'services'" multiple>
-                  <mat-option *ngFor="let option of this.services" [value]="option">
+                <mat-select [formControlName]="'services'" [value]="packageFormGroup.get('services')?.value" multiple>
+                  <mat-option *ngFor="let option of this.services"  [value]="option" value = "{{option}}">
                     {{option.name}}
                   </mat-option>
                 </mat-select>
@@ -52,7 +52,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Optional Packages</mat-label>
                 <mat-select [formControlName]="'optionalPackages'" multiple>
-                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option.name">
+                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option" value = "{{option}}">
                     {{option.name}}
                   </mat-option>
                 </mat-select>
@@ -61,7 +61,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Validity Periods</mat-label>
                 <mat-select [formControlName]="'validityPeriods'" multiple>
-                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option">
+                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option" value = "{{option}}">
                     Months: {{option.months}}, Fee: {{option.fee}}
                   </mat-option>
                 </mat-select>

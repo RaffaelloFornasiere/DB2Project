@@ -55,8 +55,10 @@ export class AuthInterceptor implements HttpInterceptor {
   private handleAuthError(err: HttpErrorResponse): Observable<any> {
     //handle your auth error or rethrow
     if (err.status === 401 || err.status === 403) {
+      this.token.signOut();
       this.navbarService.toggleSidebarVisibility(true);
-      this.router.navigateByUrl("login")
+      this.router.url
+      this.router.navigate(["login"], {queryParams: {returnUrl: this.router.url}})
         .then(() => of(err.message))
       // or EMPTY may be appropriate here
     }
