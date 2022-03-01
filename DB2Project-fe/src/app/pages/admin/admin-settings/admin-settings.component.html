@@ -1,18 +1,12 @@
-<mat-tab-group>
+<mat-tab-group headerPosition="above" [selectedIndex]="1">
   <mat-tab label="Package Manager">
     <div class="container">
       <div class="row">
         <div class="col-6">
           <div class="container">
             <div class="row">
-
               <div class="col-10">
-                <button class="btn btn-primary" (click)="newPackage()">
-                  New Service
-                </button>
-                <br> <br>
                 <h2> Edit current packages: </h2>
-
                 <div *ngFor="let package of packages">
                   <mat-card>
                     <mat-card-title>
@@ -28,8 +22,13 @@
           </div>
         </div>
         <div class="col-6">
-          <br><br><br><br><br>
+          <br><br>
+          <button class="btn btn-primary mb-3 mt-3" (click)="newPackage()">
+            New Package
+          </button>
+
           <mat-card>
+
             <mat-card-title>Package Editor</mat-card-title>
             <mat-card-subtitle>Subtitle</mat-card-subtitle>
             <form [formGroup]="packageFormGroup">
@@ -79,22 +78,19 @@
   <mat-tab label="Service Manager">
     <div class="container">
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-6">
           <div class="container">
             <div class="row">
 
-              <div class="col-6">
-                <button class="btn btn-primary">
-                  New Service
-                </button>
-                <br> <br>
-                <h2> Edit current services: </h2>
+              <div class="col-10">
+
+                <h2> Edit current packages: </h2>
 
                 <div *ngFor="let service of services">
                   <mat-card>
                     <mat-card-title>
                       {{service.name}}
-                      <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
+                      <button class="btn btn-secondary float-right" (click)="selectPackage(service.id)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -104,12 +100,59 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-6">
-          TWO
+        <div class="col-6">
+          <br><br>
+          <button class="btn btn-primary mb-3 mt-3" (click)="newPackage()">
+            New Service
+          </button>
+
+          <mat-card>
+
+            <mat-card-title>Service Editor</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+            <form [formGroup]="packageFormGroup">
+
+              <mat-form-field appearance="fill">
+                <mat-label>Package Name</mat-label>
+                <input matInput [formControlName]="'packageName'">
+              </mat-form-field>
+
+
+              <mat-form-field appearance="fill">
+                <mat-label>Services</mat-label>
+                <mat-select [formControlName]="'services'" [value]="packageFormGroup.get('services')?.value" multiple>
+                  <mat-option *ngFor="let option of this.services"  [value]="option" value = "{{option}}">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Optional Packages</mat-label>
+                <mat-select [formControlName]="'optionalPackages'" multiple>
+                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option" value = "{{option}}">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Validity Periods</mat-label>
+                <mat-select [formControlName]="'validityPeriods'" multiple>
+                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option" value = "{{option}}">
+                    Months: {{option.months}}, Fee: {{option.fee}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+
+            <mat-card-actions align="end">
+              <button class="btn ml-1 btn-primary" (click)="send()">{{buttonTile}}</button>
+            </mat-card-actions>
+          </mat-card>
         </div>
       </div>
     </div>
-
   </mat-tab>
   <mat-tab label="Optional Package Manager">
 
