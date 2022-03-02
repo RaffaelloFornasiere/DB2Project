@@ -22,10 +22,6 @@ export class ConfirmationComponent implements OnInit {
     )
   }
 
-  camelToText(camel: string): string {
-    let result = camel.replace(/([A-Z])/g, " $1");
-    return result.charAt(0).toUpperCase() + result.slice(1);
-  }
 
   buy(){
      this.purchaseService.buy(this.data.order, this.data.payment)

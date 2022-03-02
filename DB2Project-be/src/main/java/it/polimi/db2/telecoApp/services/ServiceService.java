@@ -1,11 +1,12 @@
 package it.polimi.db2.telecoApp.services;
 
-import it.polimi.db2.telecoApp.services.models.TelecoService;
+import it.polimi.db2.telecoApp.services.models.TelecomService;
 
 import java.util.List;
 
 public interface ServiceService {
-    List<TelecoService> findAll();
-    TelecoService save (TelecoService s);
+    List<TelecomService> findAll();
+    TelecomService save (TelecomService s);
 
+    TelecomService findById(Long serviceId);
 }

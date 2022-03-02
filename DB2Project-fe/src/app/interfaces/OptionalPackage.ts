@@ -1,6 +1,6 @@
 
 export type OptionalPackage = {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   monthlyFee: number;

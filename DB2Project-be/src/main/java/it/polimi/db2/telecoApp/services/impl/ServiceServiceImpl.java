@@ -3,10 +3,11 @@ package it.polimi.db2.telecoApp.services.impl;
 import it.polimi.db2.telecoApp.dataaccess.repositories.ServiceRepository;
 import it.polimi.db2.telecoApp.services.ServiceService;
 import it.polimi.db2.telecoApp.services.mappers.ServiceMapper;
-import it.polimi.db2.telecoApp.services.models.TelecoService;
+import it.polimi.db2.telecoApp.services.models.TelecomService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-@org.springframework.stereotype.Service
+@Service
 public class ServiceServiceImpl implements ServiceService {
 
     private final ServiceRepository serviceRepository;
@@ -18,16 +19,23 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<TelecoService> findAll() {
+    public List<TelecomService> findAll() {
         return serviceRepository.findAll()
                 .stream().map(serviceMapper::toTarget)
                 .toList();
             }
 
     @Override
-    public TelecoService save(TelecoService telecoService){
+    public TelecomService save(TelecomService telecomService){
         return serviceMapper.toTarget(
                 serviceRepository
-                        .save(serviceMapper.toSource(telecoService)));
+                        .save(serviceMapper.toSource(telecomService)));
+    }
+
+    @Override
+    public TelecomService findById(Long serviceId) {
+        return serviceRepository.findById(serviceId)
+                .map(serviceMapper::toTarget).orElseThrow();
+
     }
 }

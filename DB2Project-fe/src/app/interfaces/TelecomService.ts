@@ -1,7 +1,7 @@
 import {ServiceDetails} from "./ServiceDetails";
 
 export type TelecomService = {
-  id: number;
+  id?: number;
   name: string;
-  details: ServiceDetails[];
+  details: ServiceDetails | any;
 }

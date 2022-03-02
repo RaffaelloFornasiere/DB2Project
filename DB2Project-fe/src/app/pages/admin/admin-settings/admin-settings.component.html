@@ -1,4 +1,4 @@
-<mat-tab-group headerPosition="above" [selectedIndex]="1">
+<mat-tab-group headerPosition="above"  [(selectedIndex)]="pageSelected" >
   <mat-tab label="Package Manager">
     <div class="container">
       <div class="row">
@@ -22,8 +22,7 @@
           </div>
         </div>
         <div class="col-6">
-          <br><br>
-          <button class="btn btn-primary mb-3 mt-3" (click)="newPackage()">
+          <button class="btn btn-primary mb-3 mt-1" (click)="selectPackage()">
             New Package
           </button>
 
@@ -42,7 +41,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Services</mat-label>
                 <mat-select [formControlName]="'services'" [value]="packageFormGroup.get('services')?.value" multiple>
-                  <mat-option *ngFor="let option of this.services"  [value]="option" value = "{{option}}">
+                  <mat-option *ngFor="let option of this.services" [value]="option" value="{{option}}">
                     {{option.name}}
                   </mat-option>
                 </mat-select>
@@ -51,7 +50,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Optional Packages</mat-label>
                 <mat-select [formControlName]="'optionalPackages'" multiple>
-                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option" value = "{{option}}">
+                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option" value="{{option}}">
                     {{option.name}}
                   </mat-option>
                 </mat-select>
@@ -60,7 +59,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Validity Periods</mat-label>
                 <mat-select [formControlName]="'validityPeriods'" multiple>
-                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option" value = "{{option}}">
+                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option" value="{{option}}">
                     Months: {{option.months}}, Fee: {{option.fee}}
                   </mat-option>
                 </mat-select>
@@ -68,7 +67,7 @@
             </form>
 
             <mat-card-actions align="end">
-              <button class="btn ml-1 btn-primary" (click)="send()">{{buttonTile}}</button>
+              <button class="btn ml-1 btn-primary" (click)="sendPackage()">{{buttonTile}}</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -84,13 +83,13 @@
 
               <div class="col-10">
 
-                <h2> Edit current packages: </h2>
+                <h2> Edit current services: </h2>
 
                 <div *ngFor="let service of services">
                   <mat-card>
                     <mat-card-title>
                       {{service.name}}
-                      <button class="btn btn-secondary float-right" (click)="selectPackage(service.id)">Edit</button>
+                      <button class="btn btn-secondary float-right" (click)="selectService(service.id)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -101,8 +100,8 @@
           </div>
         </div>
         <div class="col-6">
-          <br><br>
-          <button class="btn btn-primary mb-3 mt-3" (click)="newPackage()">
+
+          <button class="btn btn-primary mb-3 mt-1" (click)="selectService()">
             New Service
           </button>
 
@@ -110,44 +109,66 @@
 
             <mat-card-title>Service Editor</mat-card-title>
             <mat-card-subtitle>Subtitle</mat-card-subtitle>
-            <form [formGroup]="packageFormGroup">
+            <form [formGroup]="serviceFormGroup">
 
               <mat-form-field appearance="fill">
-                <mat-label>Package Name</mat-label>
-                <input matInput [formControlName]="'packageName'">
+                <mat-label>Service Name</mat-label>
+                <input matInput [formControlName]="'serviceName'">
               </mat-form-field>
 
 
               <mat-form-field appearance="fill">
-                <mat-label>Services</mat-label>
-                <mat-select [formControlName]="'services'" [value]="packageFormGroup.get('services')?.value" multiple>
-                  <mat-option *ngFor="let option of this.services"  [value]="option" value = "{{option}}">
-                    {{option.name}}
+                <mat-label>Service Type</mat-label>
+                <mat-select [formControlName]="'serviceTypes'" [value]="packageFormGroup.get('serviceTypes')?.value">
+                  <mat-option *ngFor="let option of this.serviceTypes" [value]="option" value="{{option}}">
+                    {{option}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
 
               <mat-form-field appearance="fill">
-                <mat-label>Optional Packages</mat-label>
-                <mat-select [formControlName]="'optionalPackages'" multiple>
-                  <mat-option *ngFor="let option of this.optionalPackages" [value]="option" value = "{{option}}">
-                    {{option.name}}
-                  </mat-option>
-                </mat-select>
+                <mat-label>Cost Month</mat-label>
+                <input matInput type="number" [formControlName]="'costMonth'">
               </mat-form-field>
 
-              <mat-form-field appearance="fill">
-                <mat-label>Validity Periods</mat-label>
-                <mat-select [formControlName]="'validityPeriods'" multiple>
-                  <mat-option *ngFor="let option of this.validityPeriods" [value]="option" value = "{{option}}">
-                    Months: {{option.months}}, Fee: {{option.fee}}
-                  </mat-option>
-                </mat-select>
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Sms</mat-label>
+                <input matInput type="number" [formControlName]="'sms'">
               </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Minutes</mat-label>
+                <input matInput type="number" [formControlName]="'minutes'">
+              </mat-form-field>
+
+              <mat-form-field
+                *ngIf="['Fixed Internet', 'Mobile Internet'].includes(serviceFormGroup.get('serviceTypes')?.value)"
+                appearance="fill">
+                <mat-label>Gigabytes</mat-label>
+                <input matInput type="number" [formControlName]="'gigabytes'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Extra sms fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraSmsFee'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Extra minutes fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraMinutesFee'">
+              </mat-form-field>
+
+              <mat-form-field
+                *ngIf="['Fixed Internet', 'Mobile Internet'].includes(serviceFormGroup.get('serviceTypes')?.value)"
+                appearance="fill">
+                <mat-label>Extra GB fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraGBFee'">
+              </mat-form-field>
+
             </form>
 
             <mat-card-actions align="end">
-              <button class="btn ml-1 btn-primary" (click)="send()">{{buttonTile}}</button>
+              <button class="btn ml-1 btn-primary" (click)="sendService()">{{buttonTile}}</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -155,53 +176,162 @@
     </div>
   </mat-tab>
   <mat-tab label="Optional Package Manager">
-
     <div class="container">
       <div class="row">
-
         <div class="col-6">
-          <button class="btn btn-primary">
-            New Service
-          </button>
-          <br> <br>
-          <h2> Edit current services: </h2>
+          <div class="container">
+            <div class="row">
 
-          <div *ngFor="let service of services">
-            <mat-card>
-              <mat-card-title>
-                {{service.name}}
-                <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
-              </mat-card-title>
-            </mat-card>
-            <br>
+              <div class="col-10">
+
+                <h2> Edit current optional packages: </h2>
+
+                <div *ngFor="let optionalPackage of optionalPackages">
+                  <mat-card>
+                    <mat-card-title>
+                      {{optionalPackage.name}}
+                      <button class="btn btn-secondary float-right" (click)="selectOptionalPackage(optionalPackage.id)">Edit</button>
+                    </mat-card-title>
+                  </mat-card>
+                  <br>
+                </div>
+
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary mb-3 mt-1" (click)="selectOptionalPackage()">
+            New Optional Package
+          </button>
 
+          <mat-card>
+
+            <mat-card-title>Optional Package Editor</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+            <form [formGroup]="optionalPackageFormGroup">
+
+              <mat-form-field appearance="fill">
+                <mat-label>Optional Package Name</mat-label>
+                <input matInput [formControlName]="'name'">
+              </mat-form-field>
+
+
+              <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <input matInput [formControlName]="'description'">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Monthly Fee</mat-label>
+                <input matInput type="number" [formControlName]="'monthlyFee'">
+              </mat-form-field>
+            </form>
+
+            <mat-card-actions align="end">
+              <button class="btn ml-1 btn-primary" (click)="sendOptionalPackage()">{{buttonTile}}</button>
+            </mat-card-actions>
+          </mat-card>
         </div>
       </div>
     </div>
   </mat-tab>
   <mat-tab label="Validity Period Manager">
-
     <div class="container">
       <div class="row">
-
         <div class="col-6">
-          <button class="btn btn-primary">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-10">
+
+                <h2> Edit current packages: </h2>
+
+                <div *ngFor="let service of services">
+                  <mat-card>
+                    <mat-card-title>
+                      {{service.name}}
+                      <button class="btn btn-secondary float-right" (click)="selectService(service.id)">Edit</button>
+                    </mat-card-title>
+                  </mat-card>
+                  <br>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary mb-3 mt-1" (click)="selectService()">
             New Service
           </button>
-          <br> <br>
-          <h2> Edit current services: </h2>
 
-          <div *ngFor="let service of services">
-            <mat-card>
-              <mat-card-title>
-                {{service.name}}
-                <button class="btn btn-secondary float-right" routerLink="/detail/{{service.id}}">Edit</button>
-              </mat-card-title>
-            </mat-card>
-            <br>
-          </div>
+          <mat-card>
 
+            <mat-card-title>Service Editor</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+            <form [formGroup]="serviceFormGroup">
+
+              <mat-form-field appearance="fill">
+                <mat-label>Service Name</mat-label>
+                <input matInput [formControlName]="'serviceName'">
+              </mat-form-field>
+
+
+              <mat-form-field appearance="fill">
+                <mat-label>Service Type</mat-label>
+                <mat-select [formControlName]="'serviceTypes'" [value]="packageFormGroup.get('serviceTypes')?.value">
+                  <mat-option *ngFor="let option of this.serviceTypes" [value]="option" value="{{option}}">
+                    {{option}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Cost Month</mat-label>
+                <input matInput type="number" [formControlName]="'costMonth'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Sms</mat-label>
+                <input matInput type="number" [formControlName]="'sms'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Minutes</mat-label>
+                <input matInput type="number" [formControlName]="'minutes'">
+              </mat-form-field>
+
+              <mat-form-field
+                *ngIf="['Fixed Internet', 'Mobile Internet'].includes(serviceFormGroup.get('serviceTypes')?.value)"
+                appearance="fill">
+                <mat-label>Gigabytes</mat-label>
+                <input matInput type="number" [formControlName]="'gigabytes'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Extra sms fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraSmsFee'">
+              </mat-form-field>
+
+              <mat-form-field *ngIf="serviceFormGroup.get('serviceTypes')?.value === 'Mobile Phone'" appearance="fill">
+                <mat-label>Extra minutes fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraMinutesFee'">
+              </mat-form-field>
+
+              <mat-form-field
+                *ngIf="['Fixed Internet', 'Mobile Internet'].includes(serviceFormGroup.get('serviceTypes')?.value)"
+                appearance="fill">
+                <mat-label>Extra GB fee</mat-label>
+                <input matInput type="number" [formControlName]="'extraGBFee'">
+              </mat-form-field>
+
+            </form>
+
+            <mat-card-actions align="end">
+              <button class="btn ml-1 btn-primary" (click)="sendService()">{{buttonTile}}</button>
+            </mat-card-actions>
+          </mat-card>
         </div>
       </div>
     </div>

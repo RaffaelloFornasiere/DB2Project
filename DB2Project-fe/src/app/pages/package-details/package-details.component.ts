@@ -40,10 +40,6 @@ export class PackageDetailsComponent implements OnInit {
     console.log(this.packageDetails.package.telecomServices)
   }
 
-  camelToText(camel: string): string {
-    let result = camel.replace(/([A-Z])/g, " $1");
-    return result.charAt(0).toUpperCase() + result.slice(1);
-  }
 
   buy(p: Package) {
     let conf = new MatDialogConfig();
