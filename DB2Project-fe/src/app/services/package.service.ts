@@ -32,6 +32,14 @@ export class PackageService {
       );
   }
 
+  getService(serviceId: number): Observable<TelecomService>{
+    return this.http.get<TelecomService>("api/services/"+serviceId)
+      .pipe(
+        // tap(_ => console.log('fetched heroes')),
+        catchError(this.handleError<TelecomService>('getServices', ))
+      );
+  }
+
   getServices(packageId: number): Observable<TelecomService[]> {
     return this.http.get<TelecomService[]>("api/services/" + packageId)
       .pipe(
@@ -54,11 +62,26 @@ export class PackageService {
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
       )
   }
+  getOptionalPackage(packageId: number): Observable<OptionalPackage> {
+    return this.http.get<OptionalPackage>("api/optionalPackages/" + packageId)
+      .pipe(
+        catchError(this.handleError<OptionalPackage>('getOptionalPackages', ))
+      )
+  }
 
   getOptionalPackages(packageId: number): Observable<OptionalPackage[]> {
     return this.http.get<OptionalPackage[]>("api/optionalPackages/package/" + packageId)
       .pipe(
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
+      )
+  }
+
+  saveOptionalPackage(optionalPackage: OptionalPackage):Observable<OptionalPackage>{
+    let params = new HttpParams().set('package', JSON.stringify(optionalPackage))
+    return this.http.post<OptionalPackage>("api/optionalPackages/save/",
+      {params: params}, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<OptionalPackage>('getOptionalPackages',))
       )
   }
 
@@ -76,12 +99,21 @@ export class PackageService {
       )
   }
 
-  save(packageService: Package, optionalPackages: OptionalPackage[], validityPeriods: ValidityPeriod[]): Observable<Package> {
+  savePackage(packageService: Package, optionalPackages: OptionalPackage[], validityPeriods: ValidityPeriod[]): Observable<Package> {
     let params = new HttpParams().set('package', JSON.stringify(packageService))
     return this.http.post<Package>("api/packages/save/",
       {params: params}, this.httpOptions)
       .pipe(
         catchError(this.handleError<Package>('getOptionalPackages',))
+      )
+  }
+
+  saveService(telecomService: TelecomService): Observable<TelecomService> {
+    let params = new HttpParams().set('package', JSON.stringify(telecomService))
+    return this.http.post<TelecomService>("api/packages/save/",
+      {params: params}, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<TelecomService>('getOptionalPackages',))
       )
   }
 

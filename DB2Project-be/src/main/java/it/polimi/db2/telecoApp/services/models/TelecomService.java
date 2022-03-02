@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class TelecoService {
+public class TelecomService {
     private Integer id;
     private String name;
     private ServiceDetails details;

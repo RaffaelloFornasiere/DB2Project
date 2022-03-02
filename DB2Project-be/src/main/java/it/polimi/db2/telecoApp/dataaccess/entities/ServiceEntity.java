@@ -19,7 +19,7 @@ import java.util.List;
 public class ServiceEntity {
     @Id
     @Column(name = "service_id")
-    private Integer serviceId;
+    private Long serviceId;
 
     @Column(name = "service_name")
     private String serviceName;

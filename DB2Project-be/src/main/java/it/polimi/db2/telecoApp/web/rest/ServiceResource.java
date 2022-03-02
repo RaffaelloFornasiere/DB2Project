@@ -1,7 +1,7 @@
 package it.polimi.db2.telecoApp.web.rest;
 
 import it.polimi.db2.telecoApp.services.ServiceService;
-import it.polimi.db2.telecoApp.services.models.TelecoService;
+import it.polimi.db2.telecoApp.services.models.TelecomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +18,23 @@ public class ServiceResource {
     }
 
     @GetMapping("/services")
-    ResponseEntity<List<TelecoService>> findAll() {
+    ResponseEntity<List<TelecomService>> findAll() {
         return ResponseEntity.ok().body(
                 serviceService.findAll()
         );
     }
 
-    @PostMapping("/services/save")
-    ResponseEntity<TelecoService> save(@RequestBody TelecoService telecoService) {
+    @GetMapping("/services/{serviceId}")
+    ResponseEntity<TelecomService> findById(@PathVariable Long serviceId) {
         return ResponseEntity.ok().body(
-                this.serviceService.save(telecoService)
+                serviceService.findById(serviceId)
+        );
+    }
+
+    @PostMapping("/services/save")
+    ResponseEntity<TelecomService> save(@RequestBody TelecomService telecomService) {
+        return ResponseEntity.ok().body(
+                this.serviceService.save(telecomService)
         );
     }
 }
