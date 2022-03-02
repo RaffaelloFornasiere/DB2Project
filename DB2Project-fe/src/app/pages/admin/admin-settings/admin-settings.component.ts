@@ -55,8 +55,13 @@ export class AdminSettingsComponent implements OnInit {
     monthlyFee: new FormControl(null, [Validators.required]),
   })
 
+  validityPeriodFormGroup: FormGroup = new FormGroup({
+    fee: new FormControl(null, [Validators.required]),
+    months: new FormControl(null, [Validators.required]),
+  })
+
   selected: (number | undefined)[] = [undefined, undefined, undefined, undefined];
-  pageSelected = 2;
+  pageSelected = 3;
 
   constructor(private packageService: PackageService,
               private navbarService: NavbarService
@@ -204,9 +209,9 @@ export class AdminSettingsComponent implements OnInit {
   }
 
 
-  selectOptionalPackage(serviceId?: number) {
-    this.selected[this.pageSelected] = serviceId;
-    if (serviceId === undefined) {
+  selectOptionalPackage(packageId?: number) {
+    this.selected[this.pageSelected] = packageId;
+    if (packageId === undefined) {
       this.buttonTile = "Create";
       this.optionalPackageFormGroup.get('name')?.setValue(null)
       this.optionalPackageFormGroup.get('description')?.setValue(null)
@@ -215,7 +220,7 @@ export class AdminSettingsComponent implements OnInit {
     }
 
     this.buttonTile = "Edit";
-    let data = this.optionalPackages.find(op => op.id === serviceId)!
+    let data = this.optionalPackages.find(op => op.id === packageId)!
     console.log(data)
     this.optionalPackageFormGroup.get('name')?.setValue(data.name)
     this.optionalPackageFormGroup.get('description')?.setValue(data.description)
@@ -236,5 +241,34 @@ export class AdminSettingsComponent implements OnInit {
     });
   }
 
+
+  selectValidityPeriod(validityId?: number) {
+    this.selected[this.pageSelected] = validityId;
+    if (validityId === undefined) {
+      this.buttonTile = "Create";
+      this.validityPeriodFormGroup.get('fee')?.setValue(null)
+      this.validityPeriodFormGroup.get('months')?.setValue(null)
+      return;
+    }
+
+    this.buttonTile = "Edit";
+    let data = this.validityPeriods.find(op => op.id === validityId)!
+    console.log(data)
+    this.validityPeriodFormGroup.get('fee')?.setValue(data.fee)
+    this.validityPeriodFormGroup.get('months')?.setValue(data.months)
+  }
+
+  sendValidityPeriod() {
+    let s: OptionalPackage = {id: undefined, name: "", description: "", monthlyFee: 0}
+
+    s.id = this.optionalPackages.filter(s => s.id === this.selected[this.pageSelected]).map(s => s.id)[0];
+    s.description = this.validityPeriodFormGroup.get('fee')?.value
+    s.monthlyFee = this.validityPeriodFormGroup.get('months')?.value
+
+    console.log("service: ", s)
+    this.packageService.saveOptionalPackage(s!).subscribe((data) => {
+      console.log(data)
+    });
+  }
 
 }
