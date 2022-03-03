@@ -133,7 +133,7 @@ export class AdminSettingsComponent implements OnInit {
         telecomServices: this.packageFormGroup.get('services')?.value
       }
       console.log(p)
-      this.packageService.savePackage(p, this.packageFormGroup.get('optionalPacakges')?.value,
+      this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
         this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
         console.log(data)
       });
@@ -145,7 +145,7 @@ export class AdminSettingsComponent implements OnInit {
         p!.name = this.packageFormGroup.get('packageName')?.value
         p!.telecomServices = this.packageFormGroup.get('services')?.value
         console.log(p)
-        this.packageService.savePackage(p, this.packageFormGroup.get('optionalPacakges')?.value,
+        this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
           this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
           console.log(data)
         });
@@ -255,20 +255,22 @@ export class AdminSettingsComponent implements OnInit {
     let data = this.validityPeriods.find(op => op.id === validityId)!
     console.log(data)
     this.validityPeriodFormGroup.get('fee')?.setValue(data.fee)
+    this.validityPeriodFormGroup.get('fee')?.setValue(data.fee)
     this.validityPeriodFormGroup.get('months')?.setValue(data.months)
   }
 
   sendValidityPeriod() {
-    let s: OptionalPackage = {id: undefined, name: "", description: "", monthlyFee: 0}
+    let s: ValidityPeriod = {id: undefined, fee: 0, months: 0}
 
     s.id = this.optionalPackages.filter(s => s.id === this.selected[this.pageSelected]).map(s => s.id)[0];
-    s.description = this.validityPeriodFormGroup.get('fee')?.value
-    s.monthlyFee = this.validityPeriodFormGroup.get('months')?.value
+    s.fee = this.validityPeriodFormGroup.get('fee')?.value
+    s.months = this.validityPeriodFormGroup.get('months')?.value
 
     console.log("service: ", s)
-    this.packageService.saveOptionalPackage(s!).subscribe((data) => {
+    this.packageService.saveValidityPeriod(s!).subscribe((data) => {
       console.log(data)
     });
+    this.ngOnInit();
   }
 
 }

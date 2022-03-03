@@ -32,11 +32,11 @@ export class PackageService {
       );
   }
 
-  getService(serviceId: number): Observable<TelecomService>{
-    return this.http.get<TelecomService>("api/services/"+serviceId)
+  getService(serviceId: number): Observable<TelecomService> {
+    return this.http.get<TelecomService>("api/services/" + serviceId)
       .pipe(
         // tap(_ => console.log('fetched heroes')),
-        catchError(this.handleError<TelecomService>('getServices', ))
+        catchError(this.handleError<TelecomService>('getServices',))
       );
   }
 
@@ -62,10 +62,11 @@ export class PackageService {
         catchError(this.handleError<OptionalPackage[]>('getOptionalPackages', []))
       )
   }
+
   getOptionalPackage(packageId: number): Observable<OptionalPackage> {
     return this.http.get<OptionalPackage>("api/optionalPackages/" + packageId)
       .pipe(
-        catchError(this.handleError<OptionalPackage>('getOptionalPackages', ))
+        catchError(this.handleError<OptionalPackage>('getOptionalPackages',))
       )
   }
 
@@ -76,7 +77,7 @@ export class PackageService {
       )
   }
 
-  saveOptionalPackage(optionalPackage: OptionalPackage):Observable<OptionalPackage>{
+  saveOptionalPackage(optionalPackage: OptionalPackage): Observable<OptionalPackage> {
     let params = new HttpParams().set('package', JSON.stringify(optionalPackage))
     return this.http.post<OptionalPackage>("api/optionalPackages/save/",
       {params: params}, this.httpOptions)
@@ -99,10 +100,20 @@ export class PackageService {
       )
   }
 
+  saveValidityPeriod(validityPeriod: ValidityPeriod): Observable<ValidityPeriod> {
+    return this.http.post<ValidityPeriod>("api/validityPeriod/save/",
+      validityPeriod, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<ValidityPeriod>('getOptionalPackages',))
+      )
+  }
+
   savePackage(packageService: Package, optionalPackages: OptionalPackage[], validityPeriods: ValidityPeriod[]): Observable<Package> {
-    let params = new HttpParams().set('package', JSON.stringify(packageService))
-    return this.http.post<Package>("api/packages/save/",
-      {params: params}, this.httpOptions)
+    return this.http.post<Package>("api/packages/save/", [
+      JSON.stringify(packageService),
+      JSON.stringify(optionalPackages),
+      JSON.stringify(validityPeriods)
+    ])
       .pipe(
         catchError(this.handleError<Package>('getOptionalPackages',))
       )

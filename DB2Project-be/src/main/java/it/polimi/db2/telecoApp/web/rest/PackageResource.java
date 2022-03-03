@@ -1,5 +1,9 @@
 package it.polimi.db2.telecoApp.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.ValidityPeriodService;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
@@ -9,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -26,7 +32,7 @@ public class PackageResource {
     }
 
     @GetMapping("/home/packages")
-    ResponseEntity<List<Package>> findAll() {
+    ResponseEntity<List<Package>> findAll() throws JsonProcessingException {
         return ResponseEntity.ok().body(
                 packageService.findAll()
         );
@@ -34,14 +40,22 @@ public class PackageResource {
 
 
     @PostMapping("/packages/save/")
-    ResponseEntity<Package> save(@RequestParam(name = "package") Package servicePackage,
-                                 @RequestParam(name = "optionalPackages", required = false) List<OptionalPackage> optionalPackages,
-                                 @RequestParam(name = "validityPeriods", required = false) List<ValidityPeriod> validityPeriods) {
+    ResponseEntity<Package> save(@RequestBody List<String> wrapper) throws JsonProcessingException {
+        Package servicePackage = new ObjectMapper().readValue(wrapper.get(0), Package.class);
+        List<OptionalPackage> optionalPackages = new ObjectMapper().readValue(wrapper.get(1), new TypeReference<List<OptionalPackage>>(){});
+        List<ValidityPeriod> validityPeriods = new ObjectMapper().readValue(wrapper.get(2), new TypeReference<List<ValidityPeriod>>(){});
+
         return ResponseEntity.ok().body(
-                this.packageService.save(servicePackage)
+                this.packageService.saveWithDetails(servicePackage, optionalPackages, validityPeriods)
         );
     }
 
+    @PostMapping("validityPeriod/save/")
+    ResponseEntity<ValidityPeriod> saveValidityPeriod(@RequestBody ValidityPeriod validityPeriod){
+        return ResponseEntity.ok().body(
+                this.validityPeriodService.save(validityPeriod)
+        );
+    }
 
     @GetMapping("/home/packages/detail/{id}")
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
@@ -61,6 +75,8 @@ public class PackageResource {
                 this.validityPeriodService.findAll()
         );
     }
+
+
 
 
     @GetMapping("/all")

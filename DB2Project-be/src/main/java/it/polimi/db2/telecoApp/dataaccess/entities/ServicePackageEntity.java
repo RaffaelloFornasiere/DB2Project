@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -27,11 +28,11 @@ public class ServicePackageEntity implements Serializable {
     @Column(name = "package_name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     @JoinTable(
-            name = "packages_services",
-            joinColumns = {@JoinColumn(name = "package_id")},
-            inverseJoinColumns = {@JoinColumn(name = "service_id")})
-    private List<ServiceEntity> services;
+            name = "packages_services", schema = "db2_pdb",
+            joinColumns = {@JoinColumn(name = "package_id", referencedColumnName = "package_id")},
+            inverseJoinColumns = {@JoinColumn(name = "service_id", referencedColumnName = "service_id")})
+    private Set<ServiceEntity> services;
 }

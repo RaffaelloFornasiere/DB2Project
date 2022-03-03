@@ -7,4 +7,6 @@ import java.util.List;
 public interface ValidityPeriodService {
     List<ValidityPeriod> findAllByPackageId(Long packageId);
     List<ValidityPeriod> findAll();
+
+    ValidityPeriod save(ValidityPeriod validityPeriod);
 }

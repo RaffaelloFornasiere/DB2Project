@@ -6,12 +6,13 @@ import it.polimi.db2.telecoApp.dataaccess.repositories.PackageRepository;
 import it.polimi.db2.telecoApp.services.PackageService;
 import it.polimi.db2.telecoApp.services.mappers.OptionalPackageMapper;
 import it.polimi.db2.telecoApp.services.mappers.PackageMapper;
+import it.polimi.db2.telecoApp.services.mappers.ValidityPeriodMapper;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
+import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,19 +22,20 @@ public class PackageServiceImpl implements PackageService {
     private final PackageMapper packageMapper;
     private final OptionalPackageRepository optionalPackageRepository;
     private final OptionalPackageMapper optionalPackageMapper;
+    private final ValidityPeriodMapper validityPeriodMapper;
 
-
-    public PackageServiceImpl(PackageRepository packageRepository, PackageMapper packageMapper, OptionalPackageRepository optionalPackageRepository, OptionalPackageMapper optionalPackageMapper) {
+    public PackageServiceImpl(PackageRepository packageRepository, PackageMapper packageMapper, OptionalPackageRepository optionalPackageRepository, OptionalPackageMapper optionalPackageMapper, ValidityPeriodMapper validityPeriodMapper) {
         this.packageRepository = packageRepository;
         this.packageMapper = packageMapper;
         this.optionalPackageRepository = optionalPackageRepository;
         this.optionalPackageMapper = optionalPackageMapper;
+        this.validityPeriodMapper = validityPeriodMapper;
     }
 
     @Override
     public List<Package> findAll() {
 
-        return  packageRepository.findAll()
+        return packageRepository.findAll()
                 .stream()
                 .map(packageMapper::toTarget)
                 .toList();
@@ -41,7 +43,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Package findById(Long packageId) {
-        return  packageRepository.findById(packageId)
+        return packageRepository.findById(packageId)
                 .map(packageMapper::toTarget)
                 .orElseThrow();
     }
@@ -61,23 +63,19 @@ public class PackageServiceImpl implements PackageService {
 
 
     @Override
-    public Package save(Package p){
+    public Package save(Package p) {
         ServicePackageEntity toBeSaved = packageMapper.toSource(p);
         ServicePackageEntity saved = packageRepository.save(toBeSaved);
         return packageMapper.toTarget(saved);
     }
 
-
-    ServicePackageEntity save(ServicePackageEntity entity){
-        if(entity.getId() == null)
-        {
-            //create new entry in the packages table
-            //insert into packages(.....) values (....)
-        }
-        else{
-            //update the row with id = entity.getId()
-            //update packges set .... where id = entity.id
-        }
-        return  entity;
+    @Override
+    public Package saveWithDetails(Package p, List<OptionalPackage> optionalPackages, List<ValidityPeriod> validityPeriods) {
+        return packageMapper.toTarget(packageRepository.savePackageWithDetails(
+                packageMapper.toSource(p),
+                optionalPackages.stream().map(optionalPackageMapper::toSource).toList(),
+                validityPeriods.stream().map(validityPeriodMapper::toSource).toList()
+        ));
     }
+
 }

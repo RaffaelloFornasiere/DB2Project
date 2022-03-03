@@ -1,6 +1,6 @@
 
 export interface ValidityPeriod {
-  id: number,
+  id?: number,
   months: number,
   fee: number
 }
