@@ -17,7 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-@Table(name = "SalesValidityReport")
+@Table(name = "sales_validity_report")
 public class SalesValidityReportEntity {
 
     @EmbeddedId

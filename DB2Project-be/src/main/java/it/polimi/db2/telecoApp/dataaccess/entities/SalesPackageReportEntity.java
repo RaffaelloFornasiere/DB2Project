@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-@Table(name = "SalesPackageReport")
+@Table(name = "sales_ackage_eport")
 public class SalesPackageReportEntity {
 
     @Id
