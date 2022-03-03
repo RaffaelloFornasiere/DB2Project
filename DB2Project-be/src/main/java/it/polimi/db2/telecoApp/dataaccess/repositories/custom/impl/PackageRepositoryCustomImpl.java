@@ -4,16 +4,12 @@ import it.polimi.db2.telecoApp.dataaccess.entities.OptionalPackageEntity;
 import it.polimi.db2.telecoApp.dataaccess.entities.ServicePackageEntity;
 import it.polimi.db2.telecoApp.dataaccess.entities.ValidityPeriodEntity;
 import it.polimi.db2.telecoApp.dataaccess.repositories.custom.PackageRepositoryCustom;
-import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
-import org.hibernate.query.internal.NativeQueryImpl;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 

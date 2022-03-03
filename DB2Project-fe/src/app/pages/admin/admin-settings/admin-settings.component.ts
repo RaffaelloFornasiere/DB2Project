@@ -61,7 +61,7 @@ export class AdminSettingsComponent implements OnInit {
   })
 
   selected: (number | undefined)[] = [undefined, undefined, undefined, undefined];
-  pageSelected = 3;
+  pageSelected = 0;
 
   constructor(private packageService: PackageService,
               private navbarService: NavbarService
@@ -151,6 +151,8 @@ export class AdminSettingsComponent implements OnInit {
         });
       }
     }
+    this.ngOnInit();
+
   }
 
   selectService(serviceId?: number) {
@@ -182,6 +184,7 @@ export class AdminSettingsComponent implements OnInit {
       this.serviceFormGroup.get('extraMinutesFee')?.setValue(data.details.extraMinutesFee)
       this.serviceFormGroup.get('extraGBFee')?.setValue(data.details.extraGigaBytesFee)
     });
+
   }
 
 
@@ -206,6 +209,8 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.saveService(s!).subscribe((data) => {
       console.log(data)
     });
+    this.ngOnInit();
+
   }
 
 
@@ -239,6 +244,8 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.saveOptionalPackage(s!).subscribe((data) => {
       console.log(data)
     });
+    this.ngOnInit();
+
   }
 
 
