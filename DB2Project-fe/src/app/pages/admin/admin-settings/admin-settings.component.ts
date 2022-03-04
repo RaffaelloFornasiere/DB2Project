@@ -95,7 +95,10 @@ export class AdminSettingsComponent implements OnInit {
 
   }
 
+  deletePackage(servicePackage: Package){
 
+  }
+  
   selectPackage(packageId?: number) {
     this.selected[this.pageSelected] = packageId;
     if (packageId === undefined) {

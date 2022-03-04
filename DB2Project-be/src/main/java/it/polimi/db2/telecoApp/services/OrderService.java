@@ -3,6 +3,7 @@ package it.polimi.db2.telecoApp.services;
 import it.polimi.db2.telecoApp.Utils.Pair;
 import it.polimi.db2.telecoApp.services.models.*;
 import it.polimi.db2.telecoApp.services.models.Package;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public interface OrderService {
     Pair<Order, Boolean> buy(Order order, Boolean result) throws Exception;
 
 
-    Boolean tryPayment(Order order, Boolean result) throws Exception;
+    Pair<Order, Boolean> tryPayment(Order order, Boolean result) throws Exception;
 
     List<Order> getRejectedOrders();
 

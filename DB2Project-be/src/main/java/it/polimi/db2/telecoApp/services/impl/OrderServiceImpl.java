@@ -17,6 +17,7 @@ import it.polimi.db2.telecoApp.services.models.*;
 import it.polimi.db2.telecoApp.services.models.Package;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -90,34 +91,22 @@ public class OrderServiceImpl implements OrderService {
         Order res = orderMapper.toTarget(
                 orderRepository
                         .save(orderMapper.toSource(order)));
-        return Pair.of(res, result);
+        return tryPayment(res, result);
     }
 
 
     @Override
-    public Boolean tryPayment(Order order, Boolean result) {
-        Billing billing = new Billing().setOrderId(order.getId()).setResult(result)
+    public Pair<Order, Boolean> tryPayment(Order order, Boolean result) {
+        order.setUser( (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        Billing billing = new Billing()
+                .setOrderId(order.getId()).setResult(result)
                 .setBillingDateTime(LocalDateTime.now());
         billingMapper.toTarget(
                 billingRepository
                         .save(billingMapper.toSource(billing))
         );
 
-        //implemented through triggers
-        if (billingRepository.findAllByOrderIdNative(order.getId()).size() > 3) {
-            AlertEntity alertEntity = new AlertEntity()
-                    .setUsername(
-                            ((User) SecurityContextHolder
-                                    .getContext()
-                                    .getAuthentication()
-                                    .getPrincipal())
-                                    .getUsername());
-            alertRepository.save(alertEntity);
-        }
-        if (!result)
-            userService.markCurrentAsInsolvent();
-
-        return result;
+        return new Pair<>(order, result);
     }
 
 
@@ -189,7 +178,7 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orders.size(); i++) {
             Billing lastBilling = billingMapper.toTarget(billingRepository
                     .findOneByOrderIdNative(orders.get(i).getId()));
-            if (lastBilling.getResult().equals(false))
+            if ( lastBilling.getResult().equals(false))
                 res.add(orders.get(i));
         }
         return res;

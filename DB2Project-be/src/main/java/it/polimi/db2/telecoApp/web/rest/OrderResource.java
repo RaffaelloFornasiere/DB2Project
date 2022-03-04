@@ -4,6 +4,7 @@ import it.polimi.db2.telecoApp.Utils.Pair;
 import it.polimi.db2.telecoApp.services.OrderService;
 import it.polimi.db2.telecoApp.services.models.*;
 import it.polimi.db2.telecoApp.services.models.Package;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +63,11 @@ public class OrderResource {
         return ResponseEntity.ok().body(res);
     }
 
-
+    @GetMapping("/orders/rejected-orders/")
+    ResponseEntity<List<Order>> findAllRejectedByUsername(){
+        List<Order> res = orderService.getRejectedOrders();
+        return ResponseEntity.ok().body(res);
+    }
 
     @PostMapping("/orders/buy/{result}")
     ResponseEntity<Pair<Order, Boolean>> buy(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
@@ -71,7 +76,7 @@ public class OrderResource {
     }
 
     @PostMapping("/orders/retry-payment/{result}")
-    ResponseEntity<Boolean> retryPayment(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
+    ResponseEntity<Pair<Order, Boolean>> retryPayment(@PathVariable Boolean result, @RequestBody Order order) throws Exception {
         return ResponseEntity.ok().body(
                 this.orderService.tryPayment(order, result));
     }

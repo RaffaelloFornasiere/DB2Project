@@ -7,6 +7,8 @@ import it.polimi.db2.telecoApp.services.models.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.MAPPER.toTarget(
                 userRepository.save(userMapper.MAPPER.toSource(user)));
     }
+
+    @Override
+    public User editUser(User user) {
+        var old = findByUsername(user.getUsername()).orElseThrow();
+        //encode password
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        //can't overwrite important data
+        user.setInsolvent(old.getInsolvent());
+        user.setRoles(old.getRoles());
+        return userMapper.MAPPER.toTarget(
+                userRepository.save(userMapper.MAPPER.toSource(user)));
+    }
+
 
     @Override
     public List<User> getInsolventUsers() {

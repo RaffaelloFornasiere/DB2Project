@@ -38,8 +38,9 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
 
     @Override
     public List<OptionalPackage> findAllByPackageId(Long id) {
-        return optionalPackageRepository.findAllByPackageId(id)
-                .stream().map(optionalPackageMapper::toTarget)
+        var res =
+                optionalPackageRepository.findAllByPackageId(id);
+        return res.stream().map(optionalPackageMapper::toTarget)
                 .toList();
     }
 
@@ -47,7 +48,7 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
     public OptionalPackage save(OptionalPackage optionalPackage) {
         return optionalPackageMapper.toTarget(
                 optionalPackageRepository
-                .save(optionalPackageMapper.toSource(optionalPackage)));
+                        .save(optionalPackageMapper.toSource(optionalPackage)));
 
     }
 
@@ -63,8 +64,8 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
             int finalI = i;
             var sum = orders.stream()
                     .filter(order -> order.getServicePackage().equals(packages.get(finalI)))
-                    .map(order-> order.getOptionalPackages().size()).toList();
-            Double average =  sum.stream().reduce(Integer::sum).get().doubleValue()/sum.size();
+                    .map(order -> order.getOptionalPackages().size()).toList();
+            Double average = sum.stream().reduce(Integer::sum).get().doubleValue() / sum.size();
             res.add(new Pair<>(packages.get(i), average));
         }
 
@@ -90,8 +91,7 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
                             optionalPackage.getId().equals(optionalPackages.get(finalI).getId()))
                     .count();
 
-            if(locSize > maxSize)
-            {
+            if (locSize > maxSize) {
                 maxSize = locSize;
                 best = optionalPackages.get(i);
             }

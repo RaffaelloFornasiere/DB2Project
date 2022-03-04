@@ -48,8 +48,7 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    this.user = this.token.getUser();
-
+    this.user = this.token.getUser()!;
   }
 
 }

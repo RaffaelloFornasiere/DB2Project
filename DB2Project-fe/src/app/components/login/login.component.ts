@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLogged = true;
-      this.role = this.tokenStorage.getUser().role;
+      this.role = this.tokenStorage.getUser()!.roles[0];
 
     }
     console.log("logging");
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLogged = true;
-        this.role = this.tokenStorage.getUser().roles[0];
+        this.role = this.tokenStorage.getUser()!.roles[0];
         this.router.navigate([this.returnUrl], {queryParams: {data: this.returnData}})
       },
       error: error => {
