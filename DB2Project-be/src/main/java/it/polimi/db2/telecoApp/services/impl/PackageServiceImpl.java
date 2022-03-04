@@ -10,6 +10,7 @@ import it.polimi.db2.telecoApp.services.mappers.ValidityPeriodMapper;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
 import it.polimi.db2.telecoApp.services.models.ValidityPeriod;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -11,12 +11,13 @@
       <div class="product-item">
         <div class="product-item-content">
           <div>
+
             <h4 class="p-mb-1">{{package.name}}</h4>
             <h5 class="p-mb-1">{{package.id}}</h5>
             <span
               [class]="'product-badge status-'+package.type">{{package.type}}</span>
             <div class="center mt-2">
-              <button routerLink="/detail/{{package.id}}" class="btn btn-primary btn-block col-7">
+              <button (click)="goToDetails(package.id)" class="btn btn-primary btn-block col-7">
                 Discover
               </button>
             </div>
@@ -26,4 +27,20 @@
       </div>
     </ng-template>
   </p-carousel>
+</div>
+
+<hr/>
+
+<div *ngIf="rejectedOrders && rejectedOrders.length > 0" class="alert alert-danger" role="alert">
+  Some of your orders have been rejected:
+    <ul>
+      <li *ngFor="let order of rejectedOrders">
+        <button class="btn btn-link p-0" style="color:#dc3545" (click)="goToOrder(order)" >Order ID: {{order.id}}</button>
+        <ul>
+          <li>Date: {{order.orderDate}}</li>
+          <li>Package: {{order.servicePackage.name}}</li>
+          <li>Date: {{order.orderDate}}</li>
+        </ul>
+      </li>
+    </ul>
 </div>

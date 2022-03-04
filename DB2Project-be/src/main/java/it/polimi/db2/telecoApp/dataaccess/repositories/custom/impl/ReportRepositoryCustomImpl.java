@@ -16,9 +16,6 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     @PersistenceContext
     EntityManager entityManager;
 
-
-
-
     @Override
     public List<SalesValidityReportEntity> findAllCustom() {
         Query query = entityManager.createQuery("select a from SalesValidityReportEntity a");

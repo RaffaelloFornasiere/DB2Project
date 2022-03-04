@@ -1,10 +1,10 @@
 <h2>Checkout:</h2>
 
 <div *ngIf="data">
-  <h3>Package: {{data.order.servicePackage.name}}</h3>
+  <h3>Package: {{data.package.name}}</h3>
   <h4>Optional Packages:</h4>
   <ul>
-    <li *ngFor="let opt of data.order.optionalPackages">
+    <li *ngFor="let opt of data.optionalPackages">
       <h6>
         {{opt.name}}
       </h6>
@@ -13,8 +13,8 @@
 
   <h4>Validity period:</h4>
   <ul>
-    <li><h6>{{data.order.validityPeriod.id}}</h6></li>
-    <li><h6>{{data.order.validityPeriod.months}}</h6></li>
+    <li><h6>{{data.validityPeriod.id}}</h6></li>
+    <li><h6>{{data.validityPeriod.months}}</h6></li>
 
   </ul>
 
