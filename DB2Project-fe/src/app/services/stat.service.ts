@@ -21,7 +21,7 @@ export class StatService {
   constructor(private http: HttpClient){}
 
   getInsolventUsers():Observable<User[]>{
-    return this.http.get<User[]>("/api/users/insolvent",httpOptions)
+    return this.http.get<User[]>("/api/report/users/insolvent",httpOptions)
       .pipe(
         tap(() => console.log('getInsolventUsers done')),
         catchError(Utils.handleError<User[]>('getInsolventUsers'))
@@ -29,7 +29,7 @@ export class StatService {
   }
 
   getAlerts():Observable<Alert[]>{
-    return this.http.get<Alert[]>("/api/orders/alerts/",httpOptions)
+    return this.http.get<Alert[]>("/api/report/alerts/",httpOptions)
       .pipe(
         tap(() => console.log('getAlerts done')),
         catchError(Utils.handleError<Alert[]>('getAlerts'))
@@ -53,7 +53,7 @@ export class StatService {
   }
 
   getBestSellerOptionalPackage(): Observable<OptionalPackage>{
-    return this.http.get<OptionalPackage>("/api/optionalPackages/best-seller/",httpOptions)
+    return this.http.get<OptionalPackage>("/api/report/optionalPackages/best-seller/",httpOptions)
       .pipe(
         tap(() => console.log('getAverageOptionalPackages done')),
         catchError(Utils.handleError<OptionalPackage>('getAverageOptionalPackages'))

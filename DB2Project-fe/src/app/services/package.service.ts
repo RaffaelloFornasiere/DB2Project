@@ -120,6 +120,11 @@ export class PackageService {
       )
   }
 
+  deletePackage(packageId: number){
+    return this.http.delete("api/packages/"+packageId)
+      .pipe(catchError(Utils.handleError("delete package")))
+  }
+
   saveService(telecomService: TelecomService): Observable<TelecomService> {
     let params = new HttpParams().set('package', JSON.stringify(telecomService))
     return this.http.post<TelecomService>("api/packages/save/",

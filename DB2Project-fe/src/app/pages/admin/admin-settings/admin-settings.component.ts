@@ -95,10 +95,10 @@ export class AdminSettingsComponent implements OnInit {
 
   }
 
-  deletePackage(servicePackage: Package){
-
+  deletePackage(packageId: number) {
+    this.packageService.deletePackage(packageId);
   }
-  
+
   selectPackage(packageId?: number) {
     this.selected[this.pageSelected] = packageId;
     if (packageId === undefined) {
@@ -114,12 +114,11 @@ export class AdminSettingsComponent implements OnInit {
       console.log("getOptionalPackages: ", data)
       this.packageFormGroup.get('optionalPackages')?.setValue(this.optionalPackages.filter(op => data.find(i => i.id === op.id)))
     });
-    this.packageService.getDetails(packageId).subscribe(data => {
-      console.log("getDetails: ", data)
+    let data = this.packages.find(p => p.id === this.selected[this.pageSelected])!;
+    console.log("getDetails: ", data)
+    this.packageFormGroup.get('packageName')?.setValue(data.name)
+    this.packageFormGroup.get('services')?.setValue(this.services.filter(s => data.telecomServices.find(i => i.id === s.id)));
 
-      this.packageFormGroup.get('packageName')?.setValue(data.name)
-      this.packageFormGroup.get('services')?.setValue(this.services.filter(s => data.telecomServices.find(i => i.id === s.id)));
-    });
     this.packageService.getValidityPeriods(packageId).subscribe(
       data => {
         console.log("getValidityPeriods: ", data)
@@ -175,18 +174,17 @@ export class AdminSettingsComponent implements OnInit {
     }
 
     this.buttonTile = "Edit";
-    this.packageService.getService(serviceId).subscribe((data: any) => {
-      console.log("getOptionalPackages: ", data)
-      this.serviceFormGroup.get('serviceName')?.setValue(data.name)
-      this.serviceFormGroup.get('serviceTypes')?.setValue(Utils.fromJavaType((data.details as ServiceDetails)["@type"]))
-      this.serviceFormGroup.get('costMonth')?.setValue(data.details.costMonth)
-      this.serviceFormGroup.get('sms')?.setValue(data.details.sms)
-      this.serviceFormGroup.get('minutes')?.setValue(data.details.minutes)
-      this.serviceFormGroup.get('gigabytes')?.setValue(data.details.gigabytes)
-      this.serviceFormGroup.get('extraSmsFee')?.setValue(data.details.extraSmsFee)
-      this.serviceFormGroup.get('extraMinutesFee')?.setValue(data.details.extraMinutesFee)
-      this.serviceFormGroup.get('extraGBFee')?.setValue(data.details.extraGigaBytesFee)
-    });
+    let data = this.services.find(s => s.id === serviceId)!;
+    console.log("getOptionalPackages: ", data)
+    this.serviceFormGroup.get('serviceName')?.setValue(data.name)
+    this.serviceFormGroup.get('serviceTypes')?.setValue(Utils.fromJavaType((data.details as ServiceDetails)["@type"]))
+    this.serviceFormGroup.get('costMonth')?.setValue(data.details.costMonth)
+    this.serviceFormGroup.get('sms')?.setValue(data.details.sms)
+    this.serviceFormGroup.get('minutes')?.setValue(data.details.minutes)
+    this.serviceFormGroup.get('gigabytes')?.setValue(data.details.gigabytes)
+    this.serviceFormGroup.get('extraSmsFee')?.setValue(data.details.extraSmsFee)
+    this.serviceFormGroup.get('extraMinutesFee')?.setValue(data.details.extraMinutesFee)
+    this.serviceFormGroup.get('extraGBFee')?.setValue(data.details.extraGigaBytesFee)
 
   }
 

@@ -4,7 +4,7 @@ import {HttpInterceptor, HttpHandler, HttpRequest} from "@angular/common/http";
 
 import {TokenStorageService} from "../services/token-storage.service";
 import {Observable, of, throwError} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, map} from "rxjs/operators";
 import {NavbarService} from "../services/navbar.service";
 
@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   needsLogin = false;
 
   constructor(private token: TokenStorageService,
+              private route: ActivatedRoute,
               private router: Router,
               private navbarService: NavbarService) {
   }
@@ -58,7 +59,8 @@ export class AuthInterceptor implements HttpInterceptor {
       this.token.signOut();
       this.navbarService.toggleSidebarVisibility(true);
       this.router.url
-      this.router.navigate(["login"], {queryParams: {returnUrl: this.router.url}})
+      console.log("url: " , this.router.url)
+      this.router.navigate(["login"], {queryParams: {returnUrl: this.route.url}})
         .then(() => of(err.message))
       // or EMPTY may be appropriate here
     }
