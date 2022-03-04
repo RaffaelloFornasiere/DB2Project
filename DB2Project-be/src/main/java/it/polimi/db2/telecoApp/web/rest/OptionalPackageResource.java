@@ -5,11 +5,9 @@ import it.polimi.db2.telecoApp.services.OptionalPackageService;
 import it.polimi.db2.telecoApp.services.models.OptionalPackage;
 import it.polimi.db2.telecoApp.services.models.Package;
 import it.polimi.db2.telecoApp.Utils.Pair;
+import it.polimi.db2.telecoApp.services.models.TelecomService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,4 +45,10 @@ public class OptionalPackageResource {
         return ResponseEntity.ok().body(optionalPackageService.getBestSeller());
     }
 
+    @PostMapping("/optionalPackages/save")
+    ResponseEntity<OptionalPackage> save(@RequestBody OptionalPackage telecomService) {
+        return ResponseEntity.ok().body(
+                this.optionalPackageService.save(telecomService)
+        );
+    }
 }

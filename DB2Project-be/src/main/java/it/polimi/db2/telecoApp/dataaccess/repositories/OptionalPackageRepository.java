@@ -11,7 +11,7 @@ public interface OptionalPackageRepository extends JpaRepository<OptionalPackage
     @Query(
             nativeQuery = true,
             value = """
-                    select * from optional_packages o, PackagesOptionalPackages pop where pop.id_service_package = ?1 and pop.id_optional_package = o.id
+                    select * from optional_packages o, packages_optional_packages pop where pop.id_service_package = ?1 and pop.id_optional_package = o.id
                     """
     )
     List<OptionalPackageEntity> findAllByPackageId(Long packageId);

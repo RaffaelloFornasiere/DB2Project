@@ -20,7 +20,7 @@ public class ValidityPeriodServiceImpl implements ValidityPeriodService {
     }
 
     @Override
-    public List<ValidityPeriod> findAllByPackageId(Long packageId){
+    public List<ValidityPeriod> findAllByPackageId(Long packageId) {
         return validityPeriodRepository.findAllByPackageId(packageId)
                 .stream().map(validityPeriodMapper::toTarget)
                 .toList();
@@ -31,5 +31,12 @@ public class ValidityPeriodServiceImpl implements ValidityPeriodService {
         return validityPeriodRepository.findAll()
                 .stream().map(validityPeriodMapper::toTarget)
                 .toList();
+    }
+
+    @Override
+    public ValidityPeriod save(ValidityPeriod validityPeriod) {
+        return validityPeriodMapper.toTarget(validityPeriodRepository.save(
+                validityPeriodMapper.toSource(validityPeriod)
+        ));
     }
 }

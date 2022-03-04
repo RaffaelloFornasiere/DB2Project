@@ -11,7 +11,7 @@ public interface ValidityPeriodRepository extends JpaRepository<ValidityPeriodEn
     @Query(
             nativeQuery = true,
             value = """
-                    select vp.* from validity_periods vp, ValidityPeriodPackage vpp, packages p
+                    select vp.* from validity_periods vp, validity_period_package vpp, packages p
                     where vpp.packageId = p.package_id
                     and p.package_id = ?1
                     and vp.id = vpp.validityPeriodId

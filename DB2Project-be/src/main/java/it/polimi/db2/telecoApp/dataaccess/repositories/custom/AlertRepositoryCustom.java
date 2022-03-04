@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AlertRepositoryCustom {
     List<AlertEntity> findAllCustom();
+    AlertEntity saveCustom(AlertEntity a);
 }
