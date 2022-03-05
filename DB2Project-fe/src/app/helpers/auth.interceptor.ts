@@ -1,9 +1,16 @@
-import {HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent, HttpResponse} from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {HttpInterceptor, HttpHandler, HttpRequest} from "@angular/common/http";
 
 import {TokenStorageService} from "../services/token-storage.service";
-import {Observable, of, throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, map} from "rxjs/operators";
 import {NavbarService} from "../services/navbar.service";
@@ -36,14 +43,14 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
     const token = this.token.getToken();
-
     if (token != null) {
       authReq = req.clone(
         {headers: req.headers.set(this.TOKEN_HEADER_KEY, 'Bearer ' + token)});
     }
-    return next.handle(authReq).pipe(
-      map((event: HttpEvent<any>) => this.allOk(event)),
-      catchError(x => this.handleAuthError(x)));
+    return next.handle(authReq)
+      .pipe(
+        map((event: HttpEvent<any>) => this.allOk(event)),
+        catchError(x => this.handleAuthError(x)));
   }
 
 
@@ -58,10 +65,11 @@ export class AuthInterceptor implements HttpInterceptor {
     if (err.status === 401 || err.status === 403) {
       this.token.signOut();
       this.navbarService.toggleSidebarVisibility(true);
-      this.router.url
-      console.log("url: " , this.router.url)
-      this.router.navigate(["login"], {queryParams: {returnUrl: this.route.url}})
-        .then(() => of(err.message))
+      let url = decodeURI(this.router.url);
+      let path = url.substring(0,url.indexOf('?'));
+      let params = JSON.parse(this.router.parseUrl(url).queryParams['data'])
+      this.router.navigate(["login"], {queryParams: {returnUrl: path, data: JSON.stringify(params)}}).then()
+
       // or EMPTY may be appropriate here
     }
     return throwError(err);

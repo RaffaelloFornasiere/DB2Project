@@ -35,11 +35,11 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
     }
 
     private void storePackageValidityPeriodRelation(ServicePackageEntity packageEntity, List<ValidityPeriodEntity> validityPeriods) {
-        var current = (List<Integer>) entityManager.createNativeQuery("select validityPeriodId from validity_period_package where packageId = :packageId")
+        var current = entityManager.createNativeQuery("select validityPeriodId from validity_period_package where packageId = :packageId")
                 .setParameter("packageId", packageEntity.getId()).getResultList();
         var needed = validityPeriods.stream().map(ValidityPeriodEntity::getId).toList();
         var toBeAdded = new ArrayList<>(needed);
-        var toBeRemoved = new ArrayList<>(current);
+        var toBeRemoved = new ArrayList<Long>(current);
         toBeRemoved.removeAll(needed);
         toBeAdded.removeAll(current);
         if (!toBeAdded.isEmpty())
@@ -61,11 +61,11 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
     }
 
     private void storePackageOptionalPackageRelation(ServicePackageEntity packageEntity, List<OptionalPackageEntity> optionalPackages) {
-        var current = (List<Integer>) entityManager.createNativeQuery("select id_optional_package from packages_optional_packages where id_service_package = :packageId")
+        var current = entityManager.createNativeQuery("select id_optional_package from packages_optional_packages where id_service_package = :packageId")
                 .setParameter("packageId", packageEntity.getId()).getResultList();
         var needed = optionalPackages.stream().map(OptionalPackageEntity::getId).toList();
         var toBeAdded = new ArrayList<>(needed);
-        var toBeRemoved = new ArrayList<>(current);
+        var toBeRemoved = new ArrayList<Long>(current);
         toBeRemoved.removeAll(needed);
         toBeAdded.removeAll(current);
         if (!toBeAdded.isEmpty())

@@ -32,7 +32,9 @@ export class PurchaseService {
   retryPayment(o: Order, payment: boolean):Observable<any>{
     return this.http.post("/api/orders/retry-payment/"+payment, o, httpOptions)
       .pipe(
-        tap(() => console.log('retry payments')),
+        tap(() => {
+          console.log('retry payments')
+        }),
         catchError(Utils.handleError<Package>('buy'))
       );
   }
@@ -40,7 +42,7 @@ export class PurchaseService {
   getRejectedOrders():Observable<Order[]>{
     return this.http.get<Order[]>("/api/orders/rejected-orders/")
       .pipe(
-        tap(() => console.log('retry payments')),
+        tap((data) => console.log('get rejected orders done: ', data)),
         catchError(Utils.handleError<Order[]>('buy'))
       );
   }

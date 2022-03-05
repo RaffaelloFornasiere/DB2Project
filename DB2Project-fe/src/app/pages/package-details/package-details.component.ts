@@ -49,14 +49,12 @@ export class PackageDetailsComponent implements OnInit {
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
         next: (data: any) => {
+          if (data == "cancel")
+            return;
           data.package = this.packageDetails.package;
           result = JSON.stringify(data)
-          if (!this.tokenService.isAuthenticated())
-            this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
-              .then()
-          else
-            this.router.navigate(['confirm'], {queryParams: {data: result}})
-              .then()
+          this.router.navigate(['confirm'], {queryParams: {data: result}})
+            .then()
         }
       }
     );

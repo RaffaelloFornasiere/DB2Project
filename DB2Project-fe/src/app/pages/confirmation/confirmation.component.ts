@@ -21,7 +21,6 @@ export class ConfirmationComponent implements OnInit {
     this.route.queryParamMap.subscribe(
       (params: any) => {
         this.data = JSON.parse(params.get('data')!)
-        console.log("data: ", this.data)
       }
     )
   }
@@ -40,13 +39,18 @@ export class ConfirmationComponent implements OnInit {
      this.purchaseService.buy(order, this.data.payment)
        .subscribe({
          next:data => {
-           console.log(data)
+           if(data === undefined)
+             return;
+
            let result = JSON.stringify({
               order: data.first,
               outcome: data.second
            });
 
            this.router.navigate(['result'], {queryParams: {data: result}})
+         },
+         error: err => {
+           console.log(err)
          }
 
        })

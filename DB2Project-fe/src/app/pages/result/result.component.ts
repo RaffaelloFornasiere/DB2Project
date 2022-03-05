@@ -32,8 +32,8 @@ export class ResultComponent implements OnInit {
               private purchaseService: PurchaseService) {
     this.route.queryParamMap.subscribe(
       (params: any) => {
+        console.log(params)
         this.data = JSON.parse(this.route.snapshot.queryParams['data']);
-        console.log(this.data);
       }
     )
   }

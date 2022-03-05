@@ -64,15 +64,9 @@ export class PackageService {
       )
   }
 
-  getOptionalPackage(packageId: number): Observable<OptionalPackage> {
-    return this.http.get<OptionalPackage>("api/optionalPackages/" + packageId)
-      .pipe(
-        catchError(Utils.handleError<OptionalPackage>('getOptionalPackages',))
-      )
-  }
 
   getOptionalPackages(packageId: number): Observable<OptionalPackage[]> {
-    return this.http.get<OptionalPackage[]>("api/optionalPackages/package/" + packageId)
+    return this.http.get<OptionalPackage[]>("api/home/optionalPackages/package/" + packageId)
       .pipe(
         catchError(Utils.handleError<OptionalPackage[]>('getOptionalPackages', []))
       )
@@ -95,7 +89,7 @@ export class PackageService {
   }
 
   getValidityPeriods(packageId: number): Observable<ValidityPeriod[]> {
-    return this.http.get<ValidityPeriod[]>("api/packages/validity-periods/" + packageId)
+    return this.http.get<ValidityPeriod[]>("api/home/packages/validity-periods/" + packageId)
       .pipe(
         catchError(Utils.handleError<ValidityPeriod[]>('getOptionalPackages', []))
       )

@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {Order} from "../../interfaces/Order";
 import {PurchaseService} from "../../services/purchase.service";
 import {D} from "@angular/cdk/keycodes";
+import {SharedMemoryService} from "../../services/shared-memory.service";
+import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
   selector: 'app-home',
@@ -20,14 +22,15 @@ export class HomeComponent implements OnInit {
   constructor(private packageService: PackageService,
               private purchaseService: PurchaseService,
               private router: Router,
+              private tokenService: TokenStorageService
   ) {
 
   }
 
-  goToDetails(packageId: number) {
+  goToDetails(servicePackage: Package) {
     this.router.navigate(["detail"], {
       queryParams:
-        {data: JSON.stringify(this.packages.find(i => i.id === packageId))}
+        {data: JSON.stringify(servicePackage)}
     })
       .then()
   }
@@ -48,9 +51,13 @@ export class HomeComponent implements OnInit {
         this.packages = data;
       // console.log("products: ", this.packages);
     })
-    this.purchaseService.getRejectedOrders().subscribe(data => {
-      this.rejectedOrders = data;
-    })
+    if (this.tokenService.isAuthenticated())
+      this.purchaseService.getRejectedOrders().subscribe(data => {
+        this.rejectedOrders = data;
+      })
   }
 
 }
+
+
+

@@ -33,4 +33,8 @@ export default class Utils{
       return of(result as T);
     };
   }
+
+  static log(... args : string[]){
+    console.log(this.log.caller.name + ": " + args)
+  }
 }

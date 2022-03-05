@@ -45,11 +45,8 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLogged = true;
       this.role = this.tokenStorage.getUser()!.roles[0];
-
     }
-    console.log("logging");
     this.needsToBeLogged = this.navbarService.isLoggingInWarnVisible;
-    // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.returnData = this.route.snapshot.queryParams['data'];
   }
@@ -58,7 +55,6 @@ export class LoginComponent implements OnInit {
     const {username, password} = this.form;
     this.authService.login(username, password).subscribe({
       next: data => {
-        console.log("login done: ", data)
         this.tokenStorage.saveUser(data);
         this.tokenStorage.saveToken(data.token);
 
