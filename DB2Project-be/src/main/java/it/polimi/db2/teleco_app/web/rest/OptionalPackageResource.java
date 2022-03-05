@@ -25,7 +25,7 @@ public class OptionalPackageResource {
         );
     }
 
-    @GetMapping("/optionalPackages/package/{id}")
+    @GetMapping("/home/optionalPackages/package/{id}")
     ResponseEntity<List<OptionalPackage>> getOptionalPackages(@PathVariable Long id) {
         return ResponseEntity.ok().body(
                 this.optionalPackageService.findAllByPackageId(id));

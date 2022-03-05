@@ -28,7 +28,7 @@ public class OrderResource {
         return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping("/order/rejected-orders/")
+    @GetMapping("/orders/rejected-orders/")
     ResponseEntity<List<Order>> findAllRejectedOrders(){
         List<Order> res = orderService.getRejectedOrders();
         return ResponseEntity.ok().body(res);

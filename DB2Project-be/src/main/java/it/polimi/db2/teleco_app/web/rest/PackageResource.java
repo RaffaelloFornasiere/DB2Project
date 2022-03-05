@@ -53,7 +53,7 @@ public class PackageResource {
         );
     }
 
-    @PostMapping("validityPeriod/save/")
+    @PostMapping("/validityPeriod/save/")
     ResponseEntity<ValidityPeriod> saveValidityPeriod(@RequestBody ValidityPeriod validityPeriod){
         return ResponseEntity.ok().body(
                 this.validityPeriodService.save(validityPeriod)
@@ -66,7 +66,7 @@ public class PackageResource {
                 this.packageService.getDetails(id));
     }
 
-    @GetMapping("/packages/validity-periods/{packageId}")
+    @GetMapping("/home/packages/validity-periods/{packageId}")
     ResponseEntity<List<ValidityPeriod>> findValidityPeriodsByPackageId(@PathVariable Long packageId){
         return ResponseEntity.ok().body(
                 this.validityPeriodService.findAllByPackageId(packageId)

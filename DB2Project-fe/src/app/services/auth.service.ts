@@ -35,16 +35,18 @@ export class AuthService {
       );
   }
 
-  register(username: string, password: string): Observable<any> {
-    return this.http.post(
-      AUTH_API + 'signup',
-      {
-        username,
-        password
-      },
-      httpOptions)
+  register(user: any): Observable<any> {
+    return this.http.post(AUTH_API + 'signup',
+      user, httpOptions)
   }
 
+  checkUsername(username: string):Observable<boolean>{
+    return this.http.get<boolean>("/api/home/users/check-username/" + username)
+      .pipe(
+        tap((data) => console.log("check username: " + data)),
+        catchError(Utils.handleError<boolean>("checkUsername"))
+      )
+  }
 
 }
 
