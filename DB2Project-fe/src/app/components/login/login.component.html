@@ -23,15 +23,16 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary float-right">
-          Login
-        </button>
-      </div>
+
       <div class="form-group">
         <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
           Login failed: {{ errorMessage }}
         </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary float-right">
+          Login
+        </button>
       </div>
     </form>
 

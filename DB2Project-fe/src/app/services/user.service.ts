@@ -21,7 +21,7 @@ export class UserService {
         {title: "Settings", link: "/admin-settings"},
         {title: "Profile", link: "/admin-profile"}];
     else
-      return [{title: "Dashboard", link: "/dashboard"}]
+      return [{title: "Home", link: "/home"}]
   }
 
 

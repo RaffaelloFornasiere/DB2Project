@@ -44,7 +44,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTabsModule} from "@angular/material/tabs";
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { ResultComponent } from './pages/result/result.component';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar} from "@angular/material/snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -99,7 +99,7 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar} from "@angular/material/snac
         MatCheckboxModule,
         LayoutModule,
         MatTabsModule,
-
+      MatSnackBarModule,
     ],
   providers: [authInterceptorProviders,MatDatepickerModule,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
