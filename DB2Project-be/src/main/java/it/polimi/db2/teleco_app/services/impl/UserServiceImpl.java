@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return userRepository.findById(username).map(userMapper.MAPPER::toTarget);
+        var x = userRepository.findById(username).map(userMapper.MAPPER::toTarget);
+        return x;
 
     }
 
@@ -51,8 +53,11 @@ public class UserServiceImpl implements UserService {
     public User editUser(User user) {
         var old = findByUsername(user.getUsername()).orElseThrow();
         //encode password
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        //can't overwrite important data
+        if(user.getPassword()!= null && !user.getPassword().equals(""))
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        else
+            user.setPassword(old.getPassword());
+        //can't overwrite this data
         user.setInsolvent(old.getInsolvent());
         user.setRoles(old.getRoles());
         return userMapper.MAPPER.toTarget(

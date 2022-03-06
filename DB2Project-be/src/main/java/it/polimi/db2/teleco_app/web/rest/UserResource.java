@@ -23,5 +23,12 @@ public class UserResource {
         );
     }
 
+    @GetMapping("/home/users/check-username/{username}")
+    ResponseEntity<Boolean> checkUsername(@PathVariable String username){
+        return ResponseEntity.ok().body(
+                userService.findByUsername(username).isPresent()
+        );
+    }
+
 
 }
