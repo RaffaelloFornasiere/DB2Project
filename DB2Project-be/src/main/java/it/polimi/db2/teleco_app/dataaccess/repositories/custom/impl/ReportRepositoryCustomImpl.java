@@ -1,5 +1,6 @@
 package it.polimi.db2.teleco_app.dataaccess.repositories.custom.impl;
 
+import it.polimi.db2.teleco_app.dataaccess.entities.SalesOptionalReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.entities.SalesPackageReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.entities.SalesValidityReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.repositories.custom.ReportRepositoryCustom;
@@ -28,5 +29,11 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
         Query query = entityManager.createQuery("select a from SalesPackageReportEntity a");
         var res = query.getResultList();
         return (List<SalesPackageReportEntity>) res;
+    }
+    @Override
+    public List<SalesOptionalReportEntity> findAllOptionalReport() {
+        Query query = entityManager.createQuery("select a from SalesOptionalReportEntity a");
+        var res = query.getResultList();
+        return (List<SalesOptionalReportEntity>) res;
     }
 }
