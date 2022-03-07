@@ -7,6 +7,7 @@ import it.polimi.db2.teleco_app.services.models.Package;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,18 @@ public class OrderResource {
     @GetMapping("/orders")
     ResponseEntity<List<Order>> findAll(){
         List<Order> res = orderService.findAll();
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/orders-sorted")
+    ResponseEntity<List<Order>> findAllSorted(){
+        List<Order> res = orderService.findAllSorted();
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/orders-per-day")
+    ResponseEntity<List<Pair<LocalDate, Long>>> getOrdersPerDay(){
+        List<Pair<LocalDate, Long>> res = orderService.findOrdersPerDate();
         return ResponseEntity.ok().body(res);
     }
 

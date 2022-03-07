@@ -4,6 +4,7 @@ import it.polimi.db2.teleco_app.utils.Pair;
 import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.services.models.Package;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ public interface OrderService {
     List<Order> findAll();
 
     List<Order> findAllByUser(String username);
+
+    List<Pair<LocalDate, Long>> findOrdersPerDate();
 
     List<Order> findAllByOrderDate(LocalDateTime start, LocalDateTime end);
 
@@ -35,4 +38,5 @@ public interface OrderService {
 
     List<Pair<Package, Integer>> findAllByPackage();
 
+    List<Order> findAllSorted();
 }

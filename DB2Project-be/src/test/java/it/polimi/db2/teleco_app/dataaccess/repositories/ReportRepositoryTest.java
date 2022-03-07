@@ -14,7 +14,7 @@ class ReportRepositoryTest {
 
     @Test
     void testRepo(){
-        var aux = repository.findAllCustom();
+        var aux = repository.findAllValidityReport();
         System.out.println(aux);
     }
 }

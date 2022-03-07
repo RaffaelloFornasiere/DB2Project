@@ -14,6 +14,9 @@ import it.polimi.db2.teleco_app.services.models.Package;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,6 +57,13 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderMapper::toTarget)
                 .toList();
     }
+
+    @Override
+    public List<Pair<LocalDate, Long>> findOrdersPerDate() {
+        return orderRepository.getOrdersPerDay()
+                .stream().map(i -> new Pair<>(((java.sql.Date)i[0]).toLocalDate(), ((BigInteger)i[1]).longValue())).toList();
+    }
+
 
     @Override
     public List<Order> findAllByOrderDate(LocalDateTime start, LocalDateTime end) {
@@ -148,6 +158,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllSorted() {
+        return orderRepository.findAllByOrderByOrderDate()
+                .stream()
+                .map(orderMapper::toTarget)
+                .toList();
+    }
+
+    @Override
     public Map<Pair<Package, ValidityPeriod>, Integer> findAllByPackageAndVP() {
         var aux = orderRepository.findAll()
                 .stream().map(orderMapper::toTarget).toList();
@@ -169,7 +187,7 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orders.size(); i++) {
             Billing lastBilling = billingMapper.toTarget(billingRepository
                     .findOneByOrderIdNative(orders.get(i).getId()));
-            if ( lastBilling.getResult().equals(false))
+            if ( lastBilling != null && lastBilling.getResult().equals(false))
                 res.add(orders.get(i));
         }
         return res;

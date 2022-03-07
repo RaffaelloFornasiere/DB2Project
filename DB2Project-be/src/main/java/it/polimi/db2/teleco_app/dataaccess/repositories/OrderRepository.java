@@ -1,11 +1,15 @@
 package it.polimi.db2.teleco_app.dataaccess.repositories;
 
 import it.polimi.db2.teleco_app.dataaccess.entities.OrderEntity;
+import it.polimi.db2.teleco_app.utils.Pair;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
@@ -39,8 +43,32 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     @Query(
             nativeQuery = true,
             value = """
-                   select * from orders  where package = ?1
-                   """
+                    select * from orders  where package = ?1
+                    """
     )
     List<OrderEntity> findAllByPackageIdNative(Long packageId);
+
+    @Query(
+            value = """
+                                        select o from OrderEntity o order by o.orderDate
+                    """
+    )
+    List<OrderEntity> findAllByOrderByOrderDate();
+//
+//    @Query(
+//
+////            value = """
+////                    SELECT  DATE(o.orderDate) Date, COUNT(DISTINCT order_id) totalCOunt
+////                    FROM    OrderEntity o
+////                    GROUP   BY  DATE(o.order_date)
+////                    """
+//    )
+//    List<Object[2]> getOrdersPerDay();
+
+    @Query(
+            nativeQuery = true,
+//            value = "select  from orders o "
+            value = "select DATE(o.order_date), count(distinct o.order_id) from orders o group by DATE(o.order_date)"
+    )
+    List<Object[]> getOrdersPerDay();
 }
