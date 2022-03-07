@@ -1,23 +1,26 @@
 <h2>Checkout:</h2>
 
-<div *ngIf="data">
-  <h3>Package: {{data.package.name}}</h3>
-  <h4>Optional Packages:</h4>
+<mat-card *ngIf="data" class="col-5">
+  <h3>Package name: {{data.package.name}}</h3>
+  <h4>Services offered: </h4>
+  <ul *ngFor="let item of data.package.telecomServices">
+    <li>Service name: {{item.name}}</li>
+    <ul *ngFor="let item of item.details | keyvalue">
+      <li *ngIf="item.key != '@type'">{{item.key}}: {{item.value}}</li>
+    </ul>
+  </ul>
+  <h5>Validity period:</h5>
+  <ul>
+    <li>Months: {{data.validityPeriod.months}}, Fee: {{data.validityPeriod.fee}}</li>
+  </ul>
+  <h5>Optional Packages:</h5>
   <ul>
     <li *ngFor="let opt of data.optionalPackages">
-      <h6>
         {{opt.name}}
-      </h6>
     </li>
   </ul>
 
-  <h4>Validity period:</h4>
-  <ul>
-    <li><h6>{{data.validityPeriod.id}}</h6></li>
-    <li><h6>{{data.validityPeriod.months}}</h6></li>
-
-  </ul>
 
 
  <button class="btn btn-primary" (click)="buy()">Buy</button>
-</div>
+</mat-card>

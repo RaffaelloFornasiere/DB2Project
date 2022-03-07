@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PurchaseService} from "../../services/purchase.service";
 import {Order} from "../../interfaces/Order";
+import {Package} from "../../interfaces/package";
+import {Option} from "@angular/cli/models/interface";
+import {OptionalPackage} from "../../interfaces/OptionalPackage";
+import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
 
 @Component({
   selector: 'app-confirmation',
@@ -16,11 +20,18 @@ export class ConfirmationComponent implements OnInit {
 
   ) { }
 
-  data: any;
+  data!: {
+    payment: boolean,
+    package: Package,
+    optionalPackages: OptionalPackage[],
+    validityPeriod: ValidityPeriod,
+    startDate: Date
+  };
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(
       (params: any) => {
         this.data = JSON.parse(params.get('data')!)
+        console.log(this.data);
       }
     )
   }

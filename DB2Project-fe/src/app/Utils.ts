@@ -37,4 +37,6 @@ export default class Utils{
   static log(... args : string[]){
     console.log(this.log.caller.name + ": " + args)
   }
+
+
 }

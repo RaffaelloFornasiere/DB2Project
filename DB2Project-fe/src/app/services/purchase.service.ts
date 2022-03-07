@@ -43,7 +43,23 @@ export class PurchaseService {
     return this.http.get<Order[]>("/api/orders/rejected-orders/")
       .pipe(
         tap((data) => console.log('get rejected orders done: ', data)),
-        catchError(Utils.handleError<Order[]>('buy'))
+        catchError(Utils.handleError<Order[]>('getRejectedOrders'))
+      );
+  }
+
+  getSortedOrders():Observable<Order[]>{
+    return this.http.get<Order[]>("/api/orders-sorted/")
+      .pipe(
+        tap((data) => console.log('getSortedOrders done: ', data)),
+        catchError(Utils.handleError<Order[]>('getSortedOrders'))
+      );
+  }
+
+  getOrdersPerDay():Observable<{first: Date, second: number}[]>{
+    return this.http.get<{first: Date, second: number}[]>("/api/orders-per-day")
+      .pipe(
+        tap((data) => console.log('getSortedOrders done: ')),
+        catchError(Utils.handleError<{first: Date, second: number}[]>('getSortedOrders'))
       );
   }
 

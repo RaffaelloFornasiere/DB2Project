@@ -1,5 +1,14 @@
 <h2>Admin dashboard</h2>
 
+<div class="chart-wrapper">
+  <canvas baseChart class="col-7" #chart
+          [datasets]="data"
+          [labels]="labels"
+          [chartType]="'line'"
+          >
+  </canvas>
+</div>
+
 <h4>averageOptionalPackages: {{averageOptionalPackages}}</h4>
 <h4>bestOptionalPackage: {{bestOptionalPackage}}</h4>
 <h4>totalPurchases: {{totalPurchases}}</h4>
