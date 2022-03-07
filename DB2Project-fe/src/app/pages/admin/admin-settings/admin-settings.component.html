@@ -11,7 +11,8 @@
                   <mat-card>
                     <mat-card-title>
                       {{package.name}}
-                      <button class="btn btn-secondary float-right" (click)="selectPackage(package.id)">Edit</button>
+                      <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deletePackage(package.id!)">Delete</button>
+                      <button class="btn btn-sm btn-secondary mr-1 float-right" (click)="selectPackage(package.id)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -226,6 +227,7 @@
                 <mat-label>Monthly Fee</mat-label>
                 <input matInput type="number" [formControlName]="'monthlyFee'">
               </mat-form-field>
+
             </form>
 
             <mat-card-actions align="end">

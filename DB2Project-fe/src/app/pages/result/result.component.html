@@ -1,0 +1,21 @@
+<ng-container *ngIf="data.outcome">
+  <h2>Thanks {{data.order.user.name}} for your order!</h2>
+  <div class="alert alert-success" role="alert">
+    Payment Successful
+  </div>
+  <h6>Your service will be activated on {{data.order.startDate}}</h6>
+
+  <button class="btn ml-1 btn-primary" routerLink="/home" >Continue Shopping</button>
+
+</ng-container>
+
+<ng-container *ngIf="!data.outcome">
+  <h2>Thanks for your order... but</h2>
+  <div class="alert alert-danger" role="alert">
+    Your payment failed
+  </div>
+
+  <mat-checkbox class="example-margin" [(ngModel)]="payment">Make payment succeed</mat-checkbox>
+  <br>
+  <button class="btn ml-1 btn-danger" (click)="retryPayment()">Retry payment</button>
+</ng-container>

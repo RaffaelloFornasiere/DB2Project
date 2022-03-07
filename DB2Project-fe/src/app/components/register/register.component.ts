@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import {AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
+import {FormFieldComponent} from "../form-field/form-field.component";
+import {F} from "@angular/cdk/keycodes";
+import {User} from "../../interfaces/user";
 
 
 /**
@@ -24,17 +30,37 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
+  usernameFormControl = new FormControl(null, [Validators.required], this.usernameValidatorAsync())
+  registerFormGroup = new FormGroup(
+    {
+      name: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      surname: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      username: new FormControl(null, [Validators.required], this.usernameValidatorAsync()),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      password2: new FormControl(null, [this.password2Validator()])
 
-  constructor(private authService: AuthService) {}
-  ngOnInit(): void {}
+    }
+  )
+
+  constructor(private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
+  }
 
 
-  onSubmit(): void {
+  submit(): void {
     const {username, password} = this.form;
-    this.authService.register(username, password)
+    let user = {
+      username: this.registerFormGroup.get('username')?.value,
+      name: this.registerFormGroup.get('name')?.value,
+      surname: this.registerFormGroup.get('surname')?.value,
+      password: this.registerFormGroup.get('password')?.value,
+    }
+    this.authService.register(user)
       .subscribe({
           next: data => {
-            //console.log(data)
+            console.log(data)
             this.isSuccessful = true;
             this.isSignUpFailed = false;
           },
@@ -46,4 +72,47 @@ export class RegisterComponent implements OnInit {
       );
   }
 
+  getErrorMessage() {
+    // if (this.username.hasError('required')) {
+    //   return 'You must enter a value';
+    // }
+    console.log(this.usernameFormControl.getError('minLength'));
+    if (this.usernameFormControl.hasError('minLength'))
+      return 'Username must be more then 4 characters';
+    return '';
+  }
+
+  private validateUsername(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (control.value && control.value.length < 4)
+        return {'minLength': true};
+      else
+        return {};
+    }
+  }
+
+  password2Validator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if ((this.registerFormGroup != undefined) && (this.registerFormGroup.get('password')?.value !=
+        control.value))
+        return {'passwordDifferent': true};
+      else
+        return null;
+    }
+  }
+
+  usernameValidatorAsync(): AsyncValidatorFn {
+
+
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      if (control.value && control.value.length < 4)
+        return of({'minLength': true});
+
+
+      return this.authService.checkUsername(control.value)
+        .pipe(
+          map((exist: boolean) => exist ? {'alreadyExist': true} : null)
+        );
+    }
+  }
 }

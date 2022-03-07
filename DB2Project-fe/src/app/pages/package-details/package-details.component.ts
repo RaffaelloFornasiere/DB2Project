@@ -27,17 +27,14 @@ export class PackageDetailsComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    let id = Number(this.route.snapshot.paramMap.get('id'));
     this.packageDetails = {} as PackageDetails;
-    await this.packageService
-      .getDetails(id).toPromise().then(res => this.packageDetails!.package = res);
+    this.packageDetails.package = JSON.parse(this.route.snapshot.queryParams['data']);
+
+    let id = this.packageDetails.package.id!;
     await this.packageService
       .getOptionalPackages(id).toPromise().then(res => this.packageDetails!.optionalPackages = res)
     await this.packageService
       .getValidityPeriods(id).toPromise().then(res => this.packageDetails!.validityPeriods = res)
-
-    console.log(this.packageDetails)
-    console.log(this.packageDetails.package.telecomServices)
   }
 
 
@@ -52,13 +49,12 @@ export class PackageDetailsComponent implements OnInit {
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
         next: (data: any) => {
-          console.log(data)
+          if (data == "cancel")
+            return;
+          data.package = this.packageDetails.package;
           result = JSON.stringify(data)
-
-          if (!this.tokenService.isAuthenticated())
-            this.router.navigate(['login'], {queryParams: {returnUrl: 'confirm', data: result}})
-          else
-            this.router.navigate(['confirm'], {queryParams: {data: result}})
+          this.router.navigate(['confirm'], {queryParams: {data: result}})
+            .then()
         }
       }
     );

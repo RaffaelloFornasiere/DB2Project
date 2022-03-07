@@ -8,6 +8,7 @@ import {User} from "../interfaces/user";
 import {OptionalPackage} from "../interfaces/OptionalPackage";
 import {ValidityPeriod} from "../interfaces/ValidityPeriod";
 import {Alert} from "../interfaces/Alert";
+import Utils from "../Utils";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -20,18 +21,18 @@ export class StatService {
   constructor(private http: HttpClient){}
 
   getInsolventUsers():Observable<User[]>{
-    return this.http.get<User[]>("/api/users/insolvent",httpOptions)
+    return this.http.get<User[]>("/api/report/users/insolvent",httpOptions)
       .pipe(
         tap(() => console.log('getInsolventUsers done')),
-        catchError(this.handleError<User[]>('getInsolventUsers'))
+        catchError(Utils.handleError<User[]>('getInsolventUsers'))
       );
   }
 
   getAlerts():Observable<Alert[]>{
-    return this.http.get<Alert[]>("/api/orders/alerts/",httpOptions)
+    return this.http.get<Alert[]>("/api/report/alerts/",httpOptions)
       .pipe(
         tap(() => console.log('getAlerts done')),
-        catchError(this.handleError<Alert[]>('getAlerts'))
+        catchError(Utils.handleError<Alert[]>('getAlerts'))
       );
   }
 
@@ -39,7 +40,7 @@ export class StatService {
     return this.http.get<Order[]>("/api/orders/suspended/",httpOptions)
       .pipe(
         tap(() => console.log('getSuspendedOrders done')),
-        catchError(this.handleError<Order[]>('getSuspendedOrders'))
+        catchError(Utils.handleError<Order[]>('getSuspendedOrders'))
       );
   }
 
@@ -47,15 +48,15 @@ export class StatService {
     return this.http.get<{first: Package, second: number}[]>("/api/optionalPackages/average/",httpOptions)
       .pipe(
         tap(() => console.log('getAverageOptionalPackages done')),
-        catchError(this.handleError<{first: Package, second: number}[]>('getAverageOptionalPackages'))
+        catchError(Utils.handleError<{first: Package, second: number}[]>('getAverageOptionalPackages'))
       );
   }
 
   getBestSellerOptionalPackage(): Observable<OptionalPackage>{
-    return this.http.get<OptionalPackage>("/api/optionalPackages/best-seller/",httpOptions)
+    return this.http.get<OptionalPackage>("/api/report/optionalPackages/best-seller/",httpOptions)
       .pipe(
         tap(() => console.log('getAverageOptionalPackages done')),
-        catchError(this.handleError<OptionalPackage>('getAverageOptionalPackages'))
+        catchError(Utils.handleError<OptionalPackage>('getAverageOptionalPackages'))
       );
   }
 
@@ -63,7 +64,7 @@ export class StatService {
     return this.http.get<{first: Package, second: number}[]>("/api/orders/packages/",httpOptions)
       .pipe(
         tap(() => console.log('getOrderPerPackage done')),
-        catchError(this.handleError<{first: Package, second: number}[]>('getOrderPerPackage'))
+        catchError(Utils.handleError<{first: Package, second: number}[]>('getOrderPerPackage'))
       );
   }
 
@@ -71,23 +72,8 @@ export class StatService {
     return this.http.get<{key: {first: Package,second: ValidityPeriod},value: number}[]>("/api/orders/packages-and-vp/",httpOptions)
       .pipe(
         tap(() => console.log('getOrderPerPackageAndVP done')),
-        catchError(this.handleError<{key: {first: Package,second: ValidityPeriod},value: number}[]>('getOrderPerPackageAndVP'))
+        catchError(Utils.handleError<{key: {first: Package,second: ValidityPeriod},value: number}[]>('getOrderPerPackageAndVP'))
       );
   }
 
-
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.log("error: " + JSON.stringify(error)); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

@@ -54,7 +54,7 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <section class="example-section">
-      <mat-checkbox class="example-margin" [(ngModel)]="result">Make payment fail</mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="result">Make payment succeed</mat-checkbox>
     </section>
 
 
@@ -63,7 +63,7 @@
 
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="close()">Back</button>
+    <button type="button" class="btn btn-secondary" (click)="ngOnDestroy()">Back</button>
     <button type="button" class="btn btn-primary" (click)="close()">Continue</button>
   </div>
 </div>

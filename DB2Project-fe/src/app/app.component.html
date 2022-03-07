@@ -39,7 +39,8 @@
             <a *ngIf="isLoggedIn" href="/profile" class="nav-link"  routerLink="profile" style="color: #fff;">
               {{"ROLE:" + role + " | Username: " + username }}
             </a>
-            <a *ngIf="isLoggedIn" class="nav-item" href="/login" (click)="logout()" style="color: #fff;">
+<!--            <a *ngIf="isLoggedIn" class="nav-item" href="/login" (click)="logout()" style="color: #fff;">-->
+            <a *ngIf="isLoggedIn" class="nav-item"  (click)="logout()" style="color: #fff;">
               LogOut
             </a>
 

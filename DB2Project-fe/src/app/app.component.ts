@@ -8,6 +8,7 @@ import {TokenStorageService} from "./services/token-storage.service";
 import {LoginComponent} from "./components/login/login.component";
 import {User} from "./interfaces/user";
 import {MatSidenav} from "@angular/material/sidenav";
+import {UserService} from "./services/user.service";
 
 
 @Component({
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private tokenStorageService: TokenStorageService,
+    private userService: UserService
   ) {
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
@@ -68,26 +70,13 @@ export class AppComponent implements OnInit {
 
   setupSideBar(){
     if (this.isLoggedIn) {
-      const user: User = this.tokenStorageService.getUser();
+      const user: User = this.tokenStorageService.getUser()!;
       this.username = user.username;
       this.role = user.roles[0];
 
-      this.navElements = this.pages.filter(p => p.title != 'Packages')
-        .map((p) => {
-            return {
-              title: p.title,
-              link:
-                '/'
-                + this.role.substring('ROLE_'.length).toLocaleLowerCase()
-                + '-'
-                + p.title.toLocaleLowerCase()
-            }
-          }
-        );
-      this.navElements.push({title: "Packages", link: "/packages"})
-    } else {
-      this.navElements = [{title: "Packages", link: "/packages"}];
     }
+    this.navElements = this.userService.getPages();
+
   }
 
   ngOnInit(): void {
@@ -105,7 +94,7 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.tokenStorageService.signOut();
-    window.location.reload();
+    // window.location.reload();
   }
 
 }

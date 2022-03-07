@@ -51,7 +51,7 @@ export class UserDashboardComponent implements OnInit {
   userPages = [
     {title: "Dashboard", link: "/user-dashboard"},
     {title: "Packages", link: "/packages"},
-    {title: "Settings", link: "/user-settings"},
+    // {title: "Settings", link: "/user-settings"},
   ]
 
   // config!: ChartConfiguration<keyof ChartTypeRegistry, number[], string>;

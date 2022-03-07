@@ -43,6 +43,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTabsModule} from "@angular/material/tabs";
 import { FormFieldComponent } from './components/form-field/form-field.component';
+import { ResultComponent } from './pages/result/result.component';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -64,7 +66,7 @@ import { FormFieldComponent } from './components/form-field/form-field.component
     BuyDialogComponent,
     ConfirmationComponent,
     FormFieldComponent,
-
+    ResultComponent,
 
   ],
     imports: [
@@ -97,10 +99,11 @@ import { FormFieldComponent } from './components/form-field/form-field.component
         MatCheckboxModule,
         LayoutModule,
         MatTabsModule,
-
+      MatSnackBarModule,
     ],
   providers: [authInterceptorProviders,MatDatepickerModule,
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

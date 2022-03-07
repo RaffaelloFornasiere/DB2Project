@@ -1,27 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { TokenStorageService} from "../../services/token-storage.service";
+import {Component, OnInit} from '@angular/core';
+import {TokenStorageService} from "../../services/token-storage.service";
 import {User} from "../../interfaces/user";
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material/core";
-
-
-
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
-
-/**
- * This Component gets current User from Storage using TokenStorageService and show information
- * and allows user to edit them
- * (username, password, roles).
- */
-
+import {
+  AbstractControl, AsyncValidatorFn,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -30,23 +20,97 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: User | undefined;
-  roles= [
-    {key: "ROLE_USER", value: "User"},
-    {key: "ROLE_ADMIN", value: "Admin"}
-  ];
-  rolesForm = new FormControl();
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  matcher = new MyErrorStateMatcher();
+  user!: User;
 
 
-  submitted= false;
-  constructor(private token: TokenStorageService) {
+  constructor(private token: TokenStorageService,
+              private authService: AuthService,
+              public snackBar: MatSnackBar
+  ) {
   }
-  ngOnInit(): void {
-    this.user = this.token.getUser();
+
+  registerFormGroup = new FormGroup({});
+
+  ngOnInit() {
+    this.user = this.token.getUser()!;
+    this.registerFormGroup = new FormGroup(
+      {
+        name: new FormControl(this.user.name, [Validators.required, Validators.minLength(4)]),
+        surname: new FormControl(this.user.surname, [Validators.required, Validators.minLength(4)]),
+        username: new FormControl(this.user.username, [Validators.required], this.usernameValidatorAsync()),
+        password: new FormControl(null, [ Validators.minLength(6)]),
+        password2: new FormControl(null, [this.password2Validator()])
+
+      }
+    )
   }
-  onSubmit() {
-    this.submitted = true;
+
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
+
+  submit() {
+    let user: any = {
+      name: this.registerFormGroup.get('name')?.value,
+      surname: this.registerFormGroup.get('surname')?.value,
+      username: this.registerFormGroup.get('username')?.value,
+    }
+    if(!this.isVoid(this.registerFormGroup.get('password')?.value))
+      user.password = this.registerFormGroup.get('password')?.value;
+
+    this.authService.editUser(user).subscribe({
+        next: data => {
+          this.user = data;
+          console.log(data)
+          this.openSnackBar("User edited", "close")
+
+
+        },
+        error: err => {
+          console.log(err)
+          this.openSnackBar("Error: "+ err, "close")
+        }
+      }
+    )
+  }
+
+  isVoid(value: any):boolean{
+    if(value === undefined || value === null || value === "" )
+      return true;
+    return false;
+  }
+
+  cancel() {
+    window.location.reload();
+  }
+
+
+  password2Validator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if ((this.registerFormGroup != undefined) && (this.registerFormGroup.get('password')?.value !=
+        control.value))
+        return {'passwordDifferent': true};
+      else
+        return null;
+    }
+  }
+
+  usernameValidatorAsync(): AsyncValidatorFn {
+
+
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      if (control.value && control.value.length < 4)
+        return of({'minLength': true});
+
+
+      return this.authService.checkUsername(control.value)
+        .pipe(
+          map((exist: boolean) => exist ? {'alreadyExist': true} : null)
+        );
+    }
+  }
+
 }

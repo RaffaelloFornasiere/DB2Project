@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
+import {User} from "../interfaces/user";
 
 
 /**
@@ -63,10 +64,10 @@ export class TokenStorageService {
   /**
    * retrieves the current user (if any)
    */
-  public getUser(): any {
+  public getUser(): User | undefined {
     let user = window.sessionStorage.getItem(this.USER_KEY);
     if(user)
       return JSON.parse(user);
-
+    return undefined;
   }
 }
