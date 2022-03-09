@@ -61,12 +61,12 @@ public class AuthController {
         if (userService.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Error: Username is already taken");
         }
-        if ((user.getRoles() == null || user.getRoles().isEmpty()))
+        if ((user.getRoles() == null || user.getRoles().isEmpty())) {
             if (!user.getUsername().contains("admin"))
                 user.setRoles(Set.of(Role.ROLE_USER));
             else
                 user.setRoles(Set.of(Role.ROLE_ADMIN));
-
+        }
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().stream()
                 .filter(r -> roleRepository.findByRole(r).isPresent()).findAny()
