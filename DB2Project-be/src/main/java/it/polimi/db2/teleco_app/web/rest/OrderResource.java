@@ -53,6 +53,7 @@ public class OrderResource {
         return ResponseEntity.ok().body(res);
     }
 
+
     @GetMapping("/orders/user/{username}")
     ResponseEntity<List<Order>> findAllByUser(@PathVariable String username){
         List<Order> res = orderService.findAllByUser(username);
@@ -75,11 +76,7 @@ public class OrderResource {
         var res = orderService.findAllByPackage();
         return ResponseEntity.ok().body(res);
     }
-    @GetMapping("/orders/packages-and-vp/")
-    ResponseEntity<Map<Pair<Package, ValidityPeriod>, Integer>> findAllByPackageAndVP() {
-        var res = orderService.findAllByPackageAndVP();
-        return ResponseEntity.ok().body(res);
-    }
+
 
     @GetMapping("/orders/packages/{packageId}/{validityPeriod}")
     ResponseEntity<List<Order>> findAllByPackageIdAndVP(@PathVariable Long packageId, @PathVariable ValidityPeriod validityPeriod){

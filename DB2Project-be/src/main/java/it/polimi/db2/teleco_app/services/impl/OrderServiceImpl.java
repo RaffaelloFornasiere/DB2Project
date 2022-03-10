@@ -15,11 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -47,6 +45,11 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();
+    }
+
+    @Override
+    public List<Billing> findAllBillingsByOrderId(Long orderId){
+        return billingRepository.findAllByOrderIdNative(orderId).stream().map(billingMapper::toTarget).toList();
     }
 
 
@@ -165,22 +168,7 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-    @Override
-    public Map<Pair<Package, ValidityPeriod>, Integer> findAllByPackageAndVP() {
-        var aux = orderRepository.findAll()
-                .stream().map(orderMapper::toTarget).toList();
-        return aux.stream()
-                .map(i -> Map.entry(new Pair<>(i.getServicePackage(), i.getValidityPeriod()), 1))
-                .distinct()
-                .map(i ->
-                        Map.entry(i.getKey(), (int) aux.stream()
-                                .filter(order ->
-                                        order.getServicePackage().getId().equals(i.getKey().getFirst().getId()) &&
-                                                order.getValidityPeriod().getId().equals(i.getKey().getSecond().getId())
-                                )
-                                .count())
-                ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
+
 
     private List<Order> extractRejected(List<Order> orders) {
         List<Order> res = new ArrayList<>();

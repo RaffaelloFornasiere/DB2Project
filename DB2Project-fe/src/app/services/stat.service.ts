@@ -28,6 +28,15 @@ export class StatService {
       );
   }
 
+  getUsersReport():Observable<any[]>{
+    return this.http.get<any[]>("/api/report/users-report",httpOptions)
+      .pipe(
+        tap(() => console.log('getInsolventUsers done')),
+        catchError(Utils.handleError<any[]>('getInsolventUsers'))
+      );
+  }
+
+
   getAlerts():Observable<Alert[]>{
     return this.http.get<Alert[]>("/api/report/alerts/",httpOptions)
       .pipe(
@@ -44,19 +53,19 @@ export class StatService {
       );
   }
 
-  getAverageOptionalPackages(): Observable<{first: Package, second: number}[]>{
-    return this.http.get<{first: Package, second: number}[]>("/api/optionalPackages/average/",httpOptions)
+  getPackageReport(): Observable<any[]>{
+    return this.http.get<any[]>("/api//report/optionalPackages/average/",httpOptions)
       .pipe(
         tap(() => console.log('getAverageOptionalPackages done')),
-        catchError(Utils.handleError<{first: Package, second: number}[]>('getAverageOptionalPackages'))
+        catchError(Utils.handleError<any[]>('getAverageOptionalPackages'))
       );
   }
 
-  getBestSellerOptionalPackage(): Observable<OptionalPackage>{
-    return this.http.get<OptionalPackage>("/api/report/optionalPackages/best-seller/",httpOptions)
+  getBestSellerOptionalPackage(): Observable<any[]>{
+    return this.http.get<any[]>("/api/report/optionalPackages/best-seller/",httpOptions)
       .pipe(
         tap(() => console.log('getAverageOptionalPackages done')),
-        catchError(Utils.handleError<OptionalPackage>('getAverageOptionalPackages'))
+        catchError(Utils.handleError<any[]>('getAverageOptionalPackages'))
       );
   }
 
@@ -68,11 +77,11 @@ export class StatService {
       );
   }
 
-  getOrderPerPackageAndVP(): Observable<{key: {first: Package,second: ValidityPeriod},value: number}[]>{
-    return this.http.get<{key: {first: Package,second: ValidityPeriod},value: number}[]>("/api/orders/packages-and-vp/",httpOptions)
+  getOrderPerPackageAndVP(): Observable<any[]>{
+    return this.http.get<any[]>("/api/report/packages-and-vp/",httpOptions)
       .pipe(
         tap(() => console.log('getOrderPerPackageAndVP done')),
-        catchError(Utils.handleError<{key: {first: Package,second: ValidityPeriod},value: number}[]>('getOrderPerPackageAndVP'))
+        catchError(Utils.handleError<any[]>('getOrderPerPackageAndVP'))
       );
   }
 

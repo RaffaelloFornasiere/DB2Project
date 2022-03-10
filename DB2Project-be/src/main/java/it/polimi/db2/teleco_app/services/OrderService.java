@@ -12,6 +12,8 @@ import java.util.Map;
 public interface OrderService {
     List<Order> findAll();
 
+    List<Billing> findAllBillingsByOrderId(Long orderId);
+
     List<Order> findAllByUser(String username);
 
     List<Pair<LocalDate, Long>> findOrdersPerDate();
@@ -20,7 +22,6 @@ public interface OrderService {
 
     List<Order> findAllByPackageId(Long packageId);
     List<Order> findAllByPackageIdAndVP(Long packageId, ValidityPeriod validityPeriod);
-    Map<Pair<Package, ValidityPeriod>, Integer> findAllByPackageAndVP();
 
 
     Pair<Order, Boolean> buy(Order order, Boolean result);

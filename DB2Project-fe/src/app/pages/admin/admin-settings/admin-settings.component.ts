@@ -12,6 +12,7 @@ import {F} from "@angular/cdk/keycodes";
 import {ServiceDetails} from "../../../interfaces/ServiceDetails";
 import Utils from "../../../Utils";
 import {MatTabGroup} from "@angular/material/tabs";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 
 
 @Component({
@@ -64,19 +65,18 @@ export class AdminSettingsComponent implements OnInit {
   pageSelected = 0;
 
   constructor(private packageService: PackageService,
-              private navbarService: NavbarService
+              private route: ActivatedRoute,
+              private router: Router
   ) {
   }
 
-  ngOnInit()
-    :
-    void {
+  ngOnInit(): void {
+    this.pageSelected = this.route.snapshot.queryParams['page']
 
     this.packageService.getAllPackages()
       .subscribe(packages => {
         this.packages = packages
       });
-
     this.packageService.getAllServices()
       .subscribe(
         services => {
@@ -92,7 +92,6 @@ export class AdminSettingsComponent implements OnInit {
       .subscribe(
         validityPeriods => this.validityPeriods = validityPeriods
       )
-
   }
 
   deletePackage(packageId: number) {
@@ -153,7 +152,7 @@ export class AdminSettingsComponent implements OnInit {
         });
       }
     }
-    this.ngOnInit();
+    this.reload();
 
   }
 
@@ -210,8 +209,12 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.saveService(s!).subscribe((data) => {
       console.log(data)
     });
-    this.ngOnInit();
+    this.reload();
+  }
 
+  deleteService(serviceId: number){
+      this.packageService.deleteService(serviceId).subscribe();
+    this.reload();
   }
 
 
@@ -245,10 +248,13 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.saveOptionalPackage(s!).subscribe((data) => {
       console.log(data)
     });
-    this.ngOnInit();
+    this.reload();
 
   }
-
+  deleteOptionalPackage(optionalPackageId: number){
+    this.packageService.deleteOptionalPackage(optionalPackageId).subscribe()
+    this.reload();
+  }
 
   selectValidityPeriod(validityId?: number) {
     this.selected[this.pageSelected] = validityId;
@@ -278,7 +284,16 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.saveValidityPeriod(s!).subscribe((data) => {
       console.log(data)
     });
-    this.ngOnInit();
+    this.reload();
   }
 
+  reload(){
+    this.router.navigate(["/admin-settings"], {queryParams: {page: this.pageSelected}}).then(() => location.reload());
+
+  }
+
+  deleteValidityPeriod(validityPeriodId: number){
+    this.packageService.deleteValidityPeriod(validityPeriodId).subscribe()
+    this.reload();
+  }
 }

@@ -20,7 +20,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./buy-dialog.component.scss']
 })
 export class BuyDialogComponent implements OnInit, OnDestroy {
-  formOptionalPackages = new FormControl([this.data.packageDetails.optionalPackages[0]], [Validators.required]);
+  formOptionalPackages = new FormControl([this.data.packageDetails.optionalPackages[0]]);
   formPeriods = new FormControl(this.data.packageDetails.validityPeriods[0], [Validators.required]);
   startDate: Date = new Date();
   result: boolean = true;
@@ -30,7 +30,7 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
                 title: string,
                 packageDetails: PackageDetails
               }) {
-    this.formOptionalPackages = new FormControl([this.data.packageDetails.optionalPackages[0]], [Validators.required]);
+    this.formOptionalPackages = new FormControl([this.data.packageDetails.optionalPackages[0]]);
     this.formPeriods = new FormControl(this.data.packageDetails.validityPeriods[0], [Validators.required]);
   }
 

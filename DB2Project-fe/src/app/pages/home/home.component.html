@@ -32,7 +32,7 @@
 <hr/>
 
 <div *ngIf="rejectedOrders && rejectedOrders.length > 0" class="alert alert-danger" role="alert">
-  Some of your orders have been rejected:
+  Some of your orders are suspended:
     <ul>
       <li *ngFor="let order of rejectedOrders">
         <button class="btn btn-link p-0" style="color:#dc3545" (click)="goToOrder(order)" >Order ID: {{order.id}}</button>

@@ -1,14 +1,15 @@
 <h2>Product Details</h2>
 
-<div *ngIf="packageDetails && packageDetails.package">
-  <h3>{{ packageDetails.package.name }}</h3>
-  <h4>Services offered: </h4>
+<mat-card *ngIf="packageDetails && packageDetails.package" class="col-8">
+  <mat-card-title>{{ packageDetails.package.name }}</mat-card-title>
+  <h5>Services offered: </h5>
   <ul *ngFor="let item of packageDetails.package.telecomServices">
     <li>Service name: {{item.name}}</li>
       <ul *ngFor="let item of item.details | keyvalue">
         <li *ngIf="item.key != '@type'">{{item.key}}: {{item.value}}</li>
       </ul>
   </ul>
+
   <!--  <p>type: {{ packageDetails.package.type }}</p>-->
   <button class="btn btn-primary" (click)="buy(packageDetails.package)">Buy</button>
-</div>
+</mat-card>

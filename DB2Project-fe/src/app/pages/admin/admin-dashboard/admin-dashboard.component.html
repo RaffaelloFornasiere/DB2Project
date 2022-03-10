@@ -9,11 +9,92 @@
   </canvas>
 </div>
 
-<h4>averageOptionalPackages: {{averageOptionalPackages}}</h4>
-<h4>bestOptionalPackage: {{bestOptionalPackage}}</h4>
-<h4>totalPurchases: {{totalPurchases}}</h4>
-<h4>totalPurchasesVP: {{totalPurchasesVP}}</h4>
-<h4>suspendedOrders: {{suspendedOrders}}</h4>
-<h4>insolventUsers: {{insolventUsers}}</h4>
-<h4>alerts: {{alerts}}</h4>
+
+<mat-card *ngIf="packageReport" class="mr-8 mb-4">
+  <mat-card-title>
+    Average number of optional products sold together with each service package
+  </mat-card-title>
+  <table  mat-table [dataSource]="packageReport.data" class="mat-elevation-z8">
+
+    <ng-container *ngFor="let col of packageReport.displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef>{{packageReport.titles[
+        packageReport.displayedColumns.indexOf(col)]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="packageReport.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: packageReport.displayedColumns;"></tr>
+  </table>
+</mat-card>
+
+<mat-card *ngIf="optionalPackageReport" class="mr-8 mb-4">
+  <mat-card-title>
+    Average number of optional products sold together with each service package
+  </mat-card-title>
+
+  <h6>The best seller optional package is {{optionalPackageReport.data[0].optionalPackage}}</h6>
+
+  <button #button  (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
+    Show scores</button>
+  <table *ngIf="button.value == 'true'" mat-table [dataSource]="optionalPackageReport.data" class="mat-elevation-z8">
+
+    <ng-container *ngFor="let col of optionalPackageReport.displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef>{{optionalPackageReport.titles[
+        optionalPackageReport.displayedColumns.indexOf(col)]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="optionalPackageReport.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: optionalPackageReport.displayedColumns;"></tr>
+
+  </table>
+</mat-card>
+
+<mat-card *ngIf="validityPeriodReport" class="mr-8 mb-4">
+    <mat-card-title>
+      Number of total purchases per package and validity period
+    </mat-card-title>
+  <button #button  (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
+    View full table</button>
+  <table  mat-table
+          [dataSource]="button.value === 'true'?validityPeriodReport.data:validityPeriodReport.data.slice(0,5)"
+          class="mat-elevation-z8">
+    <ng-container *ngFor="let col of validityPeriodReport.displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef>{{validityPeriodReport.titles[
+        validityPeriodReport.displayedColumns.indexOf(col)]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="validityPeriodReport.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: validityPeriodReport.displayedColumns;"></tr>
+  </table>
+</mat-card>
+
+
+<mat-card class="mr-8 mb-4">
+  <mat-card-title>
+    Users Report
+  </mat-card-title>
+
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let report of usersReport">
+      <mat-expansion-panel-header class="right-aligned-header">
+        <mat-panel-title>
+          {{report.user.name}} {{report.user.surname}} ({{report.user.username}})
+        </mat-panel-title>
+        <mat-panel-description>
+          <a><span *ngIf="report.alert" [class]="'badge badge-pill badge-danger'">{{report.badge}}</span></a>
+          <a><span *ngIf="!report.alert" [class]="'badge badge-pill badge-secondary'">{{report.badge}}</span></a>
+
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div style="display: flex" *ngFor="let order of report.suspendedOrders">
+        <p style="flex: 1 1 auto;" >Order ID: {{order.first.id}}, date: {{order.first.orderDate | date:'short'}}</p>
+        <p ><a><span class="badge badge-pill badge-secondary">{{order.second.length}}</span></a></p>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
+
 

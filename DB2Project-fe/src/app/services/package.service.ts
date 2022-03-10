@@ -73,12 +73,16 @@ export class PackageService {
   }
 
   saveOptionalPackage(optionalPackage: OptionalPackage): Observable<OptionalPackage> {
-    let params = new HttpParams().set('package', JSON.stringify(optionalPackage))
     return this.http.post<OptionalPackage>("api/optionalPackages/save/",
-      {params: params}, this.httpOptions)
+      optionalPackage, this.httpOptions)
       .pipe(
         catchError(Utils.handleError<OptionalPackage>('getOptionalPackages',))
       )
+  }
+
+  deleteOptionalPackage(optionalPackageId: number){
+    return this.http.delete("api/optionalPackages/delete/"+optionalPackageId)
+      .pipe(catchError(Utils.handleError("delete package")))
   }
 
   getAllValidityPeriods(): Observable<ValidityPeriod[]> {
@@ -103,6 +107,11 @@ export class PackageService {
       )
   }
 
+  deleteValidityPeriod(validityPeriodId: number){
+    return this.http.delete("api/validityPeriod/delete/"+validityPeriodId)
+      .pipe(catchError(Utils.handleError("delete package")))
+  }
+
   savePackage(packageService: Package, optionalPackages: OptionalPackage[], validityPeriods: ValidityPeriod[]): Observable<Package> {
     return this.http.post<Package>("api/packages/save/", [
       JSON.stringify(packageService),
@@ -120,12 +129,16 @@ export class PackageService {
   }
 
   saveService(telecomService: TelecomService): Observable<TelecomService> {
-    let params = new HttpParams().set('package', JSON.stringify(telecomService))
-    return this.http.post<TelecomService>("api/packages/save/",
-      {params: params}, this.httpOptions)
+    return this.http.post<TelecomService>("api/services/save/",
+      telecomService, this.httpOptions)
       .pipe(
         catchError(Utils.handleError<TelecomService>('getOptionalPackages',))
       )
+  }
+
+  deleteService(serviceId: number){
+    return this.http.delete("api/services/delete/"+serviceId)
+      .pipe(catchError(Utils.handleError("delete package")))
   }
 
 

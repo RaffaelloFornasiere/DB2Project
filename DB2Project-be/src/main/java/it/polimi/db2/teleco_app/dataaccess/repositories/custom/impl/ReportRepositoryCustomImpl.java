@@ -32,7 +32,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     }
     @Override
     public List<SalesOptionalReportEntity> findAllOptionalReport() {
-        Query query = entityManager.createQuery("select a from SalesOptionalReportEntity a");
+        Query query = entityManager.createQuery("select a from SalesOptionalReportEntity a order by a.score desc");
         var res = query.getResultList();
         return (List<SalesOptionalReportEntity>) res;
     }

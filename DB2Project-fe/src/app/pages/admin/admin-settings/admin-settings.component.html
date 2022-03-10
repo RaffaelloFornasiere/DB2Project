@@ -12,7 +12,7 @@
                     <mat-card-title>
                       {{package.name}}
                       <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deletePackage(package.id!)">Delete</button>
-                      <button class="btn btn-sm btn-secondary mr-1 float-right" (click)="selectPackage(package.id)">Edit</button>
+                      <button class="btn btn-sm btn-secondary mr-1 float-right" (click)="selectPackage(package.id!)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -90,7 +90,8 @@
                   <mat-card>
                     <mat-card-title>
                       {{service.name}}
-                      <button class="btn btn-secondary float-right" (click)="selectService(service.id)">Edit</button>
+                      <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deleteService(service.id!)">Delete</button>
+                      <button class="btn btn-sm btn-secondary  mr-1 float-right" (click)="selectService(service.id!)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -191,7 +192,8 @@
                   <mat-card>
                     <mat-card-title>
                       {{optionalPackage.name}}
-                      <button class="btn btn-secondary float-right" (click)="selectOptionalPackage(optionalPackage.id)">Edit</button>
+                      <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deleteOptionalPackage(optionalPackage.id!)">Delete</button>
+                      <button class="btn btn-sm btn-secondary mr-1 float-right" (click)="selectOptionalPackage(optionalPackage.id!)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
@@ -253,7 +255,8 @@
                   <mat-card>
                     <mat-card-title>
                       Fee: {{validityPeriod.fee}}, Months: {{validityPeriod.months}}
-                      <button class="btn btn-secondary float-right" (click)="selectValidityPeriod(validityPeriod.id)">Edit</button>
+                      <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deleteValidityPeriod(validityPeriod.id!)">Delete</button>
+                      <button class="btn btn-sm btn-secondary mr-1 float-right" (click)="deleteValidityPeriod(validityPeriod.id!)">Edit</button>
                     </mat-card-title>
                   </mat-card>
                   <br>
