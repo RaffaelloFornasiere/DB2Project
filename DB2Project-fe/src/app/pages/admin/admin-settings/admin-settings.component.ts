@@ -5,7 +5,7 @@ import {NavbarService} from "../../../services/navbar.service";
 import {TelecomService} from "../../../interfaces/TelecomService";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {OptionalPackage} from "../../../interfaces/OptionalPackage";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {MatFormField} from "@angular/material/form-field";
 import {FormFieldComponent} from "../../../components/form-field/form-field.component";
 import {F} from "@angular/cdk/keycodes";
@@ -13,6 +13,7 @@ import {ServiceDetails} from "../../../interfaces/ServiceDetails";
 import Utils from "../../../Utils";
 import {MatTabGroup} from "@angular/material/tabs";
 import {ActivatedRoute, Route, Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -32,7 +33,7 @@ export class AdminSettingsComponent implements OnInit {
 
 
   packageFormGroup: FormGroup = new FormGroup({
-    packageName: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    packageName: new FormControl('', [Validators.required, Validators.minLength(5), this.packageNameValidator()]),
     services: new FormControl([], [Validators.min(2)]),
     optionalPackages: new FormControl([], [Validators.required]),
     validityPeriods: new FormControl([])
@@ -66,7 +67,8 @@ export class AdminSettingsComponent implements OnInit {
 
   constructor(private packageService: PackageService,
               private route: ActivatedRoute,
-              private router: Router
+              private router: Router,
+              public snackBar: MatSnackBar,
   ) {
   }
 
@@ -94,8 +96,14 @@ export class AdminSettingsComponent implements OnInit {
       )
   }
 
-  deletePackage(packageId: number) {
-    this.packageService.deletePackage(packageId);
+  packageNameValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      console.log(control.value)
+      if (this.packages.find(i => i.name === control.value))
+        return {'alreadyExist': true};
+      else
+        return null;
+    }
   }
 
   selectPackage(packageId?: number) {
@@ -127,34 +135,28 @@ export class AdminSettingsComponent implements OnInit {
   }
 
   sendPackage() {
-    if (this.selected[this.pageSelected] === undefined) {
-      let p: Package = {
-        id: undefined,
-        name: this.packageFormGroup.get('packageName')?.value,
-        telecomServices: this.packageFormGroup.get('services')?.value
-      }
-      console.log(p)
-      this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
-        this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
-        console.log(data)
-      });
-    } else {
-      let p = this.packages.find(p => p.id === this.selected[this.pageSelected]);
-      if (p === undefined)
-        console.error("errore")
-      else {
-        p!.name = this.packageFormGroup.get('packageName')?.value
-        p!.telecomServices = this.packageFormGroup.get('services')?.value
-        console.log(p)
-        this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
-          this.packageFormGroup.get('validityPeriods')?.value).subscribe((data) => {
-          console.log(data)
-        });
-      }
+    let p: Package = {
+      id: this.packages.find(p => p.id === this.selected[this.pageSelected])?.id,
+      name: this.packageFormGroup.get('packageName')?.value,
+      telecomServices: this.packageFormGroup.get('services')?.value
     }
-    this.reload();
+
+    this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
+      this.packageFormGroup.get('validityPeriods')?.value).subscribe(
+      {
+        next: ()=>this.reload(),
+        error: ()=> this.openSnackBar("Can't save package", "ok")
+      });
 
   }
+  deletePackage(packageId: number) {
+    this.packageService.deletePackage(packageId).subscribe(
+      {
+        next: ()=>this.reload(),
+        error: ()=> this.openSnackBar("Can't delete package", "ok")
+      });
+  }
+
 
   selectService(serviceId?: number) {
     this.selected[this.pageSelected] = serviceId;
@@ -191,7 +193,7 @@ export class AdminSettingsComponent implements OnInit {
   sendService() {
     let s: TelecomService = {id: undefined, name: "", details: {}}
 
-    s.id = this.services.filter(s => s.id === this.selected[this.pageSelected]).map(s => s.id)[0];
+    s.id = this.services.find(s => s.id === this.selected[this.pageSelected])?.id;
     s.name = this.serviceFormGroup.get('serviceName')?.value
     s.details["@type"] = Utils.toJavaType(this.serviceFormGroup.get('serviceTypes')?.value)
 
@@ -206,15 +208,19 @@ export class AdminSettingsComponent implements OnInit {
     Object.keys(s.details).forEach(key => s.details[key] === undefined && delete s.details[key])
 
     console.log("service: ", s)
-    this.packageService.saveService(s!).subscribe((data) => {
-      console.log(data)
-    });
-    this.reload();
+    this.packageService.saveService(s!).subscribe(
+      {
+        next: ()=>this.reload(),
+        error: ()=> this.openSnackBar("Can't save service", "ok")
+      });
   }
 
   deleteService(serviceId: number){
-      this.packageService.deleteService(serviceId).subscribe();
-    this.reload();
+      this.packageService.deleteService(serviceId).subscribe(
+        {
+          next: ()=>this.reload(),
+          error: ()=> this.openSnackBar("Can't delete service", "ok")
+        });
   }
 
 
@@ -230,7 +236,6 @@ export class AdminSettingsComponent implements OnInit {
 
     this.buttonTile = "Edit";
     let data = this.optionalPackages.find(op => op.id === packageId)!
-    console.log(data)
     this.optionalPackageFormGroup.get('name')?.setValue(data.name)
     this.optionalPackageFormGroup.get('description')?.setValue(data.description)
     this.optionalPackageFormGroup.get('monthlyFee')?.setValue(data.monthlyFee)
@@ -244,11 +249,11 @@ export class AdminSettingsComponent implements OnInit {
     s.description = this.optionalPackageFormGroup.get('description')?.value
     s.monthlyFee = this.optionalPackageFormGroup.get('monthlyFee')?.value
 
-    console.log("service: ", s)
-    this.packageService.saveOptionalPackage(s!).subscribe((data) => {
-      console.log(data)
-    });
-    this.reload();
+    this.packageService.saveOptionalPackage(s!).subscribe(
+      {
+        next: ()=>this.reload(),
+        error: ()=> this.openSnackBar("Can't send optional package", "ok")
+      });
 
   }
   deleteOptionalPackage(optionalPackageId: number){
@@ -295,5 +300,11 @@ export class AdminSettingsComponent implements OnInit {
   deleteValidityPeriod(validityPeriodId: number){
     this.packageService.deleteValidityPeriod(validityPeriodId).subscribe()
     this.reload();
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

@@ -200,7 +200,7 @@ export class AdminDashboardComponent implements OnInit {
             validityPeriods.forEach(vp => {
               obj[vp] = data.filter(i => i.servicePackage === servicePackage
                 && i.validityPeriod == vp).map(row => row.totalSold)
-                .reduce((a, b) => a + b)
+                .reduce((a, b) => a + b, 0)
             })
             table.push(obj);
           })
@@ -232,12 +232,10 @@ export class AdminDashboardComponent implements OnInit {
     this.purchaseService.getOrdersPerDay().subscribe(
       data => {
         this.datapoints = [];
-
         for (let i = 0; i < data.length; i++) {
           this.datapoints.push(data[i].second);
           this.labels.push(new Date(data[i].first).toDateString());
         }
-
         this.data = [
           {
             label: 'Total Orders',
@@ -245,7 +243,6 @@ export class AdminDashboardComponent implements OnInit {
             borderColor: '#ff0000',
             fill: false,
             cubicInterpolationMode: 'monotone',
-            // tension: 0.4
           },
         ];
       })
@@ -256,9 +253,7 @@ export class AdminDashboardComponent implements OnInit {
       + ", fee: " + vp.fee.toFixed(2)
   }
 
-  getPages()
-    :
-    any {
+  getPages(): any {
     return this.adminPages;
   }
 }

@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "services")
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
-public class ServiceEntity {
+public class ServiceEntity implements Serializable {
     @Id
     @Column(name = "service_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

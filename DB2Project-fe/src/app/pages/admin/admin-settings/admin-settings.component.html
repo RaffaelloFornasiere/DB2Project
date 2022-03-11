@@ -5,10 +5,10 @@
         <div class="col-6">
           <div class="container">
             <div class="row">
-              <div class="col-10">
+              <div class="col-12">
                 <h2> Edit current packages: </h2>
                 <div *ngFor="let package of packages">
-                  <mat-card>
+                  <mat-card class="-m-2">
                     <mat-card-title>
                       {{package.name}}
                       <button class="btn btn-sm btn-danger mr-1 float-right" (click)="deletePackage(package.id!)">Delete</button>
@@ -36,6 +36,8 @@
               <mat-form-field appearance="fill">
                 <mat-label>Package Name</mat-label>
                 <input matInput [formControlName]="'packageName'">
+                <mat-error *ngIf="packageFormGroup.get('packageName')?.hasError('alreadyExist')">Name already Present
+                </mat-error>
               </mat-form-field>
 
 
@@ -66,7 +68,6 @@
                 </mat-select>
               </mat-form-field>
             </form>
-
             <mat-card-actions align="end">
               <button class="btn ml-1 btn-primary" (click)="sendPackage()">{{buttonTile}}</button>
             </mat-card-actions>
@@ -82,7 +83,7 @@
           <div class="container">
             <div class="row">
 
-              <div class="col-10">
+              <div class="col-12">
 
                 <h2> Edit current services: </h2>
 
@@ -184,7 +185,7 @@
           <div class="container">
             <div class="row">
 
-              <div class="col-10">
+              <div class="col-12">
 
                 <h2> Edit current optional packages: </h2>
 
@@ -247,7 +248,7 @@
           <div class="container">
             <div class="row">
 
-              <div class="col-10">
+              <div class="col-12">
 
                 <h2> Edit current packages: </h2>
 

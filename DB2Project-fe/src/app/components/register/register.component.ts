@@ -102,8 +102,6 @@ export class RegisterComponent implements OnInit {
   }
 
   usernameValidatorAsync(): AsyncValidatorFn {
-
-
     return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
       if (control.value && control.value.length < 4)
         return of({'minLength': true});

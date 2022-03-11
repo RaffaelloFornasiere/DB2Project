@@ -29,10 +29,6 @@ export class AuthService {
 
   editUser(user: User):Observable<User>{
     return this.http.post<User>("/api/users/edit", user, httpOptions)
-      .pipe(
-        tap(() => console.log('editUser')),
-        catchError(Utils.handleError<User>('editUser'))
-      );
   }
 
   register(user: any): Observable<any> {
@@ -42,10 +38,6 @@ export class AuthService {
 
   checkUsername(username: string):Observable<boolean>{
     return this.http.get<boolean>("/api/home/users/check-username/" + username)
-      .pipe(
-        tap((data) => console.log("check username: " + data)),
-        catchError(Utils.handleError<boolean>("checkUsername"))
-      )
   }
 
 }
