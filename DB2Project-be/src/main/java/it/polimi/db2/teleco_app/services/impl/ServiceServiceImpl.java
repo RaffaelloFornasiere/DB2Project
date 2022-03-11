@@ -19,6 +19,11 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    public void delete(Long serviceId){
+        serviceRepository.deleteById(serviceId);
+    }
+
+    @Override
     public List<TelecomService> findAll() {
         return serviceRepository.findAll()
                 .stream().map(serviceMapper::toTarget)

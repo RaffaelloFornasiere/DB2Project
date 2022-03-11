@@ -39,4 +39,9 @@ public class ValidityPeriodServiceImpl implements ValidityPeriodService {
                 validityPeriodMapper.toSource(validityPeriod)
         ));
     }
+
+    @Override
+    public void delete(Long validityPeriodId) {
+        validityPeriodRepository.deleteById(validityPeriodId);
+    }
 }

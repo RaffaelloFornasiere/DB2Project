@@ -60,6 +60,13 @@ public class PackageResource {
         );
     }
 
+    @DeleteMapping("/validityPeriod/delete/{validityPeriodId}")
+    ResponseEntity<Void> deleteValidityPeriod(@PathVariable Long validityPeriodId){
+        this.validityPeriodService.delete(validityPeriodId);
+        return ResponseEntity.ok().body(null);
+
+    }
+
     @GetMapping("/home/packages/detail/{id}")
     ResponseEntity<Package> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok().body(

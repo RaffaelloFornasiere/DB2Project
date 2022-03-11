@@ -34,9 +34,15 @@ public class OptionalPackageResource {
 
 
     @PostMapping("/optionalPackages/save")
-    ResponseEntity<OptionalPackage> save(@RequestBody OptionalPackage telecomService) {
+    ResponseEntity<OptionalPackage> save(@RequestBody OptionalPackage optionalPackage) {
         return ResponseEntity.ok().body(
-                this.optionalPackageService.save(telecomService)
+                this.optionalPackageService.save(optionalPackage)
         );
+    }
+
+    @DeleteMapping("/optionalPackages/delete/{optionalPackageId}")
+    ResponseEntity<Void> delete(@PathVariable Long optionalPackageId){
+        optionalPackageService.delete(optionalPackageId);
+        return ResponseEntity.ok().body(null);
     }
 }

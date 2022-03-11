@@ -31,10 +31,16 @@ public class ServiceResource {
         );
     }
 
-    @PostMapping("/services/save")
+    @PostMapping("/services/save/")
     ResponseEntity<TelecomService> save(@RequestBody TelecomService telecomService) {
         return ResponseEntity.ok().body(
                 this.serviceService.save(telecomService)
         );
+    }
+
+    @DeleteMapping("/services/delete/{serviceId}")
+    ResponseEntity<Void> delete(@PathVariable Long serviceId){
+        serviceService.delete(serviceId);
+        return ResponseEntity.ok().body(null);
     }
 }

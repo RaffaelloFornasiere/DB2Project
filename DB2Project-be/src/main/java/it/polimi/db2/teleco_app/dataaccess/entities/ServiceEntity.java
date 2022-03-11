@@ -18,6 +18,7 @@ import javax.persistence.*;
 public class ServiceEntity {
     @Id
     @Column(name = "service_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long serviceId;
 
     @Column(name = "service_name")

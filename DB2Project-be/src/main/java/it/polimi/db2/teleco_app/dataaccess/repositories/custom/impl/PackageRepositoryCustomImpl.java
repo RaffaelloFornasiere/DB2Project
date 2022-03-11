@@ -35,13 +35,11 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
     }
 
     private void storePackageValidityPeriodRelation(ServicePackageEntity packageEntity, List<ValidityPeriodEntity> validityPeriods) {
-        var current = entityManager.createNativeQuery("select validityPeriodId from validity_period_package where packageId = :packageId")
-                .setParameter("packageId", packageEntity.getId()).getResultList();
-        var needed = validityPeriods.stream().map(ValidityPeriodEntity::getId).toList();
-        var toBeAdded = new ArrayList<>(needed);
-        var toBeRemoved = new ArrayList<Long>(current);
-        toBeRemoved.removeAll(needed);
-        toBeAdded.removeAll(current);
+        List<Long> current = entityManager.createNativeQuery("select validityPeriodId from validity_period_package where packageId = :packageId")
+                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer)i)).toList();
+        List<Long> needed = validityPeriods.stream().map(ValidityPeriodEntity::getId).toList();
+        var toBeAdded = needed.stream().filter(i -> !current.contains(i)).toList();
+        var toBeRemoved = current.stream().filter(i -> !needed.contains(i)).toList();
         if (!toBeAdded.isEmpty())
             entityManager.createNativeQuery("""
                                                 INSERT INTO validity_period_package (packageId, validityPeriodId) 
@@ -61,13 +59,12 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
     }
 
     private void storePackageOptionalPackageRelation(ServicePackageEntity packageEntity, List<OptionalPackageEntity> optionalPackages) {
-        var current = entityManager.createNativeQuery("select id_optional_package from packages_optional_packages where id_service_package = :packageId")
-                .setParameter("packageId", packageEntity.getId()).getResultList();
-        var needed = optionalPackages.stream().map(OptionalPackageEntity::getId).toList();
-        var toBeAdded = new ArrayList<>(needed);
-        var toBeRemoved = new ArrayList<Long>(current);
-        toBeRemoved.removeAll(needed);
-        toBeAdded.removeAll(current);
+        List<Long> current = entityManager.createNativeQuery("select id_optional_package from packages_optional_packages where id_service_package = :packageId")
+                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer)i)).toList();
+
+        List<Long> needed = optionalPackages.stream().map(OptionalPackageEntity::getId).toList();
+        var toBeAdded = needed.stream().filter(i -> !current.contains(i)).toList();
+        var toBeRemoved = current.stream().filter(i -> !needed.contains(i)).toList();
         if (!toBeAdded.isEmpty())
             entityManager.createNativeQuery("""
                                                 INSERT INTO packages_optional_packages (id_service_package, id_optional_package) 

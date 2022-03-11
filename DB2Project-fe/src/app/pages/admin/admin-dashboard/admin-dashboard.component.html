@@ -1,20 +1,21 @@
 <h2>Admin dashboard</h2>
 
-<div class="chart-wrapper">
-  <canvas baseChart class="col-7" #chart
-          [datasets]="data"
-          [labels]="labels"
-          [chartType]="'line'"
-          >
-  </canvas>
-</div>
-
+<mat-card class="mr-8 mb-4">
+  <div class="chart-wrapper">
+    <canvas baseChart class="col-7" #chart
+            [datasets]="data"
+            [labels]="labels"
+            [chartType]="'line'"
+    >
+    </canvas>
+  </div>
+</mat-card>
 
 <mat-card *ngIf="packageReport" class="mr-8 mb-4">
   <mat-card-title>
     Average number of optional products sold together with each service package
   </mat-card-title>
-  <table  mat-table [dataSource]="packageReport.data" class="mat-elevation-z8">
+  <table mat-table [dataSource]="packageReport.data" class="mat-elevation-z8">
 
     <ng-container *ngFor="let col of packageReport.displayedColumns" [matColumnDef]="col">
       <th mat-header-cell *matHeaderCellDef>{{packageReport.titles[
@@ -35,8 +36,9 @@
 
   <h6>The best seller optional package is {{optionalPackageReport.data[0].optionalPackage}}</h6>
 
-  <button #button  (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
-    Show scores</button>
+  <button #button (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
+    Show scores
+  </button>
   <table *ngIf="button.value == 'true'" mat-table [dataSource]="optionalPackageReport.data" class="mat-elevation-z8">
 
     <ng-container *ngFor="let col of optionalPackageReport.displayedColumns" [matColumnDef]="col">
@@ -51,14 +53,15 @@
 </mat-card>
 
 <mat-card *ngIf="validityPeriodReport" class="mr-8 mb-4">
-    <mat-card-title>
-      Number of total purchases per package and validity period
-    </mat-card-title>
-  <button #button  (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
-    View full table</button>
-  <table  mat-table
-          [dataSource]="button.value === 'true'?validityPeriodReport.data:validityPeriodReport.data.slice(0,5)"
-          class="mat-elevation-z8">
+  <mat-card-title>
+    Number of total purchases per package and validity period
+  </mat-card-title>
+  <button #button (click)="button.value = button.value ==='true'?'false':'true'" class="btn btn-info mb-2">
+    View full table
+  </button>
+  <table mat-table
+         [dataSource]="button.value === 'true'?validityPeriodReport.data:validityPeriodReport.data.slice(0,5)"
+         class="mat-elevation-z8">
     <ng-container *ngFor="let col of validityPeriodReport.displayedColumns" [matColumnDef]="col">
       <th mat-header-cell *matHeaderCellDef>{{validityPeriodReport.titles[
         validityPeriodReport.displayedColumns.indexOf(col)]}}</th>
@@ -90,8 +93,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div style="display: flex" *ngFor="let order of report.suspendedOrders">
-        <p style="flex: 1 1 auto;" >Order ID: {{order.first.id}}, date: {{order.first.orderDate | date:'short'}}</p>
-        <p ><a><span class="badge badge-pill badge-secondary">{{order.second.length}}</span></a></p>
+        <p style="flex: 1 1 auto;">Order ID: {{order.first.id}}, date: {{order.first.orderDate | date:'short'}}</p>
+        <p><a><span class="badge badge-pill badge-secondary">{{order.second.length}}</span></a></p>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
