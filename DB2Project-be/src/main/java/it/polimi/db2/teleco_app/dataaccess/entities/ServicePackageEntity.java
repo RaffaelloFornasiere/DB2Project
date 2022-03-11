@@ -26,7 +26,7 @@ public class ServicePackageEntity implements Serializable {
     @Column(name = "package_name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @ToString.Exclude
     @JoinTable(
             name = "packages_services", schema = "db2_pdb",

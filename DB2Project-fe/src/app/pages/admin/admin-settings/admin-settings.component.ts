@@ -144,16 +144,23 @@ export class AdminSettingsComponent implements OnInit {
     this.packageService.savePackage(p, this.packageFormGroup.get('optionalPackages')?.value,
       this.packageFormGroup.get('validityPeriods')?.value).subscribe(
       {
-        next: ()=>this.reload(),
-        error: ()=> this.openSnackBar("Can't save package", "ok")
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't save package", "ok")
       });
 
   }
+
   deletePackage(packageId: number) {
     this.packageService.deletePackage(packageId).subscribe(
       {
-        next: ()=>this.reload(),
-        error: ()=> this.openSnackBar("Can't delete package", "ok")
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't delete package", "ok")
       });
   }
 
@@ -210,17 +217,23 @@ export class AdminSettingsComponent implements OnInit {
     console.log("service: ", s)
     this.packageService.saveService(s!).subscribe(
       {
-        next: ()=>this.reload(),
-        error: ()=> this.openSnackBar("Can't save service", "ok")
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't save service", "ok")
       });
   }
 
-  deleteService(serviceId: number){
-      this.packageService.deleteService(serviceId).subscribe(
-        {
-          next: ()=>this.reload(),
-          error: ()=> this.openSnackBar("Can't delete service", "ok")
-        });
+  deleteService(serviceId: number) {
+    this.packageService.deleteService(serviceId).subscribe(
+      {
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't delete service", "ok")
+      });
   }
 
 
@@ -251,14 +264,24 @@ export class AdminSettingsComponent implements OnInit {
 
     this.packageService.saveOptionalPackage(s!).subscribe(
       {
-        next: ()=>this.reload(),
-        error: ()=> this.openSnackBar("Can't send optional package", "ok")
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't send optional package", "ok")
       });
 
   }
-  deleteOptionalPackage(optionalPackageId: number){
-    this.packageService.deleteOptionalPackage(optionalPackageId).subscribe()
-    this.reload();
+
+  deleteOptionalPackage(optionalPackageId: number) {
+    this.packageService.deleteOptionalPackage(optionalPackageId).subscribe(
+      {
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't send optional package", "ok")
+      });
   }
 
   selectValidityPeriod(validityId?: number) {
@@ -286,25 +309,36 @@ export class AdminSettingsComponent implements OnInit {
     s.months = this.validityPeriodFormGroup.get('months')?.value
 
     console.log("service: ", s)
-    this.packageService.saveValidityPeriod(s!).subscribe((data) => {
-      console.log(data)
-    });
-    this.reload();
+    this.packageService.saveValidityPeriod(s!).subscribe(
+      {
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't send optional package", "ok")
+      });
   }
 
-  reload(){
-    this.router.navigate(["/admin-settings"], {queryParams: {page: this.pageSelected}}).then(() => location.reload());
 
-  }
-
-  deleteValidityPeriod(validityPeriodId: number){
-    this.packageService.deleteValidityPeriod(validityPeriodId).subscribe()
-    this.reload();
+  deleteValidityPeriod(validityPeriodId: number) {
+    this.packageService.deleteValidityPeriod(validityPeriodId).subscribe(
+      {
+        next: () => {
+          this.openSnackBar("Done", "Reload")
+            .onAction().subscribe(() => this.reload())
+        },
+        error: () => this.openSnackBar("Can't send optional package", "ok")
+      });
   }
 
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
+    return this.snackBar.open(message, action, {
       duration: 2000,
     });
   }
+
+  reload() {
+    this.router.navigate(["/admin-settings"], {queryParams: {page: this.pageSelected}}).then(() => location.reload());
+  }
+
 }
