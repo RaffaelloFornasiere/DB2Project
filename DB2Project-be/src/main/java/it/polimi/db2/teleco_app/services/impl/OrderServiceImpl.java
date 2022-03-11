@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order res = orderMapper.toTarget(
                 orderRepository
-                        .save(orderMapper.toSource(order).setSuspended(result)));
+                        .save(orderMapper.toSource(order).setSuspended(!result)));
         return tryPayment(res, result);
     }
 
