@@ -93,9 +93,10 @@ public class OrderServiceImpl implements OrderService {
     public Pair<Order, Boolean> buy(Order order, Boolean result) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         order.setUser(user);
+
         Order res = orderMapper.toTarget(
                 orderRepository
-                        .save(orderMapper.toSource(order)));
+                        .save(orderMapper.toSource(order).setSuspended(result)));
         return tryPayment(res, result);
     }
 

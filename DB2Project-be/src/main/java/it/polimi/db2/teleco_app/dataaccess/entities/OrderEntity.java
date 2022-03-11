@@ -42,6 +42,9 @@ public class OrderEntity {
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @Column(name = "suspended")
+    private Boolean suspended;
+
     @ManyToMany
     @ToString.Exclude
     @JoinTable(
