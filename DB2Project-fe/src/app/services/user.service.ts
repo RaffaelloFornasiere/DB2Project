@@ -13,11 +13,12 @@ export class UserService {
     let user = this.tokenService.getUser();
     if( user && user.roles[0] == 'ROLE_USER')
       return    [{title: "Dashboard", link: "/user-dashboard"},
-        {title: "Settings", link: "/user-settings"},
+        // {title: "Settings", link: "/user-settings"},
         {title: "Profile", link: "/user-profile"}];
     if( user && user.roles[0] == 'ROLE_ADMIN')
       return [
-        {title: "Dashboard", link: "/admin-dashboard"},
+        {title: "User Dashboard", link: "/user-dashboard"},
+        {title: "Admin Dashboard", link: "/admin-dashboard"},
         {title: "Settings", link: "/admin-settings"},
         {title: "Profile", link: "/admin-profile"}];
     else
