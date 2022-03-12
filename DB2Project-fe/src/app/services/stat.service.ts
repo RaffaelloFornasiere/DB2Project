@@ -9,6 +9,7 @@ import {OptionalPackage} from "../interfaces/OptionalPackage";
 import {ValidityPeriod} from "../interfaces/ValidityPeriod";
 import {Alert} from "../interfaces/Alert";
 import Utils from "../Utils";
+import {TokenStorageService} from "./token-storage.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,7 +19,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class StatService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient,
+              private token: TokenStorageService){}
 
   getInsolventUsers():Observable<User[]>{
     return this.http.get<User[]>("/api/report/users/insolvent",httpOptions)
@@ -36,6 +38,13 @@ export class StatService {
       );
   }
 
+  getUsersCumulativeServices():Observable<any>{
+    return this.http.get<any>("/api/report/user-cumulative-services/" + this.token.getUser()?.username,httpOptions)
+      .pipe(
+        tap(() => console.log('getUsersCumulativeServices done')),
+        catchError(Utils.handleError<any>('getUsersCumulativeServices'))
+      );
+  }
 
   getAlerts():Observable<Alert[]>{
     return this.http.get<Alert[]>("/api/report/alerts/",httpOptions)
@@ -45,13 +54,6 @@ export class StatService {
       );
   }
 
-  getSuspendedOrders():Observable<Order[]>{
-    return this.http.get<Order[]>("/api/orders/suspended/",httpOptions)
-      .pipe(
-        tap(() => console.log('getSuspendedOrders done')),
-        catchError(Utils.handleError<Order[]>('getSuspendedOrders'))
-      );
-  }
 
   getPackageReport(): Observable<any[]>{
     return this.http.get<any[]>("/api//report/optionalPackages/average/",httpOptions)
@@ -69,12 +71,8 @@ export class StatService {
       );
   }
 
-  getOrderPerPackage(): Observable<{first: Package, second: number}[]>{
-    return this.http.get<{first: Package, second: number}[]>("/api/orders/packages/",httpOptions)
-      .pipe(
-        tap(() => console.log('getOrderPerPackage done')),
-        catchError(Utils.handleError<{first: Package, second: number}[]>('getOrderPerPackage'))
-      );
+  getActivePackages(): Observable<Order[]>{
+    return this.http.get<Order[]>("/api/report/user/active-packages/" + this.token.getUser()?.username,httpOptions)
   }
 
   getOrderPerPackageAndVP(): Observable<any[]>{

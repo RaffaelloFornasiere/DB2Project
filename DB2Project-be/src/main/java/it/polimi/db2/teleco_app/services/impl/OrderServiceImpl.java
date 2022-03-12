@@ -1,6 +1,7 @@
 package it.polimi.db2.teleco_app.services.impl;
 
 
+import it.polimi.db2.teleco_app.dataaccess.entities.OrderEntity;
 import it.polimi.db2.teleco_app.utils.Pair;
 import it.polimi.db2.teleco_app.dataaccess.repositories.AlertRepository;
 import it.polimi.db2.teleco_app.dataaccess.repositories.BillingRepository;
@@ -38,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
         this.alertRepository = alertRepository;
         this.alertMapper = alertMapper;
     }
+
 
     @Override
     public List<Order> findAll() {
@@ -94,9 +96,10 @@ public class OrderServiceImpl implements OrderService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         order.setUser(user);
 
+        var entity = orderMapper.toSource(order).setSuspended(!result);
         Order res = orderMapper.toTarget(
                 orderRepository
-                        .save(orderMapper.toSource(order).setSuspended(!result)));
+                        .save(entity));
         return tryPayment(res, result);
     }
 
@@ -119,20 +122,20 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getRejectedOrders() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Order> orders = orderRepository.findAllByUser_Username(user.getUsername())
+        return orderRepository.findAllByUser_Username(user.getUsername())
                 .stream()
+                .filter(OrderEntity::getSuspended)
                 .map(orderMapper::toTarget)
                 .toList();
-        return extractRejected(orders);
     }
 
     @Override
     public List<Order> getSuspended() {
-        List<Order> orders = orderRepository.findAll()
+        return orderRepository.findAll()
                 .stream()
+                .filter(OrderEntity::getSuspended)
                 .map(orderMapper::toTarget)
                 .toList();
-        return extractRejected(orders);
     }
 
     @Override
@@ -169,18 +172,12 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-
-
-    private List<Order> extractRejected(List<Order> orders) {
-        List<Order> res = new ArrayList<>();
-        for (int i = 0; i < orders.size(); i++) {
-            Billing lastBilling = billingMapper.toTarget(billingRepository
-                    .findOneByOrderIdNative(orders.get(i).getId()));
-            if ( lastBilling != null && lastBilling.getResult().equals(false))
-                res.add(orders.get(i));
-        }
-        return res;
+    @Override
+    public List<Order> findAllActiveByUser(String username) {
+        return orderRepository.findAllActiveByUser(username)
+                .stream().map(orderMapper::toTarget).toList();
     }
+
 
 
 }

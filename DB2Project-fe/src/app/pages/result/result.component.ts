@@ -49,7 +49,7 @@ export class ResultComponent implements OnInit {
       validityPeriod: this.data.order.validityPeriod,
       startDate: this.data.order.startDate
     }
-    this.purchaseService.retryPayment(order, this.payment)
+    this.purchaseService.buy(order, this.payment)
       .subscribe(data => {
           let result = JSON.stringify({
             order: data.first,

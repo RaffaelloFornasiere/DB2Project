@@ -46,5 +46,10 @@ export default class Utils{
     console.log(this.log.caller.name + ": " + args)
   }
 
+  static getRandom(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 }

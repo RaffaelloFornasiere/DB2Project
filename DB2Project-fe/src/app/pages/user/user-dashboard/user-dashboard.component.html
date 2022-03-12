@@ -1,9 +1,18 @@
+
 <!--<app-chart [config]="config"></app-chart>-->
-<div class="chart-wrapper">
-  <canvas baseChart
-          [data]="doughnutChartData"
-          [labels]="doughnutChartLabels"
-          [chartType]="doughnutChartType"
-          [colors]="doughnutChartColors">
-  </canvas>
-</div>
+<h1>Cumulative Services</h1>
+
+<mat-card *ngFor="let graphSpec of graphSpecs" class="col-6 mt-3">
+  <mat-card-title>{{graphSpec.service}}</mat-card-title>
+  <div class="chart-wrapper">
+    <canvas baseChart
+            [data]="graphSpec.graphData"
+            [labels]="graphSpec.graphLabels"
+            [chartType]="'doughnut'"
+            [colors]="graphSpec.graphColors">
+    </canvas>
+  </div>
+</mat-card>
+
+<br>
+<h4 class="alert alert-primary col-6">Total month cost: {{totalCost}}</h4>
