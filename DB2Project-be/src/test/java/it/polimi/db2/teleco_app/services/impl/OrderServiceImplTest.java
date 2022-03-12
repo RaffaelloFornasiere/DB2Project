@@ -16,28 +16,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class OrderServiceImplTest {
 
-    @Autowired
-    OrderRepository orderRepository;
-
-    @Autowired
-    OrderMapper orderMapper;
-
-    @Test
-    void testSomething(){
-        assertThat(orderRepository).isNotNull();
-        var aux = orderRepository.findAll().stream()
-                .map(orderMapper::toTarget).toList();
-        System.out.println(aux);
-    }
-
-    @Test
-    void testEqualityFind(){
-        var a = orderRepository.findAllByOrderDateAfterAndOrderDateBeforeJPQL(LocalDateTime.MIN, LocalDateTime.MAX);
-        var b = orderRepository.findAllByOrderDateAfterAndOrderDateBeforeNative(LocalDateTime.MIN, LocalDateTime.MAX);
-
-
-        assertThat(a).isEqualTo(b);//.isEqualTo(c);
-
-    }
+//    @Autowired
+//    OrderRepository orderRepository;
+//
+//    @Autowired
+//    OrderMapper orderMapper;
+//
+//    @Test
+//    void testSomething(){
+//        assertThat(orderRepository).isNotNull();
+//        var aux = orderRepository.findAll().stream()
+//                .map(orderMapper::toTarget).toList();
+//        System.out.println(aux);
+//    }
+//
+//    @Test
+//    void testEqualityFind(){
+//        var a = orderRepository.findAllByOrderDateAfterAndOrderDateBeforeJPQL(LocalDateTime.MIN, LocalDateTime.MAX);
+//        var b = orderRepository.findAllByOrderDateAfterAndOrderDateBeforeNative(LocalDateTime.MIN, LocalDateTime.MAX);
+//
+//
+//        assertThat(a).isEqualTo(b);//.isEqualTo(c);
+//
+//    }
 
 }
