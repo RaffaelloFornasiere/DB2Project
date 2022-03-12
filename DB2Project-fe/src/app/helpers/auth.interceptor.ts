@@ -10,7 +10,7 @@ import {
 import {Injectable} from "@angular/core";
 
 import {TokenStorageService} from "../services/token-storage.service";
-import {Observable, throwError} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, map} from "rxjs/operators";
 import {NavbarService} from "../services/navbar.service";
@@ -24,6 +24,7 @@ import {NavbarService} from "../services/navbar.service";
 export class AuthInterceptor implements HttpInterceptor {
   readonly TOKEN_HEADER_KEY = 'Authorization';       // for Spring Boot back-end
   needsLogin = false;
+  first = false;
 
   constructor(private token: TokenStorageService,
               private route: ActivatedRoute,
@@ -62,17 +63,22 @@ export class AuthInterceptor implements HttpInterceptor {
    */
   private handleAuthError(err: HttpErrorResponse): Observable<any> {
     //handle your auth error or rethrow
-    if (err.status === 401 || err.status === 403) {
+    if ((err.status === 401 || err.status === 403)&&!this.first) {
+      this.first = true;
       this.token.signOut();
       this.navbarService.toggleSidebarVisibility(true);
       let url = decodeURI(this.router.url);
       let path = url.substring(0,url.indexOf('?'));
-      let params = JSON.parse(this.router.parseUrl(url).queryParams['data'])
+
+      let params = this.router.parseUrl(url).queryParams['data'];
+      if(params)
+        params = JSON.parse(params);
+      else
+        path = url;
       this.router.navigate(["login"], {queryParams: {returnUrl: path, data: JSON.stringify(params)}}).then()
 
-      // or EMPTY may be appropriate here
     }
-    return throwError(err);
+    return of(err)
   }
 
   /**
@@ -83,6 +89,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private allOk(data: HttpEvent<any>): HttpEvent<any> {
     if (data instanceof HttpResponse && data.status === 200)
       this.navbarService.toggleSidebarVisibility(false);
+    this.first = false;
     return data;
   }
 }

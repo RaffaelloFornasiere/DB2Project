@@ -8,6 +8,8 @@ import {Order} from "../../../interfaces/Order";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {TelecomService} from "../../../interfaces/TelecomService";
 import Utils from "../../../Utils";
+import {PurchaseService} from "../../../services/purchase.service";
+import {D} from "@angular/cdk/keycodes";
 
 // import {ChartConfiguration, ChartData, ChartTypeRegistry} from "chart.js";
 // import {} from "/src/app/components/chart/utils.ts"
@@ -20,7 +22,17 @@ import Utils from "../../../Utils";
 export class UserDashboardComponent implements OnInit {
   public static title = "Dashboard"
 
-  activeOrders: Order[] = [];
+   orders !: {
+    displayedColumns: string[];
+    titles: string[]
+    data: {
+      ID: number,
+      'Service Package': string
+      'Order date': string,
+      'Activation': string,
+      'Deactivation': string
+    }[];
+  }
   graphSpecs: {
     service: string
     graphData: SingleDataSet,
@@ -30,13 +42,41 @@ export class UserDashboardComponent implements OnInit {
   totalCost: number = 0;
 
   constructor(private navbarService: NavbarService,
-              private statService: StatService) {
+              private statService: StatService,
+              private purchaseService: PurchaseService) {
     navbarService.loggingVisibilityChange.subscribe(value => {
       this.needsToBeLogged = value
     })
   }
 
   ngOnInit(): void {
+    this.purchaseService.getOrdersPerUser().subscribe(data =>{
+      this.orders = {
+        displayedColumns: [],
+        titles: [],
+        data: []
+      };
+
+
+      data.forEach(v => this.orders.data.push(
+          {
+            ID: v.id!,
+            'Service Package': v.servicePackage.name,
+            'Order date': new Date(v.orderDate).toDateString(),
+            'Activation': new Date(v.startDate).toDateString(),
+            'Deactivation':
+                new Date(new Date(v.startDate)
+                    .setMonth(new Date(v.startDate).getMonth() + v.validityPeriod.months)).toDateString()
+          }
+      ))
+      this.orders.displayedColumns = Object.keys(this.orders.data[0])
+      this.orders.titles = this.orders.displayedColumns.map(
+          c => Utils.camelToText(c)
+      )
+
+    })
+
+
     this.statService.getUsersCumulativeServices().subscribe(
       data => {
 

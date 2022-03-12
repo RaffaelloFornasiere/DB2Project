@@ -2,6 +2,22 @@
 <!--<app-chart [config]="config"></app-chart>-->
 <h1>Cumulative Services</h1>
 
+<mat-card *ngIf="orders">
+  <mat-card-title>Orders History</mat-card-title>
+  <table mat-table [dataSource]="orders.data" class="mat-elevation-z8 col-10">
+
+    <ng-container *ngFor="let col of orders.displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef>{{orders.titles[
+        orders.displayedColumns.indexOf(col)]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="orders.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: orders.displayedColumns;"></tr>
+  </table>
+</mat-card>
+
 <mat-card *ngFor="let graphSpec of graphSpecs" class="col-6 mt-3">
   <mat-card-title>{{graphSpec.service}}</mat-card-title>
   <div class="chart-wrapper">

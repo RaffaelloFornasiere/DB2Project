@@ -29,16 +29,6 @@ export class PurchaseService {
       );
   }
 
-  retryPayment(o: Order, payment: boolean):Observable<any>{
-    return this.http.post("/api/orders/retry-payment/"+payment, o, httpOptions)
-      .pipe(
-        tap(() => {
-          console.log('retry payments')
-        }),
-        catchError(Utils.handleError<Package>('buy'))
-      );
-  }
-
   getRejectedOrders():Observable<Order[]>{
     return this.http.get<Order[]>("/api/orders/rejected-orders/")
       .pipe(
@@ -49,6 +39,15 @@ export class PurchaseService {
 
   getSortedOrders():Observable<Order[]>{
     return this.http.get<Order[]>("/api/orders-sorted/")
+      .pipe(
+        tap((data) => console.log('getSortedOrders done: ', data)),
+        catchError(Utils.handleError<Order[]>('getSortedOrders'))
+      );
+  }
+
+
+  getOrdersPerUser():Observable<Order[]>{
+    return this.http.get<Order[]>("/api/orders/user/" + this.tokenStorageService.getUser()?.username)
       .pipe(
         tap((data) => console.log('getSortedOrders done: ', data)),
         catchError(Utils.handleError<Order[]>('getSortedOrders'))

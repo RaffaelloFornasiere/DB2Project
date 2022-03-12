@@ -55,6 +55,7 @@ export class StatService {
   }
 
 
+
   getPackageReport(): Observable<any[]>{
     return this.http.get<any[]>("/api//report/optionalPackages/average/",httpOptions)
       .pipe(
