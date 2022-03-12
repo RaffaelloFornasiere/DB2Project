@@ -22,6 +22,16 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     List<OrderEntity> findAllByUser_Username(String username);
 
+
+    @Query(
+            nativeQuery = true,
+            value = """
+                                select o.* from orders o join activation_schedule acts on o.order_id = acts.order_id
+                                where o.suspended =0 and CURDATE() > acts.activation_date and CURDATE() < acts.deactivation_date and user = ?1
+                    """
+    )
+    List<OrderEntity> findAllActiveByUser(String username);
+
     @Query(
             nativeQuery = true,
             value = """
@@ -43,14 +53,14 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     @Query(
             nativeQuery = true,
             value = """
-                    select * from orders  where package = ?1
+                    select * from orders  where package_id = ?1
                     """
     )
     List<OrderEntity> findAllByPackageIdNative(Long packageId);
 
     @Query(
             value = """
-                                        select o from OrderEntity o order by o.orderDate
+                         select o from OrderEntity o order by o.orderDate
                     """
     )
     List<OrderEntity> findAllByOrderByOrderDate();
