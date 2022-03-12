@@ -12,16 +12,14 @@ import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.services.models.Package;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ReportResource {
     private final UserService userService;
     private final OrderService orderService;
