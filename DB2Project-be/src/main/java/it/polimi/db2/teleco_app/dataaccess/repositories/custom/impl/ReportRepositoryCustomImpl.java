@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
@@ -43,8 +44,12 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     public Map<String, Object> getUserCumulativeServices(String username){
         Query query = entityManager.createNativeQuery("select user, minutes, sms, gigabytes, cost from user_accumulative_services where user = :username")
                 .setParameter("username", username);
-        var res = (Object[])query.getSingleResult();
-
+        Object[] res = null;
+        try {
+            res = (Object[]) query.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
         return Map.of(
                 "minutes",  res[1]== null?0:res[1],
                 "sms", res[2]== null?0:res[2],

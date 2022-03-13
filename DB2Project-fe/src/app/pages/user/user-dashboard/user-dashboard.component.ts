@@ -69,10 +69,9 @@ export class UserDashboardComponent implements OnInit {
                     .setMonth(new Date(v.startDate).getMonth() + v.validityPeriod.months)).toDateString()
           }
       ))
+      if(this.orders.data.length > 0)
       this.orders.displayedColumns = Object.keys(this.orders.data[0])
-      this.orders.titles = this.orders.displayedColumns.map(
-          c => Utils.camelToText(c)
-      )
+      this.orders.titles = this.orders.displayedColumns;
 
     })
 

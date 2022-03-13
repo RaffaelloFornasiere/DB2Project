@@ -1,15 +1,11 @@
 package it.polimi.db2.teleco_app.dataaccess.repositories;
 
 import it.polimi.db2.teleco_app.dataaccess.entities.OrderEntity;
-import it.polimi.db2.teleco_app.utils.Pair;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
@@ -20,7 +16,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     //or finally you can write @Query(nativeQuery = true, value """put here the mysql query""")
     //and put that above the method you want to call to retrieve the orders
 
-    List<OrderEntity> findAllByUser_Username(String username);
+    List<OrderEntity> findAllByUser_UsernameOrderByOrderDate(String username);
 
 
     @Query(

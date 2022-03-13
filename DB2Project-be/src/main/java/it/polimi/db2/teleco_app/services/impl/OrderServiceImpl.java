@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByUser(String username) {
-        return orderRepository.findAllByUser_Username(username)
+        return orderRepository.findAllByUser_UsernameOrderByOrderDate(username)
                 .stream()
                 .map(orderMapper::toTarget)
                 .toList();
@@ -122,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getRejectedOrders() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return orderRepository.findAllByUser_Username(user.getUsername())
+        return orderRepository.findAllByUser_UsernameOrderByOrderDate(user.getUsername())
                 .stream()
                 .filter(OrderEntity::getSuspended)
                 .map(orderMapper::toTarget)

@@ -4,9 +4,7 @@ export type User = {
   username: string;
   name: string;
   surname: string;
-  billingAddress: string;
+  email:string;
   token: string;
-  birthdate: Date;
   roles: string;
-  referent: Admin;
 }

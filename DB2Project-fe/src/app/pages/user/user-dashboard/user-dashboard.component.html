@@ -1,8 +1,8 @@
 
 <!--<app-chart [config]="config"></app-chart>-->
-<h1>Cumulative Services</h1>
+<h1>User Data</h1>
 
-<mat-card *ngIf="orders">
+<mat-card *ngIf="orders && orders.data.length > 0 ">
   <mat-card-title>Orders History</mat-card-title>
   <table mat-table [dataSource]="orders.data" class="mat-elevation-z8 col-10">
 

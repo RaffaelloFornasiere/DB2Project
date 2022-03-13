@@ -7,7 +7,7 @@
     <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card col-3"/>
     <form class="m-3" *ngIf="!isLogged" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">Username or Email</label>
         <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required #username="ngModel"/>
         <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
           Username is required!

@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
       name: new FormControl(null, [Validators.required, Validators.minLength(4)]),
       surname: new FormControl(null, [Validators.required, Validators.minLength(4)]),
       username: new FormControl(null, [Validators.required], this.usernameValidatorAsync()),
+      email: new FormControl(null, [Validators.required], this.usernameValidatorAsync()),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       password2: new FormControl(null, [this.password2Validator()])
 
@@ -50,11 +51,16 @@ export class RegisterComponent implements OnInit {
 
 
   submit(): void {
+    if (this.registerFormGroup.invalid) {
+      this.registerFormGroup.markAllAsTouched();
+      return;
+    }
     const {username, password} = this.form;
     let user = {
       username: this.registerFormGroup.get('username')?.value,
       name: this.registerFormGroup.get('name')?.value,
       surname: this.registerFormGroup.get('surname')?.value,
+      email: this.registerFormGroup.get('email')?.value,
       password: this.registerFormGroup.get('password')?.value,
     }
     this.authService.register(user)
@@ -72,24 +78,12 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  getErrorMessage() {
-    // if (this.username.hasError('required')) {
-    //   return 'You must enter a value';
-    // }
-    console.log(this.usernameFormControl.getError('minLength'));
-    if (this.usernameFormControl.hasError('minLength'))
+  getErrorMessage(control: AbstractControl) {
+    if (control)
       return 'Username must be more then 4 characters';
     return '';
   }
 
-  private validateUsername(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (control.value && control.value.length < 4)
-        return {'minLength': true};
-      else
-        return {};
-    }
-  }
 
   password2Validator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {

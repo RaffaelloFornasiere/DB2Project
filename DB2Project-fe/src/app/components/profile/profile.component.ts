@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
         name: new FormControl(this.user.name, [Validators.required, Validators.minLength(4)]),
         surname: new FormControl(this.user.surname, [Validators.required, Validators.minLength(4)]),
         username: new FormControl(this.user.username, [Validators.required], this.usernameValidatorAsync()),
+        email: new FormControl(this.user.email, [Validators.required], this.usernameValidatorAsync()),
         password: new FormControl(null, [ Validators.minLength(6)]),
         password2: new FormControl(null, [this.password2Validator()])
 
@@ -53,11 +54,17 @@ export class ProfileComponent implements OnInit {
   }
 
   submit() {
+    // if (this.registerFormGroup.invalid) {
+    //   this.registerFormGroup.markAllAsTouched();
+    //   return;
+    // }
     let user: any = {
       name: this.registerFormGroup.get('name')?.value,
       surname: this.registerFormGroup.get('surname')?.value,
       username: this.registerFormGroup.get('username')?.value,
+      email: this.registerFormGroup.get('email')?.value,
     }
+
     if(!this.isVoid(this.registerFormGroup.get('password')?.value))
       user.password = this.registerFormGroup.get('password')?.value;
 
@@ -66,7 +73,7 @@ export class ProfileComponent implements OnInit {
           this.user = data;
           console.log(data)
           this.openSnackBar("User edited", "close")
-
+          this.token.saveUser(data);
 
         },
         error: err => {
@@ -103,8 +110,7 @@ export class ProfileComponent implements OnInit {
 
     return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
       if (control.value && control.value.length < 4)
-        return of({'minLength': true});
-
+        return of({'minlength': true});
 
       return this.authService.checkUsername(control.value)
         .pipe(

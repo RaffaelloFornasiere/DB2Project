@@ -10,7 +10,8 @@
             <mat-label>Name</mat-label>
             <input matInput [formControlName]="'name'">
             <mat-error *ngIf="registerFormGroup.get('name')?.hasError('required')">Username is required</mat-error>
-            <mat-error *ngIf="registerFormGroup.get('name')?.hasError('minLength')">Name must be at least 4
+            <mat-error *ngIf="!registerFormGroup.get('name')?.hasError('required')&&
+            registerFormGroup.get('name')?.hasError('minlength')">Name must be at least 4
               characters
             </mat-error>
           </mat-form-field>
@@ -19,8 +20,19 @@
             <mat-label>Surname</mat-label>
             <input matInput [formControlName]="'surname'">
             <mat-error *ngIf="registerFormGroup.get('surname')?.hasError('required')">Surname is required</mat-error>
-            <mat-error *ngIf="registerFormGroup.get('surname')?.hasError('minLength')">Surname must be at least 4
+            <mat-error *ngIf="!registerFormGroup.get('surname')?.hasError('required') &&
+            registerFormGroup.get('surname')?.hasError('minlength')">Surname must be at least 4
               characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [formControlName]="'email'">
+            <mat-error *ngIf="registerFormGroup.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="!registerFormGroup.get('email')?.hasError('required') &&
+            registerFormGroup.get('email')?.hasError('alreadyExist')">Email already exists in
+              our database
             </mat-error>
           </mat-form-field>
         </div>
@@ -30,12 +42,11 @@
             <mat-label>Username</mat-label>
             <input matInput [formControlName]="'username'">
             <mat-error *ngIf="registerFormGroup.get('username')?.hasError('required')">Username is required</mat-error>
-            <mat-error *ngIf="registerFormGroup.get('username')?.hasError('minLength')">Username must be at least 4
+            <mat-error *ngIf="registerFormGroup.get('username')?.hasError('minlength')">Username must be at least 4
               characters
             </mat-error>
             <mat-error *ngIf="registerFormGroup.get('username')?.hasError('alreadyExist')">Username already exists in
-              our
-              database
+              our database
             </mat-error>
           </mat-form-field>
 
@@ -44,7 +55,7 @@
             <input matInput type="password" [formControlName]="'password'">
             <mat-error *ngIf="registerFormGroup.get('password')?.hasError('required')">Password is required</mat-error>
             <mat-error *ngIf="!registerFormGroup.get('password')?.hasError('required')  &&
-          !registerFormGroup.get('password')?.hasError('minLength')">Password must be at least 6 characters
+          !registerFormGroup.get('password')?.hasError('minlength')">Password must be at least 6 characters
             </mat-error>
           </mat-form-field>
 
