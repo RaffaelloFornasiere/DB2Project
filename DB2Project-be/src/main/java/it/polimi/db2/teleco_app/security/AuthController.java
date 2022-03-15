@@ -46,6 +46,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        if (userService.findByUsername(loginRequest.getUsername()).isEmpty() &&
+                userService.findByEmail(loginRequest.getUsername()).isPresent())
+            loginRequest.setUsername(userService.findByEmail(loginRequest.getUsername()).get().getUsername());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -61,13 +64,17 @@ public class AuthController {
         if (userService.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Error: Username is already taken");
         }
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body("Error: Username is already taken");
+        }
+
         if ((user.getRoles() == null || user.getRoles().isEmpty())) {
             if (!user.getUsername().contains("admin"))
                 user.setRoles(Set.of(Role.ROLE_USER));
             else
                 user.setRoles(Set.of(Role.ROLE_ADMIN));
         }
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().stream()
                 .filter(r -> roleRepository.findByRole(r).isPresent()).findAny()
                 .orElseThrow(() -> new RoleNotFoundException("Error: role is not found"));

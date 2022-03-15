@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(name = "users_username_uindex", columnNames = {"username"})
+        @UniqueConstraint(name = "users_username_uindex", columnNames = {"username"}),
+        @UniqueConstraint(name = "users_email_uindex", columnNames = {"email"})
 })
 @Entity
 @Getter
@@ -32,14 +33,8 @@ public class UserEntity {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "gender", length = 1)
-    private String gender;
-
-    @Column(name = "birthdate")
-    private LocalDate birthdate;
-
-    @Column(name = "billing_addr")
-    private String billingAddr;
+    @Column(name = "email")
+    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "user_roles",

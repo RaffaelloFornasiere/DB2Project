@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,10 +31,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        var x = userRepository.findById(username).map(userMapper.MAPPER::toTarget);
-        return x;
 
+        return userRepository.findById(username).map(userMapper.MAPPER::toTarget);
     }
+
+    @Override
+    public Optional<User> findByEmail(String username) {
+        return userRepository.findByEmail(username).map(userMapper.MAPPER::toTarget);
+    }
+
 
     @Override
     public Optional<User> findByNameAndSurname(String name, String surname) {

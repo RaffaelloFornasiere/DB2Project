@@ -35,12 +35,8 @@ public class User implements UserDetails {
     private String surname;
     @NotBlank
     @Size(min = 6)
-//    @JsonIgnore
     private String password;
-    private Boolean gender;
-    private LocalDate birthdate;
-    private String billingAddress;
-
+    private String email;
     private Boolean insolvent;
 
     @Builder.Default

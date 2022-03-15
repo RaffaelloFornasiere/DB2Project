@@ -9,6 +9,9 @@ import java.util.Optional;
 public interface UserService extends UserDetailsService {
     List<User> findAll();
     Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String username);
+
     Optional<User> findByNameAndSurname(String name, String surname);
     User saveUser(User user);
 
