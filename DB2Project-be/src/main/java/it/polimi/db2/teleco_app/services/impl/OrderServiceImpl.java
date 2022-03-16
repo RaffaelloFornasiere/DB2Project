@@ -78,23 +78,19 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-    @Override
-    public List<Order> findAllByPackageId(Long packageId) {
-        return orderRepository.findAllByPackageIdNative(packageId)
-                .stream()
-                .map(orderMapper::toTarget)
-                .toList();
-    }
+//    @Override
+//    public List<Order> findAllByPackageId(Long packageId) {
+//        return orderRepository.findAllByPackageIdNative(packageId)
+//                .stream()
+//                .map(orderMapper::toTarget)
+//                .toList();
+//    }
 
-    @Override
-    public List<Order> findAllByPackageIdAndVP(Long packageId, ValidityPeriod validityPeriod) {
-        return null;
-    }
 
     @Override
     public Pair<Order, Boolean> buy(Order order, Boolean result) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        order.setUser(user);
+        order.setUser(user.getUsername());
 
         var entity = orderMapper.toSource(order).setSuspended(!result);
         Order res = orderMapper.toTarget(
@@ -106,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Pair<Order, Boolean> tryPayment(Order order, Boolean result) {
-        order.setUser( (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        order.setUser( ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         Billing billing = new Billing()
                 .setOrderId(order.getId()).setResult(result)
                 .setBillingDateTime(LocalDateTime.now());
@@ -143,11 +139,6 @@ public class OrderServiceImpl implements OrderService {
         return alertRepository.findAll().stream().map(alertMapper::toTarget).toList();
     }
 
-    @Override
-    public List<User> getInsolventUsers() {
-        return getRejectedOrders()
-                .stream().map(Order::getUser).distinct().toList();
-    }
 
     @Override
     public List<Pair<Package, Integer>> findAllByPackage() {

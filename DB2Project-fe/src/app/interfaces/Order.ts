@@ -7,8 +7,10 @@ export interface  Order  {
   id: number | null,
   orderDate: Date
   servicePackage: Package,
+  user?: string,
   optionalPackages: OptionalPackage[],
   validityPeriod: ValidityPeriod,
   startDate: Date
+  totalValue: number
 
 }

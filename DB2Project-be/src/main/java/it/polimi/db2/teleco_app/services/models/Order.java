@@ -18,9 +18,10 @@ import java.util.List;
 public class Order {
     private Long id;
     private LocalDateTime orderDate;
-    private User user;
+    private String user;
     private Package servicePackage;
     private ValidityPeriod validityPeriod;
     private List<OptionalPackage> optionalPackages;
     private LocalDate startDate;
+    private Double totalValue;
 }

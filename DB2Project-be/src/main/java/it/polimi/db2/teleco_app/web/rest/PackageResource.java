@@ -9,6 +9,7 @@ import it.polimi.db2.teleco_app.services.models.OptionalPackage;
 import it.polimi.db2.teleco_app.services.models.Package;
 import it.polimi.db2.teleco_app.services.models.ValidityPeriod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,13 +36,14 @@ public class PackageResource {
         );
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/packages/delete/{packageId}")
     ResponseEntity<Void> deletePackage(@PathVariable Long packageId){
         this.packageService.delete(packageId);
         return ResponseEntity.ok().build();
     }
 
-
+    @Secured("ROLE_ADMIN")
     @PostMapping("/packages/save/")
     ResponseEntity<Package> save(@RequestBody List<String> wrapper) throws JsonProcessingException {
         Package servicePackage = new ObjectMapper().readValue(wrapper.get(0), Package.class);
@@ -53,6 +55,7 @@ public class PackageResource {
         );
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/validityPeriod/save/")
     ResponseEntity<ValidityPeriod> saveValidityPeriod(@RequestBody ValidityPeriod validityPeriod){
         return ResponseEntity.ok().body(
@@ -60,6 +63,7 @@ public class PackageResource {
         );
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/validityPeriod/delete/{validityPeriodId}")
     ResponseEntity<Void> deleteValidityPeriod(@PathVariable Long validityPeriodId){
         this.validityPeriodService.delete(validityPeriodId);
@@ -85,33 +89,6 @@ public class PackageResource {
         return ResponseEntity.ok().body(
                 this.validityPeriodService.findAll()
         );
-    }
-
-
-
-
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
-    }
-
-
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
-    public String moderatorAccess() {
-        return "Moderator Board.";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
     }
 
 }

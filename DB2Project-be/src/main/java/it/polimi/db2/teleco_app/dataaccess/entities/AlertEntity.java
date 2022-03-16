@@ -26,4 +26,7 @@ public class AlertEntity {
     @Column(name = "username")
     private String username;
 
+    @OneToOne
+    @JoinColumn(name = "last_billing")
+    BillingEntity billing;
 }

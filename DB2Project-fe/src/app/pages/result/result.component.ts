@@ -7,6 +7,7 @@ import {User} from "../../interfaces/user";
 import {PurchaseService} from "../../services/purchase.service";
 import {Order} from "../../interfaces/Order";
 import {Package} from "../../interfaces/package";
+import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
   selector: 'app-result',
@@ -15,21 +16,16 @@ import {Package} from "../../interfaces/package";
 })
 export class ResultComponent implements OnInit {
   data!: {
-    order: {
-      id: number,
-      orderDate: Date,
-      user: User,
-      servicePackage: Package,
-      validityPeriod: ValidityPeriod,
-      optionalPackages: OptionalPackage[],
-      startDate: Date
-    }
+    order: Order
     outcome: boolean
   }
+  user?: User = this.tokenService.getUser();
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private purchaseService: PurchaseService) {
+              private purchaseService: PurchaseService,
+              private tokenService: TokenStorageService) {
     this.route.queryParamMap.subscribe(
       (params: any) => {
         console.log(params)
@@ -47,7 +43,8 @@ export class ResultComponent implements OnInit {
       servicePackage: this.data.order.servicePackage,
       optionalPackages: this.data.order.optionalPackages,
       validityPeriod: this.data.order.validityPeriod,
-      startDate: this.data.order.startDate
+      startDate: this.data.order.startDate,
+      totalValue: this.data.order.totalValue
     }
     this.purchaseService.buy(order, this.payment)
       .subscribe(data => {

@@ -4,6 +4,7 @@ package it.polimi.db2.teleco_app.web.rest;
 import it.polimi.db2.teleco_app.services.OptionalPackageService;
 import it.polimi.db2.teleco_app.services.models.OptionalPackage;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class OptionalPackageResource {
 
 
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/optionalPackages/save")
     ResponseEntity<OptionalPackage> save(@RequestBody OptionalPackage optionalPackage) {
         return ResponseEntity.ok().body(
@@ -41,6 +43,7 @@ public class OptionalPackageResource {
         );
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/optionalPackages/delete/{optionalPackageId}")
     ResponseEntity<Void> delete(@PathVariable Long optionalPackageId){
         optionalPackageService.delete(optionalPackageId);

@@ -5,6 +5,7 @@ import it.polimi.db2.teleco_app.services.OrderService;
 import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.services.models.Package;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class OrderResource {
         return ResponseEntity.ok().body(res);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/orders-per-day")
     ResponseEntity<List<Pair<LocalDate, Long>>> getOrdersPerDay(){
         List<Pair<LocalDate, Long>> res = orderService.findOrdersPerDate();
@@ -67,23 +69,23 @@ public class OrderResource {
         return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping("/orders/packages/{packageId}")
-    ResponseEntity<List<Order>> findAllByPackageId(@PathVariable Long packageId){
-        List<Order> res = orderService.findAllByPackageId(packageId);
-        return ResponseEntity.ok().body(res);
-    }
+
     @GetMapping("/orders/packages/")
     ResponseEntity<List<Pair<Package, Integer>>> findAllByPackage(){
         var res = orderService.findAllByPackage();
         return ResponseEntity.ok().body(res);
     }
 
-
-    @GetMapping("/orders/packages/{packageId}/{validityPeriod}")
-    ResponseEntity<List<Order>> findAllByPackageIdAndVP(@PathVariable Long packageId, @PathVariable ValidityPeriod validityPeriod){
-        List<Order> res = orderService.findAllByPackageIdAndVP(packageId, validityPeriod);
-        return ResponseEntity.ok().body(res);
-    }
+//    @GetMapping("/orders/packages/{packageId}")
+//    ResponseEntity<List<Order>> findAllByPackageId(@PathVariable Long packageId){
+//        List<Order> res = orderService.findAllByPackageId(packageId);
+//        return ResponseEntity.ok().body(res);
+//    }
+//    @GetMapping("/orders/packages/{packageId}/{validityPeriod}")
+//    ResponseEntity<List<Order>> findAllByPackageIdAndVP(@PathVariable Long packageId, @PathVariable ValidityPeriod validityPeriod){
+//        List<Order> res = orderService.findAllByPackageIdAndVP(packageId, validityPeriod);
+//        return ResponseEntity.ok().body(res);
+//    }
 
     @PostMapping("/orders/buy/{result}")
     ResponseEntity<Pair<Order, Boolean>> buy(@PathVariable Boolean result, @RequestBody Order order) {

@@ -1,5 +1,5 @@
-<ng-container *ngIf="data.outcome">
-  <h2>Thanks {{data.order.user.name}} for your order!</h2>
+<ng-container *ngIf="data.outcome && user">
+  <h2>Thanks {{user.name}} for your order!</h2>
   <div class="alert alert-success" role="alert">
     Payment Successful
   </div>

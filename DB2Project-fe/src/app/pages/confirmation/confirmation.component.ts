@@ -6,6 +6,7 @@ import {Package} from "../../interfaces/package";
 import {Option} from "@angular/cli/models/interface";
 import {OptionalPackage} from "../../interfaces/OptionalPackage";
 import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
+import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
   selector: 'app-confirmation',
@@ -16,7 +17,8 @@ export class ConfirmationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private purchaseService: PurchaseService
+              private purchaseService: PurchaseService,
+              private tokenService: TokenStorageService
 
   ) { }
 
@@ -26,12 +28,17 @@ export class ConfirmationComponent implements OnInit {
     optionalPackages: OptionalPackage[],
     validityPeriod: ValidityPeriod,
     startDate: Date
+    totalValue: number
   };
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(
       (params: any) => {
         this.data = JSON.parse(params.get('data')!)
         console.log(this.data);
+        this.data.totalValue =
+        this.data.validityPeriod.fee + this.data.optionalPackages.map(i => i.monthlyFee).reduce((a, b) => a + b)
+        + this.data.package.telecomServices.map(i => i.details.costMonth).reduce((a, b) => a + b)
       }
     )
   }
@@ -43,9 +50,11 @@ export class ConfirmationComponent implements OnInit {
       id: null,
       orderDate: new Date(),
       servicePackage: this.data.package,
+      user: this.tokenService.getUser()?.username!,
       validityPeriod: this.data.validityPeriod,
       optionalPackages: this.data.optionalPackages,
-      startDate: this.data.startDate
+      startDate: this.data.startDate,
+      totalValue: this.data.totalValue
     }
      this.purchaseService.buy(order, this.data.payment)
        .subscribe({

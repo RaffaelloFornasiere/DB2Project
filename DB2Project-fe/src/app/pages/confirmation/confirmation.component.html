@@ -16,11 +16,14 @@
   <h5>Optional Packages:</h5>
   <ul>
     <li *ngFor="let opt of data.optionalPackages">
-        {{opt.name}}
+        {{opt.name}}, {{opt.monthlyFee}}
     </li>
   </ul>
 
+  <mat-divider></mat-divider>
+  <h5 class="m-2">Total: {{data.totalValue}}</h5>
+  <mat-divider></mat-divider>
 
 
- <button class="btn btn-primary" (click)="buy()">Buy</button>
+ <button class="btn btn-primary mt-3" (click)="buy()">Buy</button>
 </mat-card>

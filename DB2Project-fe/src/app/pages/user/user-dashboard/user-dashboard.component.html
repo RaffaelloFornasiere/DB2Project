@@ -11,10 +11,11 @@
         orders.displayedColumns.indexOf(col)]}}</th>
       <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
     </ng-container>
-
+w
 
     <tr mat-header-row *matHeaderRowDef="orders.displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: orders.displayedColumns;"></tr>
+    <tr mat-row [ngClass]="{'make-gold':  row['active']==='active'}"
+        *matRowDef="let row; columns: orders.displayedColumns;"></tr>
   </table>
 </mat-card>
 

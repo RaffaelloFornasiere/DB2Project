@@ -14,4 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class Alert {
     Long id;
     String username;
+    Billing lastBilling;
 }

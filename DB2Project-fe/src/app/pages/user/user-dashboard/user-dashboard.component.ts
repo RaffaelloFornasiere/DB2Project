@@ -31,8 +31,11 @@ export class UserDashboardComponent implements OnInit {
       'Order date': string,
       'Activation': string,
       'Deactivation': string
+      'Total value': string
+      active : string
     }[];
   }
+  today= new Date();
   graphSpecs: {
     service: string
     graphData: SingleDataSet,
@@ -58,17 +61,23 @@ export class UserDashboardComponent implements OnInit {
       };
 
 
-      data.forEach(v => this.orders.data.push(
-          {
-            ID: v.id!,
-            'Service Package': v.servicePackage.name,
-            'Order date': new Date(v.orderDate).toDateString(),
-            'Activation': new Date(v.startDate).toDateString(),
-            'Deactivation':
-                new Date(new Date(v.startDate)
-                    .setMonth(new Date(v.startDate).getMonth() + v.validityPeriod.months)).toDateString()
-          }
-      ))
+      data.forEach(v => {
+          let activation = new Date(v.startDate);
+          let deactivation =
+            new Date(new Date(v.startDate)
+              .setMonth(new Date(v.startDate).getMonth() + v.validityPeriod.months));
+          this.orders.data.push(
+            {
+              ID: v.id!,
+              'Service Package': v.servicePackage.name,
+              'Order date': new Date(v.orderDate).toDateString(),
+              'Activation': activation.toDateString(),
+              'Deactivation': deactivation.toDateString(),
+              'Total value': v.totalValue.toFixed(2),
+              active: (this.today.getTime() > activation.getTime() && this.today.getTime() < deactivation.getTime())?'active':'non active'
+            })
+        }
+      )
       if(this.orders.data.length > 0)
       this.orders.displayedColumns = Object.keys(this.orders.data[0])
       this.orders.titles = this.orders.displayedColumns;
@@ -86,7 +95,7 @@ export class UserDashboardComponent implements OnInit {
             this.graphSpecs.push({
               service: k,
               graphData: [data[k]-used, used, 0.20 * data[k]],
-              graphLabels: [['remaining'], ['Used']],
+              graphLabels: [['remaining'], ['Used'],['total: ' + data[k]]],
               graphColors: [
                 {
                   borderColor: [this.colors[0], this.grey, 'rgb(255,255,255,0)'],

@@ -45,6 +45,11 @@ public class OrderEntity {
     @Column(name = "suspended")
     private Boolean suspended;
 
+    @Column(name = "total_value")
+    private Double totalValue;
+
+
+
     @ManyToMany
     @ToString.Exclude
     @JoinTable(

@@ -46,6 +46,7 @@ export class BuyDialogComponent implements OnInit, OnDestroy {
       optionalPackages: this.formOptionalPackages.value,
       validityPeriod: this.formPeriods.value,
       startDate: this.startDate
+
     };
     this.ngOnDestroy()
   }

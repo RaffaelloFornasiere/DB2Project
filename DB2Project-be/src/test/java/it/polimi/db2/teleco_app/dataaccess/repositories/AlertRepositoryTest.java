@@ -1,6 +1,7 @@
 package it.polimi.db2.teleco_app.dataaccess.repositories;
 
 import it.polimi.db2.teleco_app.dataaccess.entities.AlertEntity;
+import it.polimi.db2.teleco_app.dataaccess.entities.BillingEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,7 +24,7 @@ class AlertRepositoryTest {
 
     @Test
     void testSave(){
-        var res2 = new AlertEntity(null, "admin");
+        var res2 = new AlertEntity(null, "admin", new BillingEntity());
         assertThatCode(() -> {
             alertRepository.saveCustom(res2);
             alertRepository.flush();

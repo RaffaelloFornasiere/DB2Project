@@ -63,7 +63,7 @@ export class AuthInterceptor implements HttpInterceptor {
    */
   private handleAuthError(err: HttpErrorResponse): Observable<any> {
     //handle your auth error or rethrow
-    if ((err.status === 401 || err.status === 403)&&!this.first) {
+    if ((err.status === 401)&&!this.first) {
       this.first = true;
       this.token.signOut();
       this.navbarService.toggleSidebarVisibility(true);
@@ -76,8 +76,8 @@ export class AuthInterceptor implements HttpInterceptor {
       else
         path = url;
       this.router.navigate(["login"], {queryParams: {returnUrl: path, data: JSON.stringify(params)}}).then()
-
     }
+
     return of(err)
   }
 

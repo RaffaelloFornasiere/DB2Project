@@ -22,9 +22,7 @@ public interface OrderService {
 
     List<Order> findAllByOrderDate(LocalDateTime start, LocalDateTime end);
 
-    List<Order> findAllByPackageId(Long packageId);
-    List<Order> findAllByPackageIdAndVP(Long packageId, ValidityPeriod validityPeriod);
-
+//    List<Order> findAllByPackageId(Long packageId);
 
     Pair<Order, Boolean> buy(Order order, Boolean result);
 
@@ -36,8 +34,6 @@ public interface OrderService {
     List<Order> getSuspended();
 
     List<Alert> findAllAlerts();
-
-    List<User> getInsolventUsers();
 
     List<Pair<Package, Integer>> findAllByPackage();
 
