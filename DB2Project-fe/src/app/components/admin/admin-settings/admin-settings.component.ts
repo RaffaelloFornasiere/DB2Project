@@ -1,18 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Package} from "../../../interfaces/package";
 import {PackageService} from "../../../services/package.service";
-import {NavbarService} from "../../../services/navbar.service";
 import {TelecomService} from "../../../interfaces/TelecomService";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {OptionalPackage} from "../../../interfaces/OptionalPackage";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {MatFormField} from "@angular/material/form-field";
-import {FormFieldComponent} from "../../../components/form-field/form-field.component";
-import {F} from "@angular/cdk/keycodes";
 import {ServiceDetails} from "../../../interfaces/ServiceDetails";
 import Utils from "../../../Utils";
-import {MatTabGroup} from "@angular/material/tabs";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 

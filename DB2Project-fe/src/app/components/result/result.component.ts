@@ -4,7 +4,7 @@ import {PackageService} from "../../services/package.service";
 import {ValidityPeriod} from "../../interfaces/ValidityPeriod";
 import {OptionalPackage} from "../../interfaces/OptionalPackage";
 import {User} from "../../interfaces/user";
-import {PurchaseService} from "../../services/purchase.service";
+import {OrderService} from "../../services/order.service";
 import {Order} from "../../interfaces/Order";
 import {Package} from "../../interfaces/package";
 import {TokenStorageService} from "../../services/token-storage.service";
@@ -24,7 +24,7 @@ export class ResultComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private purchaseService: PurchaseService,
+              private purchaseService: OrderService,
               private tokenService: TokenStorageService) {
     this.route.queryParamMap.subscribe(
       (params: any) => {

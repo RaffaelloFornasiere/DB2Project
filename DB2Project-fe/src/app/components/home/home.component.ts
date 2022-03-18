@@ -3,9 +3,8 @@ import {PackageService} from "../../services/package.service";
 import {Package} from "../../interfaces/package";
 import {Router} from "@angular/router";
 import {Order} from "../../interfaces/Order";
-import {PurchaseService} from "../../services/purchase.service";
+import {OrderService} from "../../services/order.service";
 import {D} from "@angular/cdk/keycodes";
-import {SharedMemoryService} from "../../services/shared-memory.service";
 import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
@@ -20,7 +19,7 @@ export class HomeComponent implements OnInit {
   rejectedOrders!: Order[];
 
   constructor(private packageService: PackageService,
-              private purchaseService: PurchaseService,
+              private purchaseService: OrderService,
               private router: Router,
               private tokenService: TokenStorageService
   ) {

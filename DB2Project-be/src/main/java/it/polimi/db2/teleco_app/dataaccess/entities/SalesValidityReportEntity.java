@@ -8,10 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -20,6 +17,7 @@ import javax.persistence.Table;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 @Entity
+@EntityListeners(ReadOnlyEntity.class)
 @Table(name = "sales_validity_report")
 public class SalesValidityReportEntity {
     @EmbeddedId

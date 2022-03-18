@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {PurchaseService} from "../../services/purchase.service";
+import {OrderService} from "../../services/order.service";
 import {Order} from "../../interfaces/Order";
 import {Package} from "../../interfaces/package";
 import {Option} from "@angular/cli/models/interface";
@@ -17,7 +17,7 @@ export class ConfirmationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private purchaseService: PurchaseService,
+              private purchaseService: OrderService,
               private tokenService: TokenStorageService
 
   ) { }

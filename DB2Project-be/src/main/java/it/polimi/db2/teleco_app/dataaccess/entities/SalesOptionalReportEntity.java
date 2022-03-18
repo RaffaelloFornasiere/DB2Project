@@ -16,6 +16,7 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 @Entity
+@EntityListeners(ReadOnlyEntity.class)
 @Table(name = "sales_optional_report")
 public class SalesOptionalReportEntity {
     @Id

@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Package} from "../../interfaces/package";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PackageService} from "../../services/package.service";
-import {PurchaseService} from "../../services/purchase.service";
+import {OrderService} from "../../services/order.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {BuyDialogComponent} from "../../components/buy-dialog/buy-dialog.component";
+import {BuyDialogComponent} from "../buy-dialog/buy-dialog.component";
 import {PackageDetails} from "../../interfaces/packageDetails";
 import {TokenStorageService} from "../../services/token-storage.service";
 
@@ -19,10 +19,9 @@ export class PackageDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private packageService: PackageService,
-              private purchaseService: PurchaseService,
+              private purchaseService: OrderService,
               private dialog: MatDialog,
               private router: Router,
-              private tokenService: TokenStorageService
   ) {
   }
 

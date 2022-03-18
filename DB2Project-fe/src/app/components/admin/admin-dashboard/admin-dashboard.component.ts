@@ -8,7 +8,7 @@ import {StatService} from "../../../services/stat.service";
 import {Alert} from "../../../interfaces/Alert";
 import {BaseChartDirective, Color, MultiDataSet} from "ng2-charts";
 import {ChartDataSets} from "chart.js";
-import {PurchaseService} from "../../../services/purchase.service";
+import {OrderService} from "../../../services/order.service";
 import {D} from "@angular/cdk/keycodes";
 import Utils from "../../../Utils";
 import {MatPaginator} from "@angular/material/paginator";
@@ -59,7 +59,7 @@ export class AdminDashboardComponent implements OnInit {
 
 
   constructor(private statService: StatService,
-              private purchaseService: PurchaseService) {
+              private purchaseService: OrderService) {
 
   }
 

@@ -8,11 +8,9 @@ import {Order} from "../../../interfaces/Order";
 import {ValidityPeriod} from "../../../interfaces/ValidityPeriod";
 import {TelecomService} from "../../../interfaces/TelecomService";
 import Utils from "../../../Utils";
-import {PurchaseService} from "../../../services/purchase.service";
+import {OrderService} from "../../../services/order.service";
 import {D} from "@angular/cdk/keycodes";
 
-// import {ChartConfiguration, ChartData, ChartTypeRegistry} from "chart.js";
-// import {} from "/src/app/components/chart/utils.ts"
 
 @Component({
   selector: 'app-user-dashboard',
@@ -46,7 +44,7 @@ export class UserDashboardComponent implements OnInit {
 
   constructor(private navbarService: NavbarService,
               private statService: StatService,
-              private purchaseService: PurchaseService) {
+              private purchaseService: OrderService) {
     navbarService.loggingVisibilityChange.subscribe(value => {
       this.needsToBeLogged = value
     })

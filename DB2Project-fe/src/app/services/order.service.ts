@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class PurchaseService {
+export class OrderService {
 
   constructor(private http: HttpClient,
               private tokenStorageService: TokenStorageService) { }
