@@ -9,13 +9,13 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
 @Table(name = "alerts")
 public class AlertEntity {
     @Id

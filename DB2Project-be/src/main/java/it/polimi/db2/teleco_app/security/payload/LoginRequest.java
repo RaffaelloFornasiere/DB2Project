@@ -1,4 +1,5 @@
 package it.polimi.db2.teleco_app.security.payload;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

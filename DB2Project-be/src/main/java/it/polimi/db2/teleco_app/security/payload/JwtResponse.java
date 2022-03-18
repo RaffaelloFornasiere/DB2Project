@@ -15,13 +15,12 @@ import lombok.experimental.SuperBuilder;
 @Accessors(chain = true)
 @JsonSerialize
 public class JwtResponse extends User {
-    public JwtResponse(String jwt, User user)
-    {
+    private String token;
+    @Builder.Default
+    private String type = "Bearer";
+    public JwtResponse(String jwt, User user) {
         super(user.toBuilder());
         this.token = jwt;
         type = "Bearer";
     }
-    private String token;
-    @Builder.Default
-    private String type = "Bearer";
 }

@@ -16,16 +16,15 @@ public class UserResource {
     }
 
 
-
     @PostMapping("/users/edit")
-    ResponseEntity<User> editUser(@RequestBody User user){
+    ResponseEntity<User> editUser(@RequestBody User user) {
         return ResponseEntity.ok().body(
                 this.userService.editUser(user)
         );
     }
 
     @GetMapping("/home/users/check-username/{username}")
-    ResponseEntity<Boolean> checkUsername(@PathVariable String username){
+    ResponseEntity<Boolean> checkUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(
                 userService.findByUsername(username).isPresent() ||
                         userService.findByEmail(username).isPresent()

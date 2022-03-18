@@ -7,8 +7,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "services")
+
 @Getter
 @Setter
 @ToString
@@ -16,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
+@Table(name = "services")
 public class ServiceEntity implements Serializable {
     @Id
     @Column(name = "service_id")

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -36,7 +35,7 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
 
     private void storePackageValidityPeriodRelation(ServicePackageEntity packageEntity, List<ValidityPeriodEntity> validityPeriods) {
         List<Long> current = entityManager.createNativeQuery("select validityPeriodId from validity_period_package where packageId = :packageId")
-                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer)i)).toList();
+                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer) i)).toList();
         List<Long> needed = validityPeriods.stream().map(ValidityPeriodEntity::getId).toList();
         var toBeAdded = needed.stream().filter(i -> !current.contains(i)).toList();
         var toBeRemoved = current.stream().filter(i -> !needed.contains(i)).toList();
@@ -60,7 +59,7 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
 
     private void storePackageOptionalPackageRelation(ServicePackageEntity packageEntity, List<OptionalPackageEntity> optionalPackages) {
         List<Long> current = entityManager.createNativeQuery("select id_optional_package from packages_optional_packages where id_service_package = :packageId")
-                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer)i)).toList();
+                .setParameter("packageId", packageEntity.getId()).getResultList().stream().map(i -> Long.valueOf((Integer) i)).toList();
 
         List<Long> needed = optionalPackages.stream().map(OptionalPackageEntity::getId).toList();
         var toBeAdded = needed.stream().filter(i -> !current.contains(i)).toList();

@@ -9,16 +9,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Table(name = "orders")
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
+@Table(name = "orders")
 public class OrderEntity {
-
     @Id
     @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,6 @@ public class OrderEntity {
 
     @Column(name = "total_value")
     private Double totalValue;
-
 
 
     @ManyToMany

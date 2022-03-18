@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,13 +42,11 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(
                 r -> new SimpleGrantedAuthority(r.name())).collect(Collectors.toSet());
     }
-
 
 
     @Override

@@ -24,7 +24,7 @@ public interface ServiceMapper {
     ServiceEntity toSource(TelecomService source);
 
 
-    default ServiceDetails map(String value){
+    default ServiceDetails map(String value) {
         try {
             return new ObjectMapper().readValue(value, ServiceDetails.class);
         } catch (JsonProcessingException e) {
@@ -34,7 +34,7 @@ public interface ServiceMapper {
         }
     }
 
-    default String map(ServiceDetails value){
+    default String map(ServiceDetails value) {
         try {
             return new ObjectMapper().writeValueAsString(value);
         } catch (JsonProcessingException e) {

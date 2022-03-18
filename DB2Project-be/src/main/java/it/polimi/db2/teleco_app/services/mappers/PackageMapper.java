@@ -15,11 +15,10 @@ public interface PackageMapper {
     @Mapping(target = "telecomServices", source = "services")
     Package toTarget(ServicePackageEntity source);
 
-    @Mapping(source = "id"  , target = "id")
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "telecomServices", target = "services")
     ServicePackageEntity toSource(Package source);
-
 
 
 }

@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ReportMapper {
     Report toTarget(SalesValidityReportEntity salesValidityReportEntity);
+
     SalesValidityReportEntity toSource(Report report);
 }

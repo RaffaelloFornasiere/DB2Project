@@ -32,6 +32,7 @@ public class ServiceResource {
                 serviceService.findById(serviceId)
         );
     }
+
     @Secured("ROLE_ADMIN")
     @PostMapping("/services/save/")
     ResponseEntity<TelecomService> save(@RequestBody TelecomService telecomService) {
@@ -42,7 +43,7 @@ public class ServiceResource {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/services/delete/{serviceId}")
-    ResponseEntity<Void> delete(@PathVariable Long serviceId){
+    ResponseEntity<Void> delete(@PathVariable Long serviceId) {
         serviceService.delete(serviceId);
         return ResponseEntity.ok().body(null);
     }

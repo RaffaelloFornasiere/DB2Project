@@ -8,24 +8,24 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
 @Table(name = "sales_validity_report")
 public class SalesValidityReportEntity {
-
     @EmbeddedId
     private SalesValidityId salesValidityId;
 
-
     @Column(name = "total")
     private Integer total;
-
 }
 

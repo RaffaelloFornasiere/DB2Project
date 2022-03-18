@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return  userRepository.findAll().stream().map(userMapper.MAPPER::toTarget).toList();
+        return userRepository.findAll().stream().map(userMapper.MAPPER::toTarget).toList();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public User editUser(User user) {
         var old = findByUsername(user.getUsername()).orElseThrow();
         //encode password
-        if(user.getPassword()!= null && !user.getPassword().equals(""))
+        if (user.getPassword() != null && !user.getPassword().equals(""))
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         else
             user.setPassword(old.getPassword());
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getInsolventUsers() {
-        return  userRepository.findAllByInsolventIsTrue()
+        return userRepository.findAllByInsolventIsTrue()
                 .stream().map(userMapper.MAPPER::toTarget).toList();
     }
 
@@ -84,14 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     @Override
-    public void markCurrentAsInsolvent(){
-        markAsInsolvent((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public void markCurrentAsInsolvent() {
+        markAsInsolvent((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
+
     @Override
-    public void markAsInsolvent(User user){
+    public void markAsInsolvent(User user) {
         user.setInsolvent(true);
     }
 }

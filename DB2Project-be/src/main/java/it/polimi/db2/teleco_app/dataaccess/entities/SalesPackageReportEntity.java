@@ -9,16 +9,15 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
 @Table(name = "sales_package_report")
 public class SalesPackageReportEntity {
-
     @Id
     @Column(name = "package_id")
     private Long id;
@@ -38,6 +37,4 @@ public class SalesPackageReportEntity {
 
     @Column(name = "average_optional")
     private Double averageOptional;
-
-
 }

@@ -6,7 +6,6 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Setter
 @Getter
 @ToString
@@ -14,11 +13,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
 @Table(name = "validity_periods")
 public class ValidityPeriodEntity implements Serializable {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "months")

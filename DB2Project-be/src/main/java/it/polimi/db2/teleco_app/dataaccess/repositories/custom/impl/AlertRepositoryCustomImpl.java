@@ -25,7 +25,7 @@ public class AlertRepositoryCustomImpl implements AlertRepositoryCustom {
 
 
     @Override
-    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public AlertEntity saveCustom(AlertEntity a) {
         entityManager.persist(a);
         entityManager.flush();

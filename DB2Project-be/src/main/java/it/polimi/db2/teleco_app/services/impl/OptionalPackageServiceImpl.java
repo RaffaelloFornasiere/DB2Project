@@ -6,12 +6,8 @@ import it.polimi.db2.teleco_app.services.OptionalPackageService;
 import it.polimi.db2.teleco_app.services.mappers.OptionalPackageMapper;
 import it.polimi.db2.teleco_app.services.mappers.OrderMapper;
 import it.polimi.db2.teleco_app.services.models.OptionalPackage;
-import it.polimi.db2.teleco_app.services.models.Order;
-import it.polimi.db2.teleco_app.services.models.Package;
-import it.polimi.db2.teleco_app.utils.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

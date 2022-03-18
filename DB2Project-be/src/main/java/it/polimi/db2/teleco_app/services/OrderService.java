@@ -1,15 +1,14 @@
 package it.polimi.db2.teleco_app.services;
 
-import it.polimi.db2.teleco_app.utils.Pair;
-import it.polimi.db2.teleco_app.services.models.*;
+import it.polimi.db2.teleco_app.services.models.Alert;
+import it.polimi.db2.teleco_app.services.models.Billing;
+import it.polimi.db2.teleco_app.services.models.Order;
 import it.polimi.db2.teleco_app.services.models.Package;
-import org.aspectj.weaver.ast.Or;
+import it.polimi.db2.teleco_app.utils.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public interface OrderService {
     List<Order> findAll();

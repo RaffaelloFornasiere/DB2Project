@@ -4,11 +4,14 @@ public enum Role {
     ROLE_USER(1),
     ROLE_ADMIN(2);
 
-    private Integer id;
-    private Role(Integer id){
+    private final Integer id;
+
+    Role(Integer id) {
         this.id = id;
     }
 
-    public Integer getId(){return id;}
+    public Integer getId() {
+        return id;
+    }
 }
 

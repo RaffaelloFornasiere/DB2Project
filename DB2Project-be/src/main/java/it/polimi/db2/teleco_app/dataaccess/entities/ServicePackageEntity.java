@@ -3,13 +3,12 @@ package it.polimi.db2.teleco_app.dataaccess.entities;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 
-@Entity
-@Table(name = "packages")
 @Getter
 @Setter
 @ToString
@@ -17,6 +16,8 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
+@Table(name = "packages")
 public class ServicePackageEntity implements Serializable {
     @Id
     @Column(name = "package_id")

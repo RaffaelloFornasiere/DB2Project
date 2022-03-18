@@ -21,7 +21,7 @@ public class OptionalPackageResource {
     }
 
     @GetMapping("/optionalPackages/")
-    ResponseEntity<List<OptionalPackage>> findAll(){
+    ResponseEntity<List<OptionalPackage>> findAll() {
         return ResponseEntity.ok().body(
                 optionalPackageService.findAll()
         );
@@ -34,7 +34,6 @@ public class OptionalPackageResource {
     }
 
 
-
     @Secured("ROLE_ADMIN")
     @PostMapping("/optionalPackages/save")
     ResponseEntity<OptionalPackage> save(@RequestBody OptionalPackage optionalPackage) {
@@ -45,7 +44,7 @@ public class OptionalPackageResource {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/optionalPackages/delete/{optionalPackageId}")
-    ResponseEntity<Void> delete(@PathVariable Long optionalPackageId){
+    ResponseEntity<Void> delete(@PathVariable Long optionalPackageId) {
         optionalPackageService.delete(optionalPackageId);
         return ResponseEntity.ok().body(null);
     }

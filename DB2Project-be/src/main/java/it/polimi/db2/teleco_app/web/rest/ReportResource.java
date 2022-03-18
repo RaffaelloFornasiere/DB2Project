@@ -4,13 +4,13 @@ import it.polimi.db2.teleco_app.dataaccess.entities.SalesOptionalReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.entities.SalesPackageReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.entities.SalesValidityReportEntity;
 import it.polimi.db2.teleco_app.dataaccess.repositories.ReportRepository;
-import it.polimi.db2.teleco_app.utils.Pair;
-import it.polimi.db2.teleco_app.services.OptionalPackageService;
 import it.polimi.db2.teleco_app.services.OrderService;
 import it.polimi.db2.teleco_app.services.UserService;
-import it.polimi.db2.teleco_app.services.models.*;
-import it.polimi.db2.teleco_app.services.models.Package;
-import org.aspectj.weaver.ast.Or;
+import it.polimi.db2.teleco_app.services.models.Alert;
+import it.polimi.db2.teleco_app.services.models.Order;
+import it.polimi.db2.teleco_app.services.models.User;
+import it.polimi.db2.teleco_app.services.models.UserReport;
+import it.polimi.db2.teleco_app.utils.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,6 @@ public class ReportResource {
         this.orderService = orderService;
         this.reportRepository = reportRepository;
     }
-
 
 
     @Secured("ROLE_ADMIN")
@@ -72,7 +71,7 @@ public class ReportResource {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/report/users-report")
-    ResponseEntity<List<UserReport>> getUsersReport(){
+    ResponseEntity<List<UserReport>> getUsersReport() {
         var orders = orderService.getSuspended();
         var alerts = orderService.findAllAlerts();
         var users = orders.stream().map(Order::getUser).distinct();
@@ -87,13 +86,13 @@ public class ReportResource {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/report/user/active-packages/{username}")
-    ResponseEntity<List<Order>> findActiveOrders(@PathVariable String username){
+    ResponseEntity<List<Order>> findActiveOrders(@PathVariable String username) {
         return ResponseEntity.ok().body(
                 orderService.findAllActiveByUser(username));
     }
 
     @GetMapping("/report/user-cumulative-services/{username}")
-    ResponseEntity<Map<String, Object>> getUserCumulativeServices(@PathVariable String username){
+    ResponseEntity<Map<String, Object>> getUserCumulativeServices(@PathVariable String username) {
         return ResponseEntity.ok().body(
                 reportRepository.getUserCumulativeServices(username));
 

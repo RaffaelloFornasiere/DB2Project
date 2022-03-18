@@ -8,8 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "roles")
+
 @Getter
 @Setter
 @ToString
@@ -17,9 +16,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
+@Entity
+@Table(name = "roles")
 public class RoleEntity {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

@@ -8,19 +8,20 @@ public enum PackageType {
     MOBILE_PHONE(2),
     MOBILE_INTERNET(3);
 
-    PackageType(Integer id){
-        this.id =id;
-    }
     private final Integer id;
 
-    public Integer getId() {
-        return id;
+    PackageType(Integer id) {
+        this.id = id;
     }
 
-    public static PackageType getById(Integer id){
+    public static PackageType getById(Integer id) {
         return Arrays.stream(values())
                 .filter(pt -> pt.id.equals(id))
                 .findAny().orElseThrow();
+    }
+
+    public Integer getId() {
+        return id;
     }
 
 

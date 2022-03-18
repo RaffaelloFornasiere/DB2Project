@@ -8,7 +8,8 @@ public interface ServiceService {
     void delete(Long serviceId);
 
     List<TelecomService> findAll();
-    TelecomService save (TelecomService s);
+
+    TelecomService save(TelecomService s);
 
     TelecomService findById(Long serviceId);
 }

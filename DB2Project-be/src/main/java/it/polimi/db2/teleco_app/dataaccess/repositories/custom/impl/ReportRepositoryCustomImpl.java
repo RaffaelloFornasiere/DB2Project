@@ -33,6 +33,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
         var res = query.getResultList();
         return (List<SalesPackageReportEntity>) res;
     }
+
     @Override
     public List<SalesOptionalReportEntity> findAllOptionalReport() {
         Query query = entityManager.createQuery("select a from SalesOptionalReportEntity a order by a.score desc");
@@ -41,19 +42,19 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     }
 
     @Override
-    public Map<String, Object> getUserCumulativeServices(String username){
+    public Map<String, Object> getUserCumulativeServices(String username) {
         Query query = entityManager.createNativeQuery("select user, minutes, sms, gigabytes, cost from user_accumulative_services where user = :username")
                 .setParameter("username", username);
         Object[] res = null;
         try {
             res = (Object[]) query.getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
         return Map.of(
-                "minutes",  res[1]== null?0:res[1],
-                "sms", res[2]== null?0:res[2],
-                "gigabytes", res[3]== null?0:res[3],
-                "cost",  res[4]== null?0:res[4]);
+                "minutes", res[1] == null ? 0 : res[1],
+                "sms", res[2] == null ? 0 : res[2],
+                "gigabytes", res[3] == null ? 0 : res[3],
+                "cost", res[4] == null ? 0 : res[4]);
     }
 }

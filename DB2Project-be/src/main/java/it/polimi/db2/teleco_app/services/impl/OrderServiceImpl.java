@@ -2,7 +2,6 @@ package it.polimi.db2.teleco_app.services.impl;
 
 
 import it.polimi.db2.teleco_app.dataaccess.entities.OrderEntity;
-import it.polimi.db2.teleco_app.utils.Pair;
 import it.polimi.db2.teleco_app.dataaccess.repositories.AlertRepository;
 import it.polimi.db2.teleco_app.dataaccess.repositories.BillingRepository;
 import it.polimi.db2.teleco_app.dataaccess.repositories.OrderRepository;
@@ -10,15 +9,16 @@ import it.polimi.db2.teleco_app.services.OrderService;
 import it.polimi.db2.teleco_app.services.mappers.AlertMapper;
 import it.polimi.db2.teleco_app.services.mappers.BillingMapper;
 import it.polimi.db2.teleco_app.services.mappers.OrderMapper;
-import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.services.models.Package;
+import it.polimi.db2.teleco_app.services.models.*;
+import it.polimi.db2.teleco_app.utils.Pair;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Billing> findAllBillingsByOrderId(Long orderId){
+    public List<Billing> findAllBillingsByOrderId(Long orderId) {
         return billingRepository.findAllByOrderIdNative(orderId).stream().map(billingMapper::toTarget).toList();
     }
 
@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Pair<LocalDate, Long>> findOrdersPerDate() {
         return orderRepository.getOrdersPerDay()
-                .stream().map(i -> new Pair<>(((java.sql.Date)i[0]).toLocalDate(), ((BigInteger)i[1]).longValue())).toList();
+                .stream().map(i -> new Pair<>(((java.sql.Date) i[0]).toLocalDate(), ((BigInteger) i[1]).longValue())).toList();
     }
 
 
@@ -102,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Pair<Order, Boolean> tryPayment(Order order, Boolean result) {
-        order.setUser( ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        order.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         Billing billing = new Billing()
                 .setOrderId(order.getId()).setResult(result)
                 .setBillingDateTime(LocalDateTime.now());
@@ -168,7 +168,6 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllActiveByUser(username)
                 .stream().map(orderMapper::toTarget).toList();
     }
-
 
 
 }

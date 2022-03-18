@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BillingRepository extends JpaRepository<BillingEntity, Integer>{
+public interface BillingRepository extends JpaRepository<BillingEntity, Integer> {
 
     @Query(
             nativeQuery = true,
@@ -26,5 +26,5 @@ public interface BillingRepository extends JpaRepository<BillingEntity, Integer>
                     where order_id = ?1
                     """
     )
-    List<BillingEntity> findAllByOrderIdNative(Long orderId) ;
+    List<BillingEntity> findAllByOrderIdNative(Long orderId);
 }

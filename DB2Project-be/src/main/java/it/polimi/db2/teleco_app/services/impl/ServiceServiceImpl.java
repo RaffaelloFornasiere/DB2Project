@@ -7,6 +7,7 @@ import it.polimi.db2.teleco_app.services.models.TelecomService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ServiceServiceImpl implements ServiceService {
 
@@ -19,7 +20,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public void delete(Long serviceId){
+    public void delete(Long serviceId) {
         serviceRepository.deleteById(serviceId);
     }
 
@@ -28,10 +29,10 @@ public class ServiceServiceImpl implements ServiceService {
         return serviceRepository.findAll()
                 .stream().map(serviceMapper::toTarget)
                 .toList();
-            }
+    }
 
     @Override
-    public TelecomService save(TelecomService telecomService){
+    public TelecomService save(TelecomService telecomService) {
         return serviceMapper.toTarget(
                 serviceRepository
                         .save(serviceMapper.toSource(telecomService)));
