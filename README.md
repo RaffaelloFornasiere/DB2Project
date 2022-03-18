@@ -17,15 +17,14 @@ The server will be listening on default port 8080. In order to change it you can
 ```
 
 ### Frontend
-Go to DB2Project-fe folder and install with npm the following dependencies:
-- angular/cli
-- angular/cdk
-- chartjs 
-- ng2-charts@2.3.3
+Go to DB2Project-fe folder and install through npm all the dependecies with the following command:
+```bash
+npm install
+```
 
 Then run the following command:
 ```bash
-ng serve —-proxy-config proxy.conf.json
+npm start
 ```
 
 After this you should be able to access the application on 
@@ -34,7 +33,7 @@ localhost:4200
 ```
 
 ## Online App
-If you don’t want to build the app you can find the application alive on this url ([not available yet](http://telecoapp.dn0.it))
+If you don’t want to build the app you can find the application alive on this url ([not available yet](http://db2project.duckdns.org))
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
