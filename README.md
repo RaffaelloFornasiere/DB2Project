@@ -33,7 +33,7 @@ localhost:4200
 ```
 
 ## Online App
-If you don’t want to build the app you can find the application alive on this url ([not available yet](http://db2project.duckdns.org))
+If you don’t want to build the app you can find the application alive on this url ([TelecoApp](http://db2project.duckdns.org))
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
