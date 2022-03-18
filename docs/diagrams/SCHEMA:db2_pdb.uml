@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>64d6309a-7086-467e-b45f-904f58b68356.SCHEMA:db2_pdb</OriginalElement>
+  <nodes>
+    <node x="1020.7452830188679" y="0.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.users</node>
+    <node x="661.9709119496855" y="33.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_periods</node>
+    <node x="809.5786163522013" y="485.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.activation_schedule</node>
+    <node x="0.0" y="33.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.services</node>
+    <node x="1179.2036163522012" y="269.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.alerts</node>
+    <node x="235.0" y="292.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages_services</node>
+    <node x="653.4709119496855" y="226.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders</node>
+    <node x="1014.5786163522013" y="518.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders_optional_packages</node>
+    <node x="1380.2036163522012" y="292.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.user_roles</node>
+    <node x="408.30424528301876" y="44.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages</node>
+    <node x="843.4709119496855" y="292.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_period_package</node>
+    <node x="442.4709119496855" y="280.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_validity_report</node>
+    <node x="1264.5" y="22.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.billings</node>
+    <node x="1389.0959119496856" y="518.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages_optional_packages</node>
+    <node x="13.0" y="259.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_package_report</node>
+    <node x="1565.2036163522012" y="269.5">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.optional_packages</node>
+    <node x="1667.0959119496856" y="518.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_optional_report</node>
+    <node x="1489.0" y="44.0">64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.roles</node>
+    <node x="0.0" y="486.0">64d6309a-7086-467e-b45f-904f58b68356.VIEW:db2_pdb.user_accumulative_services</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_period_package" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_periods" relationship="REFERENCES">
+      <point x="0.0" y="-37.5" />
+      <point x="952.4709119496855" y="82.0" />
+      <point x="76.5" y="0.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.users" relationship="REFERENCES">
+      <point x="85.0" y="55.0" />
+      <point x="1096.245" y="384.5" />
+      <point x="-15.000283018868004" y="82.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages_optional_packages" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.optional_packages" relationship="REFERENCES">
+      <point x="8.805031438896549E-5" y="-37.5" />
+      <point x="1518.096" y="495.0" />
+      <point x="1660.204" y="495.0" />
+      <point x="3.8364779879884736E-4" y="60.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_package_report" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages" relationship="REFERENCES">
+      <point x="0.0" y="-70.5" />
+      <point x="114.0" y="179.0" />
+      <point x="516.304" y="179.0" />
+      <point x="-2.452830187849031E-4" y="37.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.user_roles" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.roles" relationship="REFERENCES">
+      <point x="75.0" y="-37.5" />
+      <point x="-17.296383647798848" y="38.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders_optional_packages" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.optional_packages" relationship="REFERENCES">
+      <point x="6.421383647798848" y="-37.5" />
+      <point x="1137.5" y="495.0" />
+      <point x="1660.204" y="495.0" />
+      <point x="3.8364779879884736E-4" y="60.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.user_roles" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.users" relationship="REFERENCES">
+      <point x="-2.703616352201152" y="-37.5" />
+      <point x="1460.0" y="159.5" />
+      <point x="90.5" y="77.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.alerts" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.billings" relationship="REFERENCES">
+      <point x="83.0" y="-60.0" />
+      <point x="-13.296383647798848" y="60.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_validity_report" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_periods" relationship="REFERENCES">
+      <point x="15.000088050314503" y="-49.0" />
+      <point x="552.971" y="194.0" />
+      <point x="644.0" y="194.0" />
+      <point x="644.0" y="82.0" />
+      <point x="-76.4999119496855" y="0.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages" relationship="REFERENCES">
+      <point x="8.805031450265233E-5" y="-103.5" />
+      <point x="738.471" y="179.0" />
+      <point x="516.304" y="179.0" />
+      <point x="-2.452830187849031E-4" y="37.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_optional_report" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.optional_packages" relationship="REFERENCES">
+      <point x="-90.89191194968566" y="-38.0" />
+      <point x="15.000383647798799" y="60.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages_services" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.services" relationship="REFERENCES">
+      <point x="-15.0" y="-37.5" />
+      <point x="309.0" y="82.0" />
+      <point x="104.0" y="0.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages_services" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages" relationship="REFERENCES">
+      <point x="0.0" y="-37.5" />
+      <point x="324.0" y="255.0" />
+      <point x="418.0" y="255.0" />
+      <point x="418.0" y="179.0" />
+      <point x="516.304" y="179.0" />
+      <point x="-2.452830187849031E-4" y="37.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders_optional_packages" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders" relationship="REFERENCES">
+      <point x="0.0" y="37.5" />
+      <point x="1131.0786163522012" y="644.5" />
+      <point x="738.4709119496855" y="644.5" />
+      <point x="0.0" y="103.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.activation_schedule" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.users" relationship="REFERENCES">
+      <point x="92.50038364779869" y="-55.5" />
+      <point x="1115.0" y="500.5" />
+      <point x="1115.0" y="233.0" />
+      <point x="1111.245" y="233.0" />
+      <point x="-2.830188680036372E-4" y="82.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.alerts" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.users" relationship="REFERENCES">
+      <point x="3.8364779879884736E-4" y="-60.0" />
+      <point x="1269.704" y="233.0" />
+      <point x="1111.245" y="233.0" />
+      <point x="-2.830188680036372E-4" y="82.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.validity_periods" relationship="REFERENCES">
+      <point x="-14.999911949685497" y="-103.5" />
+      <point x="723.471" y="194.0" />
+      <point x="644.0" y="194.0" />
+      <point x="644.0" y="82.0" />
+      <point x="-76.4999119496855" y="0.0" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.sales_validity_report" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.packages" relationship="REFERENCES">
+      <point x="8.805031450265233E-5" y="-49.0" />
+      <point x="537.971" y="255.0" />
+      <point x="418.0" y="255.0" />
+      <point x="418.0" y="179.0" />
+      <point x="516.304" y="179.0" />
+      <point x="-2.452830187849031E-4" y="37.5" />
+    </edge>
+    <edge source="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.activation_schedule" target="64d6309a-7086-467e-b45f-904f58b68356.TABLE:db2_pdb.orders" relationship="REFERENCES">
+      <point x="-85.0" y="-71.0" />
+      <point x="78.60770440251576" y="103.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="933.0" y="322.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
