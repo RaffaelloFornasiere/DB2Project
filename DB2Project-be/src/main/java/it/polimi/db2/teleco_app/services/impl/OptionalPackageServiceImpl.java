@@ -15,14 +15,12 @@ public class OptionalPackageServiceImpl implements OptionalPackageService {
 
     private final OptionalPackageRepository optionalPackageRepository;
     private final OptionalPackageMapper optionalPackageMapper;
-    private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
 
-    public OptionalPackageServiceImpl(OptionalPackageRepository optionalPackageRepository, OptionalPackageMapper optionalPackageMapper, OrderRepository orderRepository, OrderMapper orderMapper) {
+
+    public OptionalPackageServiceImpl(OptionalPackageRepository optionalPackageRepository, OptionalPackageMapper optionalPackageMapper) {
         this.optionalPackageRepository = optionalPackageRepository;
         this.optionalPackageMapper = optionalPackageMapper;
-        this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
+
     }
 
     @Override
