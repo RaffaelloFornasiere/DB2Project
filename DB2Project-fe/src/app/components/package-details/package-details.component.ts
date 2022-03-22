@@ -45,6 +45,9 @@ export class PackageDetailsComponent implements OnInit {
       title: "Buy " + p.name + "package",
       packageDetails: this.packageDetails
     }
+    console.log(conf.data
+
+    )
     let result: any;
     this.dialog.open(BuyDialogComponent, conf).afterClosed().subscribe({
         next: (data: any) => {
@@ -52,6 +55,7 @@ export class PackageDetailsComponent implements OnInit {
             return;
           data.package = this.packageDetails.package;
           result = JSON.stringify(data)
+
           this.router.navigate(['confirm'], {queryParams: {data: result}})
             .then()
         }

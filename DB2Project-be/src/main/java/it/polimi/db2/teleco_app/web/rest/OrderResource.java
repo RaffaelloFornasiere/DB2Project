@@ -92,11 +92,11 @@ public class OrderResource {
                 this.orderService.buy(order, result));
     }
 
-    @PostMapping("/orders/retry-payment/{result}")
-    ResponseEntity<Pair<Order, Boolean>> retryPayment(@PathVariable Boolean result, @RequestBody Order order) {
-        return ResponseEntity.ok().body(
-                this.orderService.tryPayment(order, result));
-    }
+//    @PostMapping("/orders/retry-payment/{result}")
+//    ResponseEntity<Pair<Order, Boolean>> retryPayment(@PathVariable Boolean result, @RequestBody Order order) {
+//        return ResponseEntity.ok().body(
+//                this.orderService.tryPayment(order, result));
+//    }
 
 }
 

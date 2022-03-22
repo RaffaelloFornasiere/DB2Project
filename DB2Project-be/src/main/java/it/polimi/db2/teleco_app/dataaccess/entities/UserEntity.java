@@ -36,16 +36,16 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @ToString.Exclude
     private Set<RoleEntity> roles;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @ToString.Exclude
-    private Set<OrderEntity> purchasesEntities;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    @ToString.Exclude
+//    private Set<OrderEntity> purchasesEntities;
 
 
     @Column(name = "insolvent")

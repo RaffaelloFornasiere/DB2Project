@@ -12,13 +12,19 @@ import it.polimi.db2.teleco_app.services.mappers.OrderMapper;
 import it.polimi.db2.teleco_app.services.models.Package;
 import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.utils.Pair;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -88,8 +94,10 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    @Transactional
     public Pair<Order, Boolean> buy(Order order, Boolean result) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
         order.setUser(user.getUsername());
 
         var entity = orderMapper.toSource(order).setSuspended(!result);
@@ -100,7 +108,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Pair<Order, Boolean> tryPayment(Order order, Boolean result) {
         order.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         Billing billing = new Billing()

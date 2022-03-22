@@ -37,7 +37,7 @@ export class ConfirmationComponent implements OnInit {
         this.data = JSON.parse(params.get('data')!)
         console.log(this.data);
         this.data.totalValue =
-        this.data.validityPeriod.fee + this.data.optionalPackages.map(i => i.monthlyFee).reduce((a, b) => a + b)
+        this.data.validityPeriod.fee + this.data.optionalPackages.map(i => i.monthlyFee).reduce((a, b) => a + b, 0)
         + this.data.package.telecomServices.map(i => i.details.costMonth).reduce((a, b) => a + b)
       }
     )

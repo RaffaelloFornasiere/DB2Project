@@ -30,8 +30,8 @@ public class SalesPackageReportEntity {
     @Column(name = "total_sold")
     private Integer totalSold;
 
-    @Column(name = "total_w_optional")
-    private Integer totalWOptional;
+    @Column(name = "total_op_sold_w")
+    private Integer totalOpSoldW;
 
     @Column(name = "total_wo_optional")
     private Integer totalWoOptional;

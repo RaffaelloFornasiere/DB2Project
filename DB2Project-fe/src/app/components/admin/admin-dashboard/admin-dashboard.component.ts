@@ -28,9 +28,9 @@ export class AdminDashboardComponent implements OnInit {
     data: {
       servicePackage: string,
       totalSold: number,
-      totalWithOptional: number,
+      totalOpSoldW: number,
       totalWithoutOptional: number,
-      averageOptional: number,
+      averageOptional: string,
     }[];
   }
 
@@ -138,8 +138,8 @@ export class AdminDashboardComponent implements OnInit {
             {
               servicePackage: v.servicePackage.name,
               totalSold: v.totalSold,
-              averageOptional: v.averageOptional,
-              totalWithOptional: v.totalWOptional,
+              averageOptional: v.averageOptional.toFixed(2),
+              totalOpSoldW: v.totalOpSoldW,
               totalWithoutOptional: v.totalWoOptional,
             }
           ))

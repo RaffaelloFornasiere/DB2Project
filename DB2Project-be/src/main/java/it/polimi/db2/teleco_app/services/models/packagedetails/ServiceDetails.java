@@ -16,5 +16,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 public abstract class ServiceDetails {
-    protected Integer costMonth;
+    protected Double costMonth;
 }
