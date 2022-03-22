@@ -1,0 +1,80 @@
+title Login
+
+actor User
+
+participantgroup #lightblue **Front-end**
+boundary /home
+boundary /login
+participant AuthService
+end
+
+participantgroup **Back-end**
+participant AuthController
+participant UserService
+participantgroup #ff998F **Mappers**
+participant UserMapper
+end 
+participant UserRepository
+end
+
+
+
+participantgroup **Database**
+participant Database
+end
+
+activate /home
+  space -3
+  User->/home: Click on Login
+  /home->/login: /login
+  space -1
+deactivate /home
+space -3
+activate /login
+  /login->User: show form
+  space -3
+  User->AuthService: (username, password)
+  space -3
+  AuthService->AuthController:<background:#lightgray>/login:LoginRequest</background>
+  activate AuthController
+    activate UserService
+      space -3
+      AuthController->UserService: getUser(username | email)
+      space -3
+      UserService ->UserRepository: getUser(username) 
+      space -4
+      UserRepository->Database: find user
+      space -3
+      Database ->UserRepository:user
+      space -4
+      UserRepository->UserService:user
+      space -4
+      UserService->AuthController: user
+      AuthController->AuthController:validate request
+	  space -3
+      AuthController ->AuthService: user
+      space -1
+    deactivate UserService
+    space -1
+  deactivate AuthController
+  space -4
+  AuthService->/login:
+  space -3
+  /login->/home: go to home
+  space -1
+deactivate /login
+space -3
+activate /home
+destroysilent AuthController
+destroysilent UserService
+destroysilent UserRepository
+destroysilent UserMapper
+space -3
+/home->User:show home
+space -3
+/home-->>]: get rejected orders
+space -3
+]-->>/home: rejected orders
+space -3
+/home->User: show rejected orders
+space -3

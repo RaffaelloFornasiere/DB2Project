@@ -46,9 +46,9 @@ public class PackageResource {
     @PostMapping("/packages/save/")
     ResponseEntity<Package> save(@RequestBody List<String> wrapper) throws JsonProcessingException {
         Package servicePackage = new ObjectMapper().readValue(wrapper.get(0), Package.class);
-        List<OptionalPackage> optionalPackages = new ObjectMapper().readValue(wrapper.get(1), new TypeReference<List<OptionalPackage>>() {
+        List<OptionalPackage> optionalPackages = new ObjectMapper().readValue(wrapper.get(1), new TypeReference<>() {
         });
-        List<ValidityPeriod> validityPeriods = new ObjectMapper().readValue(wrapper.get(2), new TypeReference<List<ValidityPeriod>>() {
+        List<ValidityPeriod> validityPeriods = new ObjectMapper().readValue(wrapper.get(2), new TypeReference<>() {
         });
 
         return ResponseEntity.ok().body(

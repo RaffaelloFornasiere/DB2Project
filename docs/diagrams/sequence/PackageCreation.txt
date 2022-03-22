@@ -1,0 +1,88 @@
+title Edit/Create Package
+
+
+actor User
+
+participantgroup #lightblue **Front-end**
+boundary /admin-settings
+end
+
+participantgroup **Back-end**
+participant PackageResource
+participant PackageService
+participantgroup #ff998F 
+participant Mappers
+end 
+participant PackageRepositoryCustomImpl
+end
+
+
+
+participantgroup 
+participant Database
+end
+
+User->/admin-settings: compile the package form 
+space -3
+activate /admin-settings
+  /admin-settings->PackageResource: /packages/save:List<String>
+  space -3
+  activate PackageResource
+    PackageResource->PackageResource:decode string into package\nvalidity periods and optional packages
+    space -2
+    activate PackageService
+    PackageResource->PackageService: saveWithDetails(sp, List<vp>, List<op>)
+    space -2
+    aboxright over PackageService, Mappers: map all objects
+    space -2
+    aboxleft over Mappers, PackageService: return mapped objects
+    space -2
+    PackageService ->PackageRepositoryCustomImpl: savePackageWithDetails(spe, List<vpe>, List<ope>)
+  activate PackageRepositoryCustomImpl
+    expandable- spe exists 
+    PackageRepositoryCustomImpl->Database: entityManager.merge(spe)
+    space -3
+    Database-->PackageRepositoryCustomImpl:
+    end
+    
+    expandable- spe not exists 
+    PackageRepositoryCustomImpl->Database: entityManager.persist(spe)
+    space -3
+    Database-->PackageRepositoryCustomImpl:
+    end
+    
+    expandable- store validity periods
+    PackageRepositoryCustomImpl->PackageRepositoryCustomImpl:filter non associated vp
+    space -3
+    PackageRepositoryCustomImpl->PackageRepositoryCustomImpl:filter non needed vp
+    space -3
+    PackageRepositoryCustomImpl->Database: entityManager.createNativeQuery:remove non needed from join table
+    space -3
+    PackageRepositoryCustomImpl->Database: entityManager.createNativeQuery:add non associated to join table
+    end 
+    
+    expandable- store optional products
+    PackageRepositoryCustomImpl->PackageRepositoryCustomImpl:filter non associated op
+    space -3
+    PackageRepositoryCustomImpl->PackageRepositoryCustomImpl:filter non needed op
+    space -3
+    PackageRepositoryCustomImpl->Database: entityManager.createNativeQuery:remove non needed from join table
+    space -3
+    PackageRepositoryCustomImpl->Database: entityManager.createNativeQuery:add non associated to join table
+    end 
+    space -3
+    PackageRepositoryCustomImpl-->PackageService: ServicePackageEntity
+    space -1
+  deactivate PackageRepositoryCustomImpl
+    PackageService-->PackageResource: ServicePackage
+    PackageResource->/admin-settings: ServicePackage
+    
+    space -3
+    /admin-settings->/admin-settings:reload page
+    space -2
+    /admin-settings->User: show edited or new package
+    space -1
+    
+    deactivate /admin-settings
+    space -3
+   
