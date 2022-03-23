@@ -1,9 +1,6 @@
 package it.polimi.db2.teleco_app.dataaccess.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
@@ -16,6 +13,7 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder = true)
 @Accessors(chain = true)
 @Entity
+@EntityListeners(ReadOnlyEntity.class)
 @Table(name = "alerts")
 public class AlertEntity {
     @Id
@@ -30,3 +28,5 @@ public class AlertEntity {
     @JoinColumn(name = "last_billing")
     BillingEntity billing;
 }
+
+

@@ -49,7 +49,7 @@ public class OrderEntity {
     private Double totalValue;
 
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
     @JoinTable(
             name = "orders_optional_packages",

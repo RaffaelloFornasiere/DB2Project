@@ -12,9 +12,7 @@ import it.polimi.db2.teleco_app.services.mappers.OrderMapper;
 import it.polimi.db2.teleco_app.services.models.Package;
 import it.polimi.db2.teleco_app.services.models.*;
 import it.polimi.db2.teleco_app.utils.Pair;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,7 +22,6 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -84,13 +81,6 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-//    @Override
-//    public List<Order> findAllByPackageId(Long packageId) {
-//        return orderRepository.findAllByPackageIdNative(packageId)
-//                .stream()
-//                .map(orderMapper::toTarget)
-//                .toList();
-//    }
 
 
     @Override

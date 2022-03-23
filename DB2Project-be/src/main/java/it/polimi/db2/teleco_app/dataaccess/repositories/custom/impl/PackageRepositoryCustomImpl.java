@@ -23,7 +23,7 @@ public class PackageRepositoryCustomImpl implements PackageRepositoryCustom {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public ServicePackageEntity savePackageWithDetails(ServicePackageEntity packageEntity, List<OptionalPackageEntity> optionals, List<ValidityPeriodEntity> validityPeriods) {
         if (packageEntity.getId() != null && entityManager.find(ServicePackageEntity.class, packageEntity.getId()) != null)
-            entityManager.merge(packageEntity);
+            packageEntity = entityManager.merge(packageEntity);
         else
             entityManager.persist(packageEntity);
 
