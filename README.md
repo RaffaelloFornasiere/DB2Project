@@ -4,6 +4,18 @@
 TelecoApp is a Java application that simulates the web services of a telecommunication provider.
 
 ## Building
+
+### Database
+Import the copy of the database from the file db2_pdb_backup.sql through the commands:
+```bash
+> mysql -u root -p
+mysql> create database db2_pdb;
+mysql> use db2_pdb;
+mysql> source <path_to_dump>;
+
+```
+
+
 ### Backend
 Inside the folder DB2Pject-be run the following commands:
 
