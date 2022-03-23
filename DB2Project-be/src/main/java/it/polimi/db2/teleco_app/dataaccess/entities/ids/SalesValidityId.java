@@ -19,6 +19,5 @@ public class SalesValidityId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "package_id", nullable = false)
     private ServicePackageEntity servicePackage;
-
 }
 

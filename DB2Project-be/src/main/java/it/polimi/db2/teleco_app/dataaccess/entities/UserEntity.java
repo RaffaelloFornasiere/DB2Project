@@ -44,7 +44,6 @@ public class UserEntity {
     private Set<RoleEntity> roles;
 
 
-
     @Column(name = "insolvent")
     private Boolean insolvent;
 
