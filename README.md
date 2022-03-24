@@ -1,13 +1,9 @@
 
 # TelecoApp
 
-TelecoApp is a Java application that simulates the web services of a telecommunication provider.
+TelecoApp is a Web Application built with Angular and Spring Boot that simulates the web services of a telecommunication provider.
 
 ## Building
-
-
-
-
 ### Backend
 Inside the folder DB2Pject-be run the following commands:
 
