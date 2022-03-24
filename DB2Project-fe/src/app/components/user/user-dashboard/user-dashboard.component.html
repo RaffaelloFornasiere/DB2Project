@@ -2,9 +2,9 @@
 <!--<app-chart [config]="config"></app-chart>-->
 <h1>User Data</h1>
 
-<mat-card *ngIf="orders && orders.data.length > 0 ">
+<mat-card *ngIf="orders && orders.data.length > 0 " class=" col-11">
   <mat-card-title>Orders History</mat-card-title>
-  <table mat-table [dataSource]="orders.data" class="mat-elevation-z8 col-10">
+  <table mat-table [dataSource]="orders.data" class="mat-elevation-z8 col-12" style="max-width: 90vh">
 
     <ng-container *ngFor="let col of orders.displayedColumns" [matColumnDef]="col">
       <th mat-header-cell *matHeaderCellDef>{{orders.titles[
@@ -19,7 +19,7 @@ w
   </table>
 </mat-card>
 
-<mat-card *ngFor="let graphSpec of graphSpecs" class="col-6 mt-3">
+<mat-card *ngFor="let graphSpec of graphSpecs" class="mt-3 mr-2" style="max-width: 70vh">
   <mat-card-title>{{graphSpec.service}}</mat-card-title>
   <div class="chart-wrapper">
     <canvas baseChart
