@@ -53,7 +53,7 @@ public class DatabaseRandomDataGenerator {
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i <100; i++) {
 
             Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(users.get(ran.nextInt(users.size())));
             var initDate = LocalDateTime.now()
