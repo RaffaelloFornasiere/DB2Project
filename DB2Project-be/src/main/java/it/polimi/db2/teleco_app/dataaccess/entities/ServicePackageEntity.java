@@ -18,7 +18,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @Entity
 @Table(name = "packages")
-public class ServicePackageEntity implements Serializable {
+public class ServicePackageEntity {
     @Id
     @Column(name = "package_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Entity
 @Table(name = "services")
-public class ServiceEntity implements Serializable {
+public class ServiceEntity {
     @Id
     @Column(name = "service_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Entity
 @Table(name = "validity_periods")
-public class ValidityPeriodEntity implements Serializable {
+public class ValidityPeriodEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
